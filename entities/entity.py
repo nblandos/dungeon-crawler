@@ -1,0 +1,36 @@
+import pygame
+from settings import *
+import functions as f
+
+
+class Entity:
+    def __init__(self, game, name):
+        self.name = name
+        self.path = f'assets/frames/{self.name}_f_idle_anim_f3.png'
+        self.image = pygame.image.load(self.path).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (TILE_SIZE, PLAYER_HEIGHT))
+        self.image = pygame.transform.scale(pygame.image.load(f'{self.path}'),
+                                            (64, 64)).convert_alpha()
+        self.rect = self.image.get_rect()
+        self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
+        self.velocity = [0, 0]
+        self.direction = 'right'
+
+    def set_velocity(self, new_velocity):
+        self.velocity = new_velocity
+
+    '''def wall_collision(self):
+        move_rect = self.hit_box.move(*self.velocity)
+        collide_points = (move_rect.midbottom, move_rect.bottomleft, move_rect.bottomright)
+        for wall in self.game.world_manager.current_map.wall_list:
+            if any(wall.hitbox.collidepoint(point) for point in collide_points):
+                self.velocity = [0, 0]'''
+
+    def update_hit_box(self):
+        self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
+        self.hit_box.midbottom = self.rect.midbottom
+
+    def basic_update(self):
+        self.rect.move_ip(*self.velocity)
+        self.hit_box.move_ip(*self.velocity)
+        self.update_hit_box()
