@@ -4,13 +4,15 @@ from .entity import Entity
 
 class Player(Entity):
     name = 'knight'
-    speed = 350
+    speed = 500
     max_health = 100
     health = max_health
 
     def __init__(self, game):
         Entity.__init__(self, game, self.name)
         self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 600))
+        self.hit_box_image = pygame.Surface((self.rect.width, self.rect.height))
+        self.hit_box_image.fill((255, 0, 0))
         self.room = None
 
     def input(self):
@@ -46,9 +48,10 @@ class Player(Entity):
             self.set_velocity(vel_list)
 
     def draw(self, surface):
+        surface.blit(self.hit_box_image, self.hit_box)
         surface.blit(self.image, self.rect)
 
-    def update(self) -> None:
+    def update(self):
         self.rect.move_ip(*self.velocity)
         self.hit_box.move_ip(*self.velocity)
         self.update_hit_box()
