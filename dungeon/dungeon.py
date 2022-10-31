@@ -18,7 +18,7 @@ class Tile(pygame.sprite.Sprite):
     def __init__(self, spritesheet, x, y, size):
         pygame.sprite.Sprite.__init__(self)
         self.size = size
-        self.image = spritesheet.get_image(x, y, size)
+        self.image = spritesheet.get_image(x, y, self.size)
         self.image = pygame.transform.scale(self.image, self.size)
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x, y

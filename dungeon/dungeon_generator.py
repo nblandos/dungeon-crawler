@@ -84,7 +84,6 @@ class Dungeon:
                     num_rooms += 1
         return num_rooms
 
-
     def create_connections(self):
         """Loops through the 2D array and re-assigns the connections for each room.
         This is done to connect rooms that have been generated next to each other from different paths."""
@@ -111,7 +110,6 @@ class Dungeon:
                         pass
                     elif self.rooms[room.pos[0]][room.pos[1] - 1] is not None:
                         room.paths += 'W'
-                    room.image = room.assign_image()
 
     def find_free_paths(self, room):
         free_paths = []
@@ -183,7 +181,7 @@ class Dungeon:
                     room_map[x][y] = random.choices(FLOOR_TILES, w, k=1)[0]
 
     def add_room_map(self, file):
-        with open(f'.assets/maps/{file}.csv', newline='') as f:
+        with open(f'assets/maps/{file}.csv', newline='') as f:
             reader = csv.reader(f)
             basic_map = list(reader)
 
@@ -200,5 +198,4 @@ class Dungeon:
         for row in self.rooms:
             for room in row:
                 if isinstance(room, Room):
-                    room.tile_map = TileMap(room, room.room_map, SpriteSheet('.assets/spritesheet.png'))
-
+                    room.tile_map = TileMap(SpriteSheet('assets/spritesheet.png'), room.room_map, room)
