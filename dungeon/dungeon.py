@@ -40,7 +40,6 @@ class TileMap:
         self.map_size = (WIDTH, HEIGHT)
         self.tile_list = []
         self.wall_list = []
-        #self.path = namedtuple('Path', ['direction', 'value', 'tile'])
         self.map_surface = pygame.Surface(self.map_size).convert()
         self.map_surface.set_colorkey((0, 0, 0, 0))
         self.new_map_surface = None
@@ -65,13 +64,13 @@ class TileMap:
         self.clear_map()
 
     def load_tiles(self):
-        tiles = []
-        x = 0
-        y = TILE_SIZE / 2
         for layer in self.file:
+            tiles = []
+            x = TILE_SIZE
+            y = TILE_SIZE / 2
             for row in layer:
                 for tile in row:
-                    tiles.append(Tile(self.spritesheet, x, y, (16, 16)))
+                    tiles.append(Tile(self.spritesheet, x, y, (TILE_SIZE, TILE_SIZE)))
                     if int(tile) in WALL_LIST:
                         self.wall_list.append(tiles[-1])
                     x += TILE_SIZE
