@@ -10,7 +10,6 @@ class SpriteSheet(object):
 
     def get_image(self, x, y, size):
         image = pygame.Surface(size, pygame.SRCALPHA).convert_alpha()
-        image.blit(self.spritesheet, (0, 0), (x, y, size[0], size[1]))
         return image
 
 
@@ -47,7 +46,7 @@ class TileMap:
         self.load_tiles()
         self.load_map()
 
-    def center_map_position(self):
+    def fix_map_position(self):
         if self.y != 0:
             self.y = 0
         if self.x != 0:
@@ -80,3 +79,5 @@ class TileMap:
     def draw_map(self, surface):
         surface.blit(self.new_map_surface, (self.x, self.y))
         self.clear_map()
+        for wall in self.wall_list:
+            pygame.draw.rect(surface, (255, 255, 255), wall.rect, 2)

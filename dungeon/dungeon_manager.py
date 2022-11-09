@@ -26,13 +26,14 @@ class DungeonManager:
         self.y, self.x = self.current_room.pos[0], self.current_room.pos[1]
         self.room_change = False
 
-    def set_room(self, room):
+    def set_current_room(self, room):
         self.current_room = room
         self.current_map = room.tile_map
 
-    def set_next_room(self, room):
+    def set_next_room(self, room=None):
         self.next_room = room
-        self.next_room_map = room.tile_map
+        if room:
+            self.next_room_map = room.tile_map
 
     def initialise_room_change(self, direction):
         self.direction = direction
@@ -68,6 +69,14 @@ class DungeonManager:
                 self.initialise_room_change('W')
             elif player.rect.x > 17 * 64:
                 self.initialise_room_change('E')
+
+    def end_room_change(self):
+        self.room_change = False
+        self.x, self.y = self.next_room.x, self.next_room.y
+        self.current_map.fix_map_position()
+        self.next_room_map.fix_map_position()
+        self.set_current_room(self.dungeon.rooms[self.y][self.x])
+        self.set_next_room()
 
     def update(self):
         self.detect_room_change()
