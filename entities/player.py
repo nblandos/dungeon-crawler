@@ -49,7 +49,7 @@ class Player(Entity):
             self.set_velocity(vel_list)
 
     def draw(self, surface):
-        surface.blit(self.hit_box_image, self.hit_box)
+        #surface.blit(self.hit_box_image, self.hit_box)
         surface.blit(self.image, self.rect)
 
     def update(self):
