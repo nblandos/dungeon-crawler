@@ -19,8 +19,6 @@ class Room:
         self.type = room_type
         self.room_map = []  # csv file of tile identifiers
         self.tile_map = None
-        # None is assigned to image as connections are not yet correctly assigned
-        self.image = None
 
 
 # Defines the Dungeon class
@@ -38,7 +36,9 @@ class Dungeon:
         self.start_pos = [h // 2, w // 2]
         self.new_pos = None
         self.new_room = None
+        self.depth = 0
         self.generate_dungeon()
+        self.num_rooms = self.count_rooms()
 
     def generate_dungeon(self):
         # Creates the spawn room
@@ -53,27 +53,28 @@ class Dungeon:
         self.add_graphics()
 
     def create_room(self, room):
-        # Main function that creates the dungeon
-        free_paths = self.find_free_paths(room)
-        # Uses a set to remove the paths that have been randomly chosen but are not free
-        available_paths = (list(set(free_paths).intersection(room.paths)))
+            # Main function that creates the dungeon
+            free_paths = self.find_free_paths(room)
+            # Uses a set to remove the paths that have been randomly chosen but are not free
+            available_paths = (list(set(free_paths).intersection(room.paths)))
 
-        if available_paths:
-            # Loops through the available generated paths and assigns the new room coordinates
-            for path in available_paths:
-                if path == 'N':
-                    self.new_pos = [room.pos[0] - 1, room.pos[1]]
-                elif path == 'E':
-                    self.new_pos = [room.pos[0], room.pos[1] + 1]
-                elif path == 'S':
-                    self.new_pos = [room.pos[0] + 1, room.pos[1]]
-                elif path == 'W':
-                    self.new_pos = [room.pos[0], room.pos[1] - 1]
-                # Instantiates the new room and adds it to the 2D array 'rooms'
-                self.new_room = Room(self.game, random.choice(POSSIBLE_ROOMS[path]), self.new_pos)
-                self.rooms[self.new_pos[0]][self.new_pos[1]] = self.new_room
-                # Recursively calls the function to explore the newly created room and create its neighbours
-                self.create_room(self.new_room)
+            if available_paths and self.depth < 5:
+                # Loops through the available generated paths and assigns the new room coordinates
+                self.depth += 1
+                for path in available_paths:
+                    if path == 'N':
+                        self.new_pos = [room.pos[0] - 1, room.pos[1]]
+                    elif path == 'E':
+                        self.new_pos = [room.pos[0], room.pos[1] + 1]
+                    elif path == 'S':
+                        self.new_pos = [room.pos[0] + 1, room.pos[1]]
+                    elif path == 'W':
+                        self.new_pos = [room.pos[0], room.pos[1] - 1]
+                    # Instantiates the new room and adds it to the 2D array 'rooms'
+                    self.new_room = Room(self.game, random.choice(POSSIBLE_ROOMS[path]), self.new_pos)
+                    self.rooms[self.new_pos[0]][self.new_pos[1]] = self.new_room
+                    # Recursively calls the function to explore the newly created room and create its neighbours
+                    self.create_room(self.new_room)
 
     def count_rooms(self):
         # Returns the number of rooms in the dungeon
@@ -174,7 +175,6 @@ class Dungeon:
     @staticmethod
     def randomise_floor_layout(room_map):
         w = [10, 1, 1, 1, 1, 0.2, 0.2, 0.2]
-        floor_tiles = [129, 130, 131, 161, 162, 163, 193, 194]
         for x in range(len(room_map)):
             for y in range(len(room_map[0])):
                 if int(room_map[x][y]) in FLOOR_TILES:

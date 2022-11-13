@@ -22,12 +22,12 @@ class Game:
         self.run()
 
     def update_groups(self):
-        self.player.update()
         self.dungeon_manager.update()
+        self.player.update()
 
     def draw_groups(self):
-        self.player.draw(self.screen)
         self.dungeon_manager.draw_map(self.screen)
+        self.player.draw(self.screen)
 
     def input(self):
         for event in pygame.event.get():

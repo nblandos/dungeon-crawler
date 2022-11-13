@@ -1,23 +1,25 @@
 import pygame
 from settings import *
 import functions as f
-from collections import namedtuple
 
 
 class SpriteSheet(object):
     def __init__(self, filename):
         self.spritesheet = pygame.image.load(filename).convert_alpha()
 
-    def get_image(self, x, y, size):
-        image = pygame.Surface(size, pygame.SRCALPHA).convert_alpha()
+    def get_image(self, rectangle):
+        # Gets an image from the spritesheet
+        rect = pygame.Rect(rectangle)
+        image = pygame.Surface(rect.size, pygame.SRCALPHA).convert_alpha()
+        image.blit(self.spritesheet, (0, 0), rect)
         return image
 
 
 class Tile(pygame.sprite.Sprite):
-    def __init__(self, spritesheet, x, y, size):
+    def __init__(self, spritesheet, rectangle, x, y, size):
         pygame.sprite.Sprite.__init__(self)
         self.size = size
-        self.image = spritesheet.get_image(x, y, self.size)
+        self.image = spritesheet.get_image(rectangle)
         self.image = pygame.transform.scale(self.image, self.size)
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x, y
@@ -26,8 +28,8 @@ class Tile(pygame.sprite.Sprite):
     def draw(self, surface):
         surface.blit(self.image, (self.rect.x, self.rect.y))
 
-    def swap_image(self, spritesheet, x, y, size):
-        self.image = spritesheet.get_image(x, y, size)
+    def swap_image(self, spritesheet, rectangle):
+        self.image = spritesheet.get_image(rectangle)
         self.image = pygame.transform.scale(self.image, self.size)
 
 
@@ -62,14 +64,21 @@ class TileMap:
                 tile.draw(self.map_surface)
         self.clear_map()
 
+    @staticmethod
+    def get_tile_position(num):
+        a = num // 32
+        b = num % 32
+        return b * 16, a * 16
+
     def load_tiles(self):
         for layer in self.file:
             tiles = []
-            x = TILE_SIZE
+            x = 0
             y = TILE_SIZE / 2
             for row in layer:
+                x = TILE_SIZE
                 for tile in row:
-                    tiles.append(Tile(self.spritesheet, x, y, (TILE_SIZE, TILE_SIZE)))
+                    tiles.append(Tile(self.spritesheet, (self.get_tile_position(int(tile)), (16, 16)), x, y, (TILE_SIZE, TILE_SIZE)))
                     if int(tile) in WALL_LIST:
                         self.wall_list.append(tiles[-1])
                     x += TILE_SIZE
@@ -79,5 +88,3 @@ class TileMap:
     def draw_map(self, surface):
         surface.blit(self.new_map_surface, (self.x, self.y))
         self.clear_map()
-        for wall in self.wall_list:
-            pygame.draw.rect(surface, (255, 255, 255), wall.rect, 2)
