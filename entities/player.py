@@ -10,8 +10,10 @@ class Player(Entity):
     def __init__(self, game):
         Entity.__init__(self, game, self.name)
         self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400))
-        self.hit_box_image = pygame.Surface((self.rect.width, self.rect.height))
+        self.hit_box = self.hit_box.inflate(-10, -10)
+        self.hit_box_image = pygame.Surface((self.hit_box.width, self.hit_box.height))
         self.hit_box_image.fill((255, 0, 0))
+        self.hit_box_image.set_alpha(150)
         self.room = None
 
     def input(self):

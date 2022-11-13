@@ -26,7 +26,6 @@ class Entity:
                 self.velocity = [0, 0]
 
     def update_hit_box(self):
-        self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.hit_box.midbottom = self.rect.midbottom
 
     def basic_update(self):
