@@ -58,7 +58,7 @@ class Dungeon:
             # Uses a set to remove the paths that have been randomly chosen but are not free
             available_paths = (list(set(free_paths).intersection(room.paths)))
 
-            if available_paths and self.depth < 5:
+            if available_paths and self.depth < 6:
                 # Loops through the available generated paths and assigns the new room coordinates
                 self.depth += 1
                 for path in available_paths:
