@@ -5,6 +5,7 @@ import functions as f
 
 class Entity:
     def __init__(self, game, name):
+        self.game = game
         self.name = name
         self.path = f'assets/frames/{self.name}_f_idle_anim_f3.png'
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}'),
@@ -17,18 +18,18 @@ class Entity:
     def set_velocity(self, new_velocity):
         self.velocity = new_velocity
 
-    '''def wall_collision(self):
+    def wall_collision(self):
         move_rect = self.hit_box.move(*self.velocity)
         collide_points = (move_rect.midbottom, move_rect.bottomleft, move_rect.bottomright)
-        for wall in self.game.dungeon_manager.py.current_map.wall_list:
-            if any(wall.hitbox.collidepoint(point) for point in collide_points):
-                self.velocity = [0, 0]'''
+        for wall in self.game.dungeon_manager.current_map.wall_list:
+            if any(wall.hit_box.collidepoint(point) for point in collide_points):
+                self.velocity = [0, 0]
 
     def update_hit_box(self):
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.hit_box.midbottom = self.rect.midbottom
 
     def basic_update(self):
+        self.update_hit_box()
         self.rect.move_ip(*self.velocity)
         self.hit_box.move_ip(*self.velocity)
-        self.update_hit_box()
