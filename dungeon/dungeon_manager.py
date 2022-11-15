@@ -39,7 +39,7 @@ class DungeonManager:
         if room:
             self.next_room_map = room.tile_map
 
-    def move_rooms(self, direction, speed=35):
+    def move_rooms(self, direction, speed=70):
         if direction == 'N':
             self.current_map.y += speed
             self.next_room_map.y += speed
