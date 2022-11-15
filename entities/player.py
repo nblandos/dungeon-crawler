@@ -3,8 +3,8 @@ from .entity import Entity
 
 
 class Player(Entity):
-    name = 'knight'
-    speed = 500
+    name = 'knight_m'
+    speed = 450
     max_health = 100
 
     def __init__(self, game):
@@ -22,10 +22,6 @@ class Player(Entity):
             self.direction = 'left'
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction = 'right'
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
-            self.direction = 'up'
-        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-            self.direction = 'down'
 
         constant_dt = 0.016
         vel_up = [0, -self.speed * constant_dt]
