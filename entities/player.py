@@ -1,29 +1,33 @@
 import pygame
+from settings import FPS
 from .entity import Entity
 
 
 class Player(Entity):
+    # Creates the player which is a subclass of Entity
     name = 'knight_m'
     speed = 450
-    max_health = 100
 
     def __init__(self, game):
-        Entity.__init__(self, game, self.name)
-        self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400))
+        Entity.__init__(self, game, self.name)  # Inherits from Entity
+        self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400)) # Changes the position of the rect
         self.hit_box = self.hit_box.inflate(-10, -10)
+        # Creates a surface the size of the hit_box to be used for testing
         self.hit_box_image = pygame.Surface((self.hit_box.width, self.hit_box.height))
         self.hit_box_image.fill((255, 0, 0))
         self.hit_box_image.set_alpha(150)
         self.room = None
 
     def input(self):
+        # Sets the direction of the player based on the key pressed
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.direction = 'left'
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction = 'right'
 
-        constant_dt = 0.016
+        constant_dt = 1 / FPS  # seconds between each frame
+        # Calculates the velocity of the player based on the key pressed
         vel_up = [0, -self.speed * constant_dt]
         vel_up = [i * keys[pygame.K_w] for i in vel_up]
         vel_down = [0, self.speed * constant_dt]
@@ -35,9 +39,9 @@ class Player(Entity):
         vel = zip(vel_up, vel_down, vel_left, vel_right)
         vel_list = [sum(item) for item in vel]
 
-        x = (pow(vel_list[0], 2) + pow(vel_list[1], 2)) ** 0.5
-
         if 0 not in vel_list:
+            # Calculates the velocity if the player is moving diagonally
+            x = (pow(vel_list[0], 2) + pow(vel_list[1], 2)) ** 0.5
             z = x / (abs(vel_list[0]) + abs(vel_list[1]))
             vel_list_fixed = [item * z for item in vel_list]
             self.set_velocity(vel_list_fixed)
@@ -45,10 +49,13 @@ class Player(Entity):
             self.set_velocity(vel_list)
 
     def draw(self, surface):
-        #surface.blit(self.hit_box_image, self.hit_box)
+        # Draws the hit_box for testing
+        surface.blit(self.hit_box_image, self.hit_box)
+        # Draws the player
         surface.blit(self.image, self.rect)
 
     def update(self):
+        # Check if the player is colliding with a wall and updates the rect and hit_box
         self.wall_collision()
         self.basic_update()
 

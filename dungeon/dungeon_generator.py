@@ -36,7 +36,7 @@ class Dungeon:
         self.start_pos = [h // 2, w // 2]
         self.new_pos = None
         self.new_room = None
-        self.depth = 0
+        self.depth = 0  # Used to limit the number of recursive calls
         self.generate_dungeon()
         self.num_rooms = self.count_rooms()
 
@@ -53,28 +53,28 @@ class Dungeon:
         self.add_graphics()
 
     def create_room(self, room):
-            # Main function that creates the dungeon
-            free_paths = self.find_free_paths(room)
-            # Uses a set to remove the paths that have been randomly chosen but are not free
-            available_paths = (list(set(free_paths).intersection(room.paths)))
+        # Main function that creates the dungeon
+        free_paths = self.find_free_paths(room)
+        # Uses a set to remove the paths that have been randomly chosen but are not free
+        available_paths = (list(set(free_paths).intersection(room.paths)))
 
-            if available_paths and self.depth < 6:
-                # Loops through the available generated paths and assigns the new room coordinates
-                self.depth += 1
-                for path in available_paths:
-                    if path == 'N':
-                        self.new_pos = [room.pos[0] - 1, room.pos[1]]
-                    elif path == 'E':
-                        self.new_pos = [room.pos[0], room.pos[1] + 1]
-                    elif path == 'S':
-                        self.new_pos = [room.pos[0] + 1, room.pos[1]]
-                    elif path == 'W':
-                        self.new_pos = [room.pos[0], room.pos[1] - 1]
-                    # Instantiates the new room and adds it to the 2D array 'rooms'
-                    self.new_room = Room(self.game, random.choice(POSSIBLE_ROOMS[path]), self.new_pos)
-                    self.rooms[self.new_pos[0]][self.new_pos[1]] = self.new_room
-                    # Recursively calls the function to explore the newly created room and create its neighbours
-                    self.create_room(self.new_room)
+        if available_paths and self.depth < 6:
+            # Loops through the available generated paths and assigns the new room coordinates
+            self.depth += 1
+            for path in available_paths:
+                if path == 'N':
+                    self.new_pos = [room.pos[0] - 1, room.pos[1]]
+                elif path == 'E':
+                    self.new_pos = [room.pos[0], room.pos[1] + 1]
+                elif path == 'S':
+                    self.new_pos = [room.pos[0] + 1, room.pos[1]]
+                elif path == 'W':
+                    self.new_pos = [room.pos[0], room.pos[1] - 1]
+                # Instantiates the new room and adds it to the 2D array 'rooms'
+                self.new_room = Room(self.game, random.choice(POSSIBLE_ROOMS[path]), self.new_pos)
+                self.rooms[self.new_pos[0]][self.new_pos[1]] = self.new_room
+                # Recursively calls the function to explore the newly created room and create its neighbours
+                self.create_room(self.new_room)
 
     def count_rooms(self):
         # Returns the number of rooms in the dungeon
@@ -135,6 +135,7 @@ class Dungeon:
 
     @staticmethod
     def close_paths(paths, room_map, file):
+        # Closes the paths that are not available for the current room
         if 'W' not in paths:
             room_map[5][2] = 257
             room_map[6][2] = 257
@@ -174,6 +175,7 @@ class Dungeon:
 
     @staticmethod
     def randomise_floor_layout(room_map):
+        # Randomises the floor tiles displayed in a room
         w = [10, 1, 1, 1, 1, 0.2, 0.2, 0.2]
         for x in range(len(room_map)):
             for y in range(len(room_map[0])):
@@ -181,6 +183,8 @@ class Dungeon:
                     room_map[x][y] = random.choices(FLOOR_TILES, w, k=1)[0]
 
     def add_room_map(self, file):
+        # Adds layers of csv files to every room in the dungeon
+        # The number in the csv files correspond to tile image identifiers
         with open(f'assets/maps/{file}.csv', newline='') as f:
             reader = csv.reader(f)
             basic_map = list(reader)
@@ -195,6 +199,7 @@ class Dungeon:
                     room.room_map.append(room_map)
 
     def add_graphics(self):
+        # Creates an instance of TileMap for each room in the dungeon which will display the room
         for row in self.rooms:
             for room in row:
                 if isinstance(room, Room):
