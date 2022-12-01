@@ -3,6 +3,7 @@ import sys
 from settings import *
 from entities.player import Player
 from dungeon.dungeon_manager import DungeonManager
+from menu import Menu
 # Initialises pygame modules
 pygame.init()
 
@@ -15,9 +16,11 @@ class Game:
         self.screen = pygame.Surface((WIDTH, HEIGHT)).convert()
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
+        self.constant_dt = 1 / FPS
         # Creates instances of the player and dungeon manager
         self.dungeon_manager = DungeonManager(self)
         self.player = Player(self)
+        self.menu = Menu(self)
         self.running = True
 
     def refresh(self):
@@ -51,6 +54,7 @@ class Game:
     def run(self):
         # Main game loop that is called every frame
         while self.running:
+            self.menu.show()
             self.screen.fill(BLACK)
             self.update_groups()
             self.draw_groups()

@@ -26,15 +26,14 @@ class Player(Entity):
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction = 'right'
 
-        constant_dt = 1 / FPS  # seconds between each frame
         # Calculates the velocity of the player based on the key pressed
-        vel_up = [0, -self.speed * constant_dt]
+        vel_up = [0, -self.speed * self.game.constant_dt]
         vel_up = [i * keys[pygame.K_w] for i in vel_up]
-        vel_down = [0, self.speed * constant_dt]
+        vel_down = [0, self.speed * self.game.constant_dt]
         vel_down = [i * keys[pygame.K_s] for i in vel_down]
-        vel_left = [-self.speed * constant_dt, 0]
+        vel_left = [-self.speed * self.game.constant_dt, 0]
         vel_left = [i * keys[pygame.K_a] for i in vel_left]
-        vel_right = [self.speed * constant_dt, 0]
+        vel_right = [self.speed * self.game.constant_dt, 0]
         vel_right = [i * keys[pygame.K_d] for i in vel_right]
         vel = zip(vel_up, vel_down, vel_left, vel_right)
         vel_list = [sum(item) for item in vel]
@@ -50,7 +49,7 @@ class Player(Entity):
 
     def draw(self, surface):
         # Draws the hit_box for testing
-        surface.blit(self.hit_box_image, self.hit_box)
+        # surface.blit(self.hit_box_image, self.hit_box)
         # Draws the player
         surface.blit(self.image, self.rect)
 
