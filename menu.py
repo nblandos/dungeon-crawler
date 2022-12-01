@@ -30,3 +30,39 @@ class Menu:
             self.game.display.blit(self.game.screen, (0, 0))
             pygame.display.flip()
 
+class Button:
+    def __init__(self, menu, name, x, y):
+        self.menu = menu
+        self.name = name
+        self.image = pygame.image.load(f'assets/buttons/{self.name}.png')
+        self.rect = self.image.get_rect()
+        self.rect.midtop = (x, y)
+        self.clicked = False
+
+    def draw(self):
+        self.menu.game.screen.blit(self.image, self.rect)
+
+    def update(self):
+        if self.rect.collidepoint(pygame.mouse.get_pos()):
+            if pygame.mouse.get_pressed()[0] == 1:
+                self.clicked = True
+            else:
+                self.clicked = False
+
+
+class PlayButton(Button):
+    def __init__(self, menu, x, y):
+        super().__init__(menu, 'play', x, y)
+
+
+class SettingsButton(Button):
+    def __init__(self, menu, x, y):
+        super().__init__(menu, 'settings', x, y)
+
+
+class QuitButton(Button):
+    def __init__(self, menu, x, y):
+        super().__init__(menu, 'quit', x, y)
+
+
+
