@@ -13,7 +13,7 @@ class Entity:
                                             (TILE_SIZE, PLAYER_HEIGHT)).convert_alpha()
         self.direction = 'right'
         self.entity_animation = EntityAnimation(self)
-        self.rect = self.image.get_rect() # Creates a rect of the size of the image
+        self.rect = self.image.get_rect()  # Creates a rect of the size of the image
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.velocity = [0, 0]
 

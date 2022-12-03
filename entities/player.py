@@ -48,8 +48,6 @@ class Player(Entity):
             self.set_velocity(vel_list)
 
     def draw(self, surface):
-        # Draws the hit_box for testing
-        # surface.blit(self.hit_box_image, self.hit_box)
         # Draws the player
         surface.blit(self.image, self.rect)
 
