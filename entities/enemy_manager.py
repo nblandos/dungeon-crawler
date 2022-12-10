@@ -9,7 +9,9 @@ class EnemyManager:
 
     def draw_enemies(self):
         for enemy in self.game.dungeon_manager.current_room.enemy_list:
-            if not self.game.dungeon_manager.room_change:
+            enemy.draw()
+        if self.game.dungeon_manager.next_room:
+            for enemy in self.game.dungeon_manager.next_room.enemy_list:
                 enemy.draw()
 
 

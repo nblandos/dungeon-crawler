@@ -127,7 +127,7 @@ class DungeonManager:
         if self.room_change:
             self.move_rooms(self.direction)
 
-    def draw_map(self, surface):
+    def draw_maps(self, surface):
         # Draws the rooms to the screen
         self.current_map.draw_map(surface)
         if self.next_room:

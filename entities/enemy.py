@@ -8,12 +8,13 @@ class Enemy(Entity):
     def __init__(self, game, name, room, max_health):
         Entity.__init__(self, game, name)
         self.room = room
+        self.max_health = max_health
         self.health = max_health
         self.attack_cooldown = pygame.time.get_ticks()
 
     def spawn(self):
         self.rect.x = random.randint(200, 1000)
-        self.rect.y = random.randint(250, 600)
+        self.rect.y = random.randint(200, 550)
 
     def move(self):
         if self.can_move and not self.dead:
@@ -44,12 +45,12 @@ class Enemy(Entity):
         self.attack_player()
 
     def draw(self):
-        self.game.screen.blit(self.image, self.rect)
+        self.room.tile_map.new_map_surface.blit(self.image, self.rect)
 
 
 class Goblin(Enemy):
     name = 'goblin'
-    speed = 150
+    speed = 200
     damage = 15
 
     def __init__(self, game, room, max_health):

@@ -39,7 +39,7 @@ class Game:
 
     def draw_groups(self):
         # Draws all groups on the screen
-        self.dungeon_manager.draw_map(self.screen)
+        self.dungeon_manager.draw_maps(self.screen)
         self.enemy_manager.draw_enemies()
         self.player.draw(self.screen)
 
