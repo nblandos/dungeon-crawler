@@ -11,6 +11,8 @@ class Entity:
         self.path = f'assets/frames/{self.name}'
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (TILE_SIZE, PLAYER_HEIGHT)).convert_alpha()
+        self.dead = False
+        self.can_move = True
         self.direction = 'right'
         self.entity_animation = EntityAnimation(self)
         self.rect = self.image.get_rect()  # Creates a rect of the size of the image
@@ -34,8 +36,17 @@ class Entity:
         # Updates the hit_box to the position of the rect
         self.hit_box.midbottom = self.rect.midbottom
 
+    def detect_death(self):
+        # Checks if the entity is dead
+        if self.health <= 0 and not self.dead:
+            self.dead = True
+            self.can_move = False
+            if self.room:
+                self.room.enemy_list.remove(self)
+
     def basic_update(self):
         # Updates the rect, hit_box and animations of the entity
+        self.detect_death()
         self.update_hit_box()
         self.entity_animation.update()
         self.rect.move_ip(*self.velocity)

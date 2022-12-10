@@ -1,12 +1,13 @@
 import pygame
-from settings import FPS
 from .entity import Entity
 
 
 class Player(Entity):
     # Creates the player which is a subclass of Entity
     name = 'knight_m'
-    speed = 450
+    speed = 400
+    max_health = 100
+    health = max_health
 
     def __init__(self, game):
         Entity.__init__(self, game, self.name)  # Inherits from Entity
@@ -46,6 +47,10 @@ class Player(Entity):
             self.set_velocity(vel_list_fixed)
         else:
             self.set_velocity(vel_list)
+
+    def take_damage(self, amount):
+        if not self.dead:
+            self.health -= amount
 
     def draw(self, surface):
         # Draws the player

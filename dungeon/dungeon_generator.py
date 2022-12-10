@@ -19,6 +19,7 @@ class Room:
         self.type = room_type
         self.room_map = []  # csv file of tile identifiers
         self.tile_map = None
+        self.enemy_list = []
 
 
 # Defines the Dungeon class

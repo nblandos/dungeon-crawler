@@ -2,8 +2,10 @@ import pygame
 import sys
 from settings import *
 from entities.player import Player
+from entities.enemy_manager import EnemyManager
 from dungeon.dungeon_manager import DungeonManager
 from menu import Menu
+
 # Initialises pygame modules
 pygame.init()
 
@@ -17,12 +19,12 @@ class Game:
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
         self.constant_dt = 1 / FPS
-        # Creates instances of the player and dungeon manager
+        # Creates instances of the necessary classes
         self.dungeon_manager = DungeonManager(self)
+        self.enemy_manager = EnemyManager(self)
         self.player = Player(self)
         self.menu = Menu(self)
         self.running = True
-
     def refresh(self):
         # Restarts the game
         self.__init__()
@@ -30,21 +32,22 @@ class Game:
         self.run()
 
     def update_groups(self):
-        # Updates the player and dungeon manager
+        # Updates all groups
         self.dungeon_manager.update()
         self.player.update()
+        self.enemy_manager.update_enemies()
 
     def draw_groups(self):
-        # Draws the current dungeon and player on the screen
+        # Draws all groups on the screen
         self.dungeon_manager.draw_map(self.screen)
+        self.enemy_manager.draw_enemies()
         self.player.draw(self.screen)
 
     def input(self):
         # Checks for user inputs
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-               self.running = False
-
+                self.running = False
         self.player.input()
         keys = pygame.key.get_pressed()
 
@@ -52,6 +55,7 @@ class Game:
             self.refresh()
 
     def run(self):
+        self.enemy_manager.spawn_enemies()
         # Main game loop that is called every frame
         while self.running:
             self.menu.show()
@@ -62,7 +66,5 @@ class Game:
             self.clock.tick(FPS)
             self.display.blit(self.screen, (0, 0))
             pygame.display.flip()
-
         pygame.quit()
         sys.exit()
-

@@ -6,8 +6,8 @@ class EntityAnimation:
     def __init__(self, entity):
         self.entity = entity
         self.direction = self.entity.direction
-        self.animation_frame = 0 # The current frame of the animation
-        self.states = ['idle', 'run'] # List of possible states
+        self.animation_frame = 0  # The current frame of the animation
+        self.states = ['idle', 'run']  # List of possible states
         self.frames_dict = self.load_frames_dict() # Loads the animation images for the entity
 
     def load_frames_dict(self):

@@ -9,3 +9,8 @@ def get_hit_box(surface, top=0, left=0):
         hit_box = rect_list[0].unionall(rect_list)
         hit_box.move_ip(top, left)
         return hit_box
+
+
+def time_passed(time, amount):
+    if pygame.time.get_ticks() - time > amount:
+        return True
