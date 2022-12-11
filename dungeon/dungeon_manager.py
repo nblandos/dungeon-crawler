@@ -23,7 +23,7 @@ class DungeonManager:
         while len(self.dungeon.rooms[self.dungeon.start_pos[0]][self.dungeon.start_pos[1]].paths) != 1 \
                 or self.dungeon.num_rooms < MIN_ROOMS or self.dungeon.num_rooms > MAX_ROOMS:
             self.dungeon = Dungeon(self, DUNGEON_SIZE, self)
-        print(self.dungeon.num_rooms)
+        print(f"Number of rooms: {self.dungeon.num_rooms}")
         self.current_room = self.dungeon.rooms[self.dungeon.start_pos[0]][self.dungeon.start_pos[1]]
         self.current_map = self.current_room.tile_map
         self.y, self.x = self.current_room.pos[0], self.current_room.pos[1]

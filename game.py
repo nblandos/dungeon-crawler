@@ -25,8 +25,8 @@ class Game:
         self.player = Player(self)
         self.menu = Menu(self)
         self.running = True
+
     def refresh(self):
-        # Restarts the game
         self.__init__()
         pygame.display.flip()
         self.run()

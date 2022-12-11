@@ -1,7 +1,6 @@
 import pygame
 from settings import *
 
-
 class EntityAnimation:
     def __init__(self, entity):
         self.entity = entity
@@ -16,7 +15,10 @@ class EntityAnimation:
         for state in self.states:
             for i in range(4):
                 frame = pygame.image.load(f'{self.entity.path}_{state}_anim_f{i}.png').convert_alpha()
-                frame = pygame.transform.scale(frame, (TILE_SIZE, PLAYER_HEIGHT))
+                if self.entity.name == 'knight_m':
+                    frame = pygame.transform.scale(frame, (TILE_SIZE, PLAYER_HEIGHT))
+                else:
+                    frame = pygame.transform.scale(frame, (TILE_SIZE, TILE_SIZE))
                 frames_dict[state.upper()].append(frame)
         return frames_dict
 

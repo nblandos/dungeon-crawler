@@ -1,6 +1,6 @@
 import random
 from dungeon.dungeon_generator import Room
-from .enemy import Goblin
+from .enemy import Goblin, Imp
 
 
 class EnemyManager:
@@ -13,7 +13,6 @@ class EnemyManager:
         if self.game.dungeon_manager.next_room:
             for enemy in self.game.dungeon_manager.next_room.enemy_list:
                 enemy.draw()
-
 
     def update_enemies(self):
         for enemy in self.game.dungeon_manager.current_room.enemy_list:
@@ -29,9 +28,14 @@ class EnemyManager:
     def spawn_normal_enemies(self, room):
         # Spawns enemies in a given room
         level = self.game.dungeon_manager.level
-        num_enemies = random.randint(2 + level, 5 + level)  # Number of enemies to spawn, scales with the dungeon level
-        for _ in range(num_enemies):
+        # Number of enemies to spawn, scales with the dungeon level
+        num_goblins = random.randint(1 + level, 4 + level)
+        num_imps = random.randint(level, 3 + level)
+        for _ in range(num_goblins):
             enemy = Goblin(self.game, room, 100)
             room.enemy_list.append(enemy)
             room.enemy_list[-1].spawn()
-
+        for _ in range(num_imps):
+            enemy = Imp(self.game, room, 100)
+            room.enemy_list.append(enemy)
+            room.enemy_list[-1].spawn()

@@ -24,8 +24,8 @@ class Entity:
         self.velocity = new_velocity
 
     def wall_collision(self):
-        move_rect = self.hit_box.move(*self.velocity) # Creates a rect of where the hit_box will be after moving
-        collide_points = (move_rect.midbottom, move_rect.bottomleft, move_rect.bottomright) # Creates a tuple of the points of the rect
+        move_rect = self.hit_box.move(*self.velocity)  # Creates a rect of where the hit_box will be after moving
+        collide_points = (move_rect.midbottom, move_rect.bottomleft, move_rect.bottomright)  # Creates a tuple of the points of the rect
         for wall in self.game.dungeon_manager.current_map.wall_list:
             # Loops through all the walls in the current map and checks if the hit_box will collide with any of them
             if any(wall.hit_box.collidepoint(point) for point in collide_points):
@@ -40,7 +40,9 @@ class Entity:
         # Checks if the entity is dead
         if self.health <= 0 and not self.dead:
             self.dead = True
+            self.entity_animation.animation_frame = 0
             self.can_move = False
+            self.velocity = [0, 0]
             if self.room:
                 self.room.enemy_list.remove(self)
 
