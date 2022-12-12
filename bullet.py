@@ -7,12 +7,14 @@ class Bullet:
         self.game = game
         self.room = room
         self.user = user
+        self.target_pos = target_pos
         self.image = None
         self.rect = None
         self.load_image()
         self.rect.x = x
         self.rect.y = y
         self.direction = None
+        self.calculate_direction()
 
     def load_image(self):
         self.image = pygame.Surface(self.hit_box_size)
@@ -20,18 +22,21 @@ class Bullet:
         self.rect = self.image.get_rect()
 
     def calculate_direction(self):
-        pass
+        distance_to_target = pygame.math.Vector2(self.target_pos[0] - self.rect.x, self.target_pos[1] - self.rect.y)
+        self.direction = distance_to_target.normalize()
 
     def wall_collision(self):
         for wall in self.game.dungeon_manager.current_map.wall_list:
             if self.rect.colliderect(wall.rect):
                 print("hit")
 
-    def update_pos(self):
-        pass
+    def move(self):
+        self.rect.x += self.direction[0] * self.speed
+        self.rect.y += self.direction[1] * self.speed
 
     def update(self):
-        self.update_pos()
+        self.move()
+        #self.wall_collision()
 
     def draw(self):
         pygame.draw.circle(self.room.tile_map.new_map_surface, BLACK, self.rect.center, self.radius)
@@ -41,7 +46,7 @@ class Bullet:
 class ImpBullet(Bullet):
     hit_box_size = (5, 5)
     radius = 5
-    speed = 5
+    speed = 3
 
     def __init__(self, game, room, user, x, y, target_pos):
         Bullet.__init__(self, game, room, user, x, y, target_pos)

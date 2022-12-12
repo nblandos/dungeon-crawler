@@ -82,6 +82,8 @@ class Enemy(Entity):
         self.room.tile_map.new_map_surface.blit(self.image, self.rect)
 
 
+
+
 class Goblin(Enemy):
     name = 'goblin'
     speed = 150
@@ -105,7 +107,7 @@ class Imp(Enemy):
         if f.time_passed(self.attack_cooldown, 800) and not self.dead and not self.game.player.dead:
             self.attack_cooldown = pygame.time.get_ticks()
             self.game.bullet_manager.add_bullet(
-                ImpBullet(self.game, self.room, self, self.hit_box.midbottom[0], self.hit_box.midbottom[1],
+                ImpBullet(self.game, self.room, self, self.rect.center[0], self.rect.center[1],
                           (self.game.player.hit_box.centerx, self.game.player.hit_box.centery)))
 
     def move(self):

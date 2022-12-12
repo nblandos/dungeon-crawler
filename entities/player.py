@@ -6,12 +6,12 @@ class Player(Entity):
     # Creates the player which is a subclass of Entity
     name = 'knight_m'
     speed = 400
-    max_health = 100
+    max_health = 1000
     health = max_health
 
     def __init__(self, game):
         Entity.__init__(self, game, self.name)  # Inherits from Entity
-        self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400)) # Changes the position of the rect
+        self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400))  # Changes the position of the rect
         self.hit_box = self.hit_box.inflate(-10, -10)
         # Creates a surface the size of the hit_box to be used for testing
         self.hit_box_image = pygame.Surface((self.hit_box.width, self.hit_box.height))
