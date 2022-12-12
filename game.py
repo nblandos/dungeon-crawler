@@ -4,6 +4,7 @@ from settings import *
 from entities.player import Player
 from entities.enemy_manager import EnemyManager
 from dungeon.dungeon_manager import DungeonManager
+from bullet import BulletManager
 from menu import Menu
 
 # Initialises pygame modules
@@ -22,6 +23,7 @@ class Game:
         # Creates instances of the necessary classes
         self.dungeon_manager = DungeonManager(self)
         self.enemy_manager = EnemyManager(self)
+        self.bullet_manager = BulletManager(self)
         self.player = Player(self)
         self.menu = Menu(self)
         self.running = True
@@ -36,12 +38,14 @@ class Game:
         self.dungeon_manager.update()
         self.player.update()
         self.enemy_manager.update_enemies()
+        self.bullet_manager.update()
 
     def draw_groups(self):
         # Draws all groups on the screen
         self.dungeon_manager.draw_maps(self.screen)
         self.enemy_manager.draw_enemies()
         self.player.draw(self.screen)
+        self.bullet_manager.draw()
 
     def input(self):
         # Checks for user inputs

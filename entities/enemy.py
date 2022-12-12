@@ -2,12 +2,12 @@ import pygame
 import random
 import functions as f
 from .entity import Entity
+from bullet import ImpBullet
 
 
 class Enemy(Entity):
     def __init__(self, game, name, room, max_health):
         Entity.__init__(self, game, name)
-
         self.room = room
         self.max_health = max_health
         self.health = max_health
@@ -102,10 +102,14 @@ class Imp(Enemy):
         self.destination = None
 
     def shoot(self):
-        pass
+        if f.time_passed(self.attack_cooldown, 800) and not self.dead and not self.game.player.dead:
+            self.attack_cooldown = pygame.time.get_ticks()
+            self.game.bullet_manager.add_bullet(
+                ImpBullet(self.game, self.room, self, self.hit_box.midbottom[0], self.hit_box.midbottom[1],
+                          (self.game.player.hit_box.centerx, self.game.player.hit_box.centery)))
 
     def move(self):
-        if not self.dead:
+        if self.can_move and not self.dead:
             self.move_away_from_player(self.radius)
 
     def update(self):
