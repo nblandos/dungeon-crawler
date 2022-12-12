@@ -40,13 +40,13 @@ class Bullet:
 
     def draw(self):
         pygame.draw.circle(self.room.tile_map.new_map_surface, BLACK, self.rect.center, self.radius)
-        pygame.draw.circle(self.room.tile_map.new_map_surface, RED, self.rect.center, self.radius - 1)
+        pygame.draw.circle(self.room.tile_map.new_map_surface, BURGUNDY, self.rect.center, self.radius - 1)
 
 
 class ImpBullet(Bullet):
     hit_box_size = (5, 5)
     radius = 5
-    speed = 3
+    speed = 5
 
     def __init__(self, game, room, user, x, y, target_pos):
         Bullet.__init__(self, game, room, user, x, y, target_pos)
