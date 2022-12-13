@@ -26,9 +26,15 @@ class Bullet:
         self.direction = distance_to_target.normalize()
 
     def wall_collision(self):
+        collide_points = (self.rect.midbottom, self.rect.bottomleft, self.rect.bottomright)
         for wall in self.game.dungeon_manager.current_map.wall_list:
-            if self.rect.colliderect(wall.rect):
-                print("hit")
+            if any(wall.hit_box.collidepoint(point) for point in collide_points):
+                self.game.bullet_manager.remove_bullet(self)
+
+    def player_collision(self):
+        if self.rect.colliderect(self.game.player.hit_box):
+            self.game.player.health -= self.damage
+            self.game.bullet_manager.remove_bullet(self)
 
     def move(self):
         self.rect.x += self.direction[0] * self.speed
@@ -36,7 +42,10 @@ class Bullet:
 
     def update(self):
         self.move()
-        #self.wall_collision()
+        if self.rect.y < 0 or self.rect.y > 1000 or self.rect.x < 0 or self.rect.x > 1300:
+            self.game.bullet_manager.remove_bullet(self)
+        self.player_collision()
+        self.wall_collision()
 
     def draw(self):
         pygame.draw.circle(self.room.tile_map.new_map_surface, BLACK, self.rect.center, self.radius)
@@ -44,7 +53,7 @@ class Bullet:
 
 
 class ImpBullet(Bullet):
-    hit_box_size = (5, 5)
+    hit_box_size = (7, 7)
     radius = 5
     speed = 5
 
@@ -62,7 +71,8 @@ class BulletManager:
         self.bullet_list.append(bullet)
 
     def remove_bullet(self, bullet):
-        self.bullet_list.remove(bullet)
+        if bullet in self.bullet_list:
+            self.bullet_list.remove(bullet)
 
     def update(self):
         for bullet in self.bullet_list:
