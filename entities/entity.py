@@ -9,14 +9,10 @@ class Entity:
         self.game = game
         self.name = name
         self.path = f'assets/frames/{self.name}'
-        self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
-                                            (TILE_SIZE, PLAYER_HEIGHT)).convert_alpha()
         self.dead = False
         self.can_move = True
         self.direction = 'right'
         self.entity_animation = EntityAnimation(self)
-        self.rect = self.image.get_rect()  # Creates a rect of the size of the image
-        self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.velocity = [0, 0]
 
     def set_velocity(self, new_velocity):

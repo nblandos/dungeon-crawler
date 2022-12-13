@@ -1,6 +1,7 @@
 import pygame
 import random
 import functions as f
+from settings import *
 from .entity import Entity
 from bullet import ImpBullet
 
@@ -8,6 +9,10 @@ from bullet import ImpBullet
 class Enemy(Entity):
     def __init__(self, game, name, room, max_health):
         Entity.__init__(self, game, name)
+        self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
+                                            (TILE_SIZE, TILE_SIZE)).convert_alpha()
+        self.rect = self.image.get_rect()  # Creates a rect of the size of the image
+        self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.room = room
         self.max_health = max_health
         self.health = max_health
@@ -77,16 +82,15 @@ class Enemy(Entity):
         self.basic_update()
         self.move()
         self.attack()
+        self.rect.midbottom = self.hit_box.midbottom
 
     def draw(self):
         self.room.tile_map.new_map_surface.blit(self.image, self.rect)
 
 
-
-
 class Goblin(Enemy):
     name = 'goblin'
-    speed = 150
+    speed = 175
     damage = 12
 
     def __init__(self, game, room, max_health):
@@ -104,11 +108,11 @@ class Imp(Enemy):
         self.destination = None
 
     def shoot(self):
-        if f.time_passed(self.attack_cooldown, 800) and not self.dead and not self.game.player.dead:
-            self.attack_cooldown = pygame.time.get_ticks()
+        if f.time_passed(self.attack_cooldown, 1200) and not self.dead and not self.game.player.dead and sum(self.velocity) == 0:
             self.game.bullet_manager.add_bullet(
                 ImpBullet(self.game, self.room, self, self.rect.center[0], self.rect.center[1],
-                          (self.game.player.hit_box.centerx, self.game.player.hit_box.centery)))
+                          (self.game.player.hit_box.centerx, self.game.player.hit_box.centery + 30)))
+            self.attack_cooldown = pygame.time.get_ticks()
 
     def move(self):
         if self.can_move and not self.dead:

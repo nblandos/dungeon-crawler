@@ -1,5 +1,8 @@
 import pygame
+from settings import *
+import functions as f
 from .entity import Entity
+
 
 
 class Player(Entity):
@@ -11,12 +14,12 @@ class Player(Entity):
 
     def __init__(self, game):
         Entity.__init__(self, game, self.name)  # Inherits from Entity
+        self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
+                                            (TILE_SIZE, PLAYER_HEIGHT)).convert_alpha()
+        self.rect = self.image.get_rect()  # Creates a rect of the size of the image
+        self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400))  # Changes the position of the rect
-        self.hit_box = self.hit_box.inflate(-10, -10)
-        # Creates a surface the size of the hit_box to be used for testing
-        self.hit_box_image = pygame.Surface((self.hit_box.width, self.hit_box.height))
-        self.hit_box_image.fill((255, 0, 0))
-        self.hit_box_image.set_alpha(150)
+        self.hit_box = self.hit_box.inflate(-25, -20)
         self.room = None
 
     def input(self):
