@@ -8,7 +8,8 @@ from bullet import ImpBullet
 
 class Enemy(Entity):
     def __init__(self, game, name, room, max_health):
-        Entity.__init__(self, game, name)
+        # Enemy class is the parent class for all enemies
+        Entity.__init__(self, game, name)  # Inherit from Entity
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (TILE_SIZE, TILE_SIZE)).convert_alpha()
         self.rect = self.image.get_rect()  # Creates a rect of the size of the image
@@ -19,33 +20,40 @@ class Enemy(Entity):
         self.attack_cooldown = pygame.time.get_ticks()
 
     def spawn(self):
+        # Spawns the enemy in a random position within the room
         self.rect.x = random.randint(200, 1000)
         self.rect.y = random.randint(200, 550)
 
     def move(self):
+        # Method that makes the enemy move towards the player
         if self.can_move and not self.dead:
             self.follow_player()
         else:
             self.velocity = [0, 0]
 
     def can_attack(self):
+        # Checks if the enemy can attack based on a cooldown
         if f.time_passed(self.attack_cooldown, 1000):
             self.attack_cooldown = pygame.time.get_ticks()
             return True
 
     def attack(self):
+        # If the enemy is touching the player and is not an attack cooldown, the player takes damage
         if self.hit_box.colliderect(self.game.player.hit_box) and self.can_attack():
             self.game.player.take_damage(self.damage)
 
     def follow_player(self):
+        # Calculates the distance and direction between the enemy and the player
         distance_to_player = pygame.math.Vector2(self.game.player.hit_box.x - self.hit_box.x,
                                                  self.game.player.hit_box.y - self.hit_box.y)
         if distance_to_player.length_squared() > 0:
             distance_to_player.normalize_ip()
             distance_to_player.scale_to_length(self.speed * self.game.constant_dt)
+        # Sets the velocity to based on the direction from the player to the enemy and the speed of the enemy
         self.set_velocity(distance_to_player)
 
     def move_away_from_player(self, radius):
+        # Moves the enemy to a random positiion within the room if the player is within a certain radius
         distance_to_player = pygame.math.Vector2(self.game.player.hit_box.x - self.hit_box.x,
                                                  self.game.player.hit_box.y - self.hit_box.y)
         if self.destination:
@@ -70,7 +78,7 @@ class Enemy(Entity):
 
     def choose_random_pos(self, radius):
         # Finds a random destination within the room for ranged enemies (imps) to move to
-        min_x, max_x, min_y, max_y = 196, 1082, 162, 586
+        min_x, max_x, min_y, max_y = 196, 1082, 162, 586 # The bounds of the room
         pos = [random.randint(min_x, max_x), random.randint(min_y, max_y)]
         vector = pygame.math.Vector2(self.game.player.hit_box.x - pos[0], self.game.player.hit_box.x - pos[1])
         while vector.length() < radius:
@@ -79,35 +87,45 @@ class Enemy(Entity):
         self.destination = pos
 
     def update(self):
+        # Adds movement to the enemy and lets it attack the player if it can
         self.basic_update()
         self.move()
         self.attack()
         self.rect.midbottom = self.hit_box.midbottom
 
     def draw(self):
+        # Draws the enemy
         self.room.tile_map.new_map_surface.blit(self.image, self.rect)
 
 
 class Goblin(Enemy):
+    # Goblin class is a child class of Enemy
+    # The goblin is a melee enemy that moves towards the player and attacks it
+    # Defines the stats of the goblin enemy
     name = 'goblin'
-    speed = 175
+    speed = 225
     damage = 12
 
     def __init__(self, game, room, max_health):
-        Enemy.__init__(self, game, self.name, room, max_health)
+        Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
 
 
 class Imp(Enemy):
+    # Imp class is a child class of Enemy
+    # The imp is a ranged enemy that moves away from the player and shoots bullets at it
+    # Defines the stats of the imp enemy
     name = 'imp'
-    speed = 200
+    speed = 175
     damage = 8
     radius = 200
 
     def __init__(self, game, room, max_health):
-        Enemy.__init__(self, game, self.name, room, max_health)
-        self.destination = None
+        Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
+        self.destination = None  # The position of a destination for the enemy to move to
 
-    def shoot(self):
+    def attack(self):
+        # Overrides the attack method from Enemy as the imp shoots bullets at the player
+        # Shoots a bullet at the player every 1.2 seconds when standing still
         if f.time_passed(self.attack_cooldown, 1200) and not self.dead and not self.game.player.dead and sum(self.velocity) == 0:
             self.game.bullet_manager.add_bullet(
                 ImpBullet(self.game, self.room, self, self.rect.center[0], self.rect.center[1],
@@ -115,10 +133,7 @@ class Imp(Enemy):
             self.attack_cooldown = pygame.time.get_ticks()
 
     def move(self):
+        # Overrides the move method from Enemy as the imp moves away from the player
+        # Moves the enemy away from the player if the player is within a certain radius
         if self.can_move and not self.dead:
             self.move_away_from_player(self.radius)
-
-    def update(self):
-        self.basic_update()
-        self.move()
-        self.shoot()

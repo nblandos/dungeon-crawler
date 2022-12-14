@@ -40,10 +40,11 @@ class Entity:
             self.can_move = False
             self.velocity = [0, 0]
             if self.room:
+                # The dead entity is removed from the room
                 self.room.enemy_list.remove(self)
 
     def basic_update(self):
-        # Updates the rect, hit_box and animations of the entity
+        # Updates the rect, hit_box and animations of the entity and checks if the entity is dead
         self.detect_death()
         self.update_hit_box()
         self.entity_animation.update()

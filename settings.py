@@ -7,6 +7,7 @@ HEIGHT = 13 * TILE_SIZE
 TITLE = "Roguelike NEA"
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
+DARK_RED = (150, 0, 32)
 BURGUNDY = (128, 0, 32)
 WHITE = (255, 255, 255)
 MIN_ROOMS = 8

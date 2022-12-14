@@ -4,9 +4,8 @@ import functions as f
 from .entity import Entity
 
 
-
 class Player(Entity):
-    # Creates the player which is a subclass of Entity
+    # Creates the player which is a child class of Entity
     name = 'knight_m'
     speed = 400
     max_health = 1000
@@ -52,6 +51,7 @@ class Player(Entity):
             self.set_velocity(vel_list)
 
     def take_damage(self, amount):
+        # Removes the specified amount of health from the player
         if not self.dead:
             self.health -= amount
 

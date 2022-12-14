@@ -13,6 +13,7 @@ class Button:
         self.rect.midtop = (x, y)
 
     def load_images(self):
+        # Load the images for the button
         self.images.append(pygame.image.load(f'assets/buttons/{self.path}/{self.name} Button.png'))
         self.images.append(pygame.image.load(f'assets/buttons/{self.path}/{self.name} col_Button.png'))
         for i in range(len(self.images)):
@@ -21,12 +22,15 @@ class Button:
                                                      self.images[i].get_height() / 1.4))
 
     def action(self):
+        # This method is overwritten in the subclasses
         pass
 
     def draw(self):
+        # Draws the button
         self.menu.game.screen.blit(self.image, self.rect)
 
     def update(self):
+        # Checks if the button is hovered over and changes the image accordingly
         pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(pos):
             self.image = self.images[1]
@@ -38,7 +42,7 @@ class Button:
 
 class PlayButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Play', x, y)
+        super().__init__(menu, 'Large Buttons', 'Play', x, y)  # Inherits from the Button class
 
     def action(self):
         self.menu.running = False
@@ -46,7 +50,7 @@ class PlayButton(Button):
 
 class SettingsButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Settings', x, y)
+        super().__init__(menu, 'Large Buttons', 'Settings', x, y)  # Inherits from the Button class
 
     def action(self):
         pass
@@ -54,7 +58,7 @@ class SettingsButton(Button):
 
 class QuitButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Quit', x, y)
+        super().__init__(menu, 'Large Buttons', 'Quit', x, y)  # Inherits from the Button class
 
     def action(self):
         self.menu.game.running = False

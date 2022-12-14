@@ -5,10 +5,9 @@ import csv
 import copy
 # Settings contains the constants used in the game
 from settings import *
-from .dungeon import TileMap, SpriteSheet
+from .dungeon_graphics import TileMap, SpriteSheet
 
 
-# Defines the Room class
 class Room:
     def __init__(self, game, paths, pos, room_type='normal'):
         # Initializes the Room class
@@ -22,7 +21,6 @@ class Room:
         self.enemy_list = []
 
 
-# Defines the Dungeon class
 class Dungeon:
     def __init__(self, game, size, dm):
         # Initializes the Dungeon class
