@@ -104,7 +104,7 @@ class Goblin(Enemy):
     # Defines the stats of the goblin enemy
     name = 'goblin'
     speed = 225
-    damage = 12
+    damage = 2
 
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
@@ -116,7 +116,7 @@ class Imp(Enemy):
     # Defines the stats of the imp enemy
     name = 'imp'
     speed = 175
-    damage = 8
+    damage = 4
     radius = 200
 
     def __init__(self, game, room, max_health):
