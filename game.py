@@ -6,6 +6,7 @@ from entities.enemy_manager import EnemyManager
 from dungeon.dungeon_manager import DungeonManager
 from bullet import BulletManager
 from menu import Menu
+from hud import Hud
 
 # Initialises pygame modules
 pygame.init()
@@ -26,6 +27,7 @@ class Game:
         self.bullet_manager = BulletManager(self)
         self.player = Player(self)
         self.menu = Menu(self)
+        self.hud = Hud(self)
         self.running = True
 
     def refresh(self):
@@ -47,6 +49,7 @@ class Game:
         self.enemy_manager.draw_enemies()
         self.player.draw(self.screen)
         self.bullet_manager.draw()
+        self.hud.draw()
 
     def input(self):
         # Checks for user inputs

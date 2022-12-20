@@ -8,7 +8,7 @@ class Player(Entity):
     # Creates the player which is a child class of Entity
     name = 'knight_m'
     speed = 400
-    max_health = 1000
+    max_health = 100
     health = max_health
 
     def __init__(self, game):
