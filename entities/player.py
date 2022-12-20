@@ -20,6 +20,7 @@ class Player(Entity):
         self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400))  # Changes the position of the rect
         self.hit_box = self.hit_box.inflate(-25, -20)
         self.room = None
+        self.weapon = None
 
     def input(self):
         # Sets the direction of the player based on the key pressed
@@ -50,6 +51,10 @@ class Player(Entity):
         else:
             self.set_velocity(vel_list)
 
+        if pygame.mouse.get_pressed()[0]:
+            # attack
+            pass
+
     def take_damage(self, amount):
         # Removes the specified amount of health from the player
         if not self.dead:
@@ -58,6 +63,8 @@ class Player(Entity):
     def draw(self, surface):
         # Draws the player
         surface.blit(self.image, self.rect)
+        if self.weapon:
+            self.weapon.draw()
 
     def update(self):
         # Check if the player is colliding with a wall and updates the rect and hit_box

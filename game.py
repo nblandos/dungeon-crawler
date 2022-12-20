@@ -7,6 +7,7 @@ from dungeon.dungeon_manager import DungeonManager
 from bullet import BulletManager
 from menu import Menu
 from hud import Hud
+from weapon import RustySword
 
 # Initialises pygame modules
 pygame.init()
@@ -64,6 +65,7 @@ class Game:
 
     def run(self):
         self.enemy_manager.spawn_enemies()
+        self.player.weapon = RustySword(self)
         # Main game loop that is called every frame
         while self.running:
             self.menu.show()
