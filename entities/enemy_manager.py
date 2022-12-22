@@ -2,13 +2,14 @@ import random
 from dungeon.dungeon_generator import Room
 from .enemy import Goblin, Imp
 
-#As there are many enemies belonging to different rooms, this class manages which ones to draw and update. It also is
+
+# As there are many enemies belonging to different rooms, this class manages which ones to draw and update. It also is
 class EnemyManager:
     def __init__(self, game):
         # Initializes the enemy manager
         self.game = game
 
-    def draw_enemies(self):
+    def draw(self):
         # Draws all enemies in the current room
         for enemy in self.game.dungeon_manager.current_room.enemy_list:
             enemy.draw()
@@ -17,7 +18,7 @@ class EnemyManager:
             for enemy in self.game.dungeon_manager.next_room.enemy_list:
                 enemy.draw()
 
-    def update_enemies(self):
+    def update(self):
         # Updates all enemies in the current room
         for enemy in self.game.dungeon_manager.current_room.enemy_list:
             enemy.update()
@@ -37,11 +38,11 @@ class EnemyManager:
         num_imps = random.randint(level, 3 + level)
         for _ in range(num_goblins):
             # Creates the specified number of goblins
-            enemy = Goblin(self.game, room, 100)
+            enemy = Goblin(self.game, room, 30)
             room.enemy_list.append(enemy)
             room.enemy_list[-1].spawn()
         for _ in range(num_imps):
             # Creates the specified number of imps
-            enemy = Imp(self.game, room, 100)
+            enemy = Imp(self.game, room, 20)
             room.enemy_list.append(enemy)
             room.enemy_list[-1].spawn()

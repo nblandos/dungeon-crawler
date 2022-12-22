@@ -4,10 +4,10 @@ from settings import *
 from entities.player import Player
 from entities.enemy_manager import EnemyManager
 from dungeon.dungeon_manager import DungeonManager
+from objects.object_manager import ObjectManager
 from bullet import BulletManager
 from menu import Menu
 from hud import Hud
-from weapon import RustySword
 
 # Initialises pygame modules
 pygame.init()
@@ -26,6 +26,7 @@ class Game:
         self.dungeon_manager = DungeonManager(self)
         self.enemy_manager = EnemyManager(self)
         self.bullet_manager = BulletManager(self)
+        self.object_manager = ObjectManager(self)
         self.player = Player(self)
         self.menu = Menu(self)
         self.hud = Hud(self)
@@ -40,16 +41,18 @@ class Game:
     def update_groups(self):
         # Updates all groups
         self.dungeon_manager.update()
-        self.player.update()
-        self.enemy_manager.update_enemies()
+        self.enemy_manager.update()
+        self.object_manager.update()
         self.bullet_manager.update()
+        self.player.update()
 
     def draw_groups(self):
         # Draws all groups on the screen
-        self.dungeon_manager.draw_maps(self.screen)
-        self.enemy_manager.draw_enemies()
-        self.player.draw(self.screen)
+        self.dungeon_manager.draw(self.screen)
+        self.enemy_manager.draw()
+        self.object_manager.draw()
         self.bullet_manager.draw()
+        self.player.draw(self.screen)
         self.hud.draw()
 
     def input(self):
@@ -65,7 +68,6 @@ class Game:
 
     def run(self):
         self.enemy_manager.spawn_enemies()
-        self.player.weapon = RustySword(self)
         # Main game loop that is called every frame
         while self.running:
             self.menu.show()

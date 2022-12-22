@@ -6,6 +6,7 @@ import copy
 # Settings contains the constants used in the game
 from settings import *
 from .dungeon_graphics import TileMap, SpriteSheet
+from objects.weapon import RustySword
 
 
 class Room:
@@ -19,6 +20,7 @@ class Room:
         self.room_map = []  # csv file of tile identifiers
         self.tile_map = None
         self.enemy_list = []
+        self.object_list = []
 
 
 class Dungeon:
@@ -50,6 +52,7 @@ class Dungeon:
         self.add_room_map('floor_layer')
         self.add_room_map('wall_layer')
         self.add_graphics()
+        self.add_objects()
 
     def create_room(self, room):
         # Main function that creates the dungeon
@@ -203,3 +206,10 @@ class Dungeon:
             for room in row:
                 if isinstance(room, Room):
                     room.tile_map = TileMap(SpriteSheet('assets/spritesheet.png'), room.room_map, room)
+
+    def add_objects(self):
+        for row in self.rooms:
+            for room in row:
+                if isinstance(room, Room):
+                    if room.type == 'spawn':
+                        room.object_list.append(RustySword(self.game, room, (550, 300)))

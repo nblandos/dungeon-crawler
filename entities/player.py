@@ -29,6 +29,8 @@ class Player(Entity):
             self.direction = 'left'
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction = 'right'
+        if keys[pygame.K_e]:
+            self.game.object_manager.interact()
 
         # Calculates the velocity of the player based on the key pressed
         vel_up = [0, -self.speed * self.game.constant_dt]
@@ -62,9 +64,9 @@ class Player(Entity):
 
     def draw(self, surface):
         # Draws the player
-        surface.blit(self.image, self.rect)
-        if self.weapon:
-            self.weapon.draw()
+        self.game.screen.blit(self.image, self.rect)
+        '''if self.weapon:
+            self.weapon.draw()'''
 
     def update(self):
         # Check if the player is colliding with a wall and updates the rect and hit_box

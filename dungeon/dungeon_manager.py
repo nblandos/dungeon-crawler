@@ -19,10 +19,10 @@ class DungeonManager:
 
     def load_dungeon_manager(self):
         # Creates a dungeon between a range of 8-12 rooms and where the spawn room only has one path
-        self.dungeon = Dungeon(self, DUNGEON_SIZE, self)
+        self.dungeon = Dungeon(self.game, DUNGEON_SIZE, self)
         while len(self.dungeon.rooms[self.dungeon.start_pos[0]][self.dungeon.start_pos[1]].paths) != 1 \
                 or self.dungeon.num_rooms < MIN_ROOMS or self.dungeon.num_rooms > MAX_ROOMS:
-            self.dungeon = Dungeon(self, DUNGEON_SIZE, self)
+            self.dungeon = Dungeon(self.game, DUNGEON_SIZE, self)
         print(f"Number of rooms: {self.dungeon.num_rooms}")
         self.current_room = self.dungeon.rooms[self.dungeon.start_pos[0]][self.dungeon.start_pos[1]]
         self.current_map = self.current_room.tile_map
@@ -127,7 +127,7 @@ class DungeonManager:
         if self.room_change:
             self.move_rooms(self.direction)
 
-    def draw_maps(self, surface):
+    def draw(self, surface):
         # Draws the rooms to the screen
         self.current_map.draw_map(surface)
         if self.next_room:
