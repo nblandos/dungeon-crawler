@@ -24,6 +24,7 @@ class Object:
 
     def remove(self):
         self.room.object_list.remove(self)
+        self.room = None
 
     def update(self):
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)

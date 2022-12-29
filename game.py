@@ -52,7 +52,7 @@ class Game:
         self.enemy_manager.draw()
         self.object_manager.draw()
         self.bullet_manager.draw()
-        self.player.draw(self.screen)
+        self.player.draw()
         self.hud.draw()
 
     def input(self):

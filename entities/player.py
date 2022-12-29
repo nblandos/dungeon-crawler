@@ -31,6 +31,9 @@ class Player(Entity):
             self.direction = 'right'
         if keys[pygame.K_e]:
             self.game.object_manager.interact()
+        if keys[pygame.K_q]:
+            if self.weapon:
+                self.weapon.drop()
 
         # Calculates the velocity of the player based on the key pressed
         vel_up = [0, -self.speed * self.game.constant_dt]
@@ -62,7 +65,7 @@ class Player(Entity):
         if not self.dead:
             self.health -= amount
 
-    def draw(self, surface):
+    def draw(self):
         # Draws the player
         self.game.screen.blit(self.image, self.rect)
         '''if self.weapon:
