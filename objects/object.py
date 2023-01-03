@@ -11,6 +11,7 @@ class Object:
         self.size = size
         self.path = f'assets/frames/{self.name}.png'
         self.image = pygame.transform.scale(pygame.image.load(self.path), self.size).convert_alpha()
+        self.image_copy = self.image
         self.rect = self.image.get_rect()
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.rect.x, self.rect.y = self.pos[0], self.pos[1]
@@ -27,6 +28,9 @@ class Object:
         self.room = None
 
     def update(self):
+        self.update_hit_box()
+
+    def update_hit_box(self):
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.hit_box.midbottom = self.rect.midbottom
 

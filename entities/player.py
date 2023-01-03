@@ -15,9 +15,8 @@ class Player(Entity):
         Entity.__init__(self, game, self.name)  # Inherits from Entity
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (TILE_SIZE, PLAYER_HEIGHT)).convert_alpha()
-        self.rect = self.image.get_rect()  # Creates a rect of the size of the image
+        self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400))  # Creates the rect
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
-        self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400))  # Changes the position of the rect
         self.hit_box = self.hit_box.inflate(-25, -20)
         self.room = None
         self.weapon = None
@@ -68,12 +67,14 @@ class Player(Entity):
     def draw(self):
         # Draws the player
         self.game.screen.blit(self.image, self.rect)
-        '''if self.weapon:
-            self.weapon.draw()'''
+        if self.weapon:
+            self.weapon.draw()
 
     def update(self):
         # Check if the player is colliding with a wall and updates the rect and hit_box
         self.wall_collision()
         self.basic_update()
+        if self.weapon:
+            self.weapon.rotate()
 
 

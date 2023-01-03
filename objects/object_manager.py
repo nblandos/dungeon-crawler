@@ -24,6 +24,8 @@ class ObjectManager:
         for obj in self.game.dungeon_manager.current_room.object_list:
             obj.detect_interaction()
             obj.update()
+        if self.game.player.weapon:
+            self.game.player.weapon.update()
 
 
 
