@@ -48,7 +48,6 @@ class Weapon(Object):
         for enemy in self.game.dungeon_manager.current_room.enemy_list:
             if self.rect.colliderect(enemy.hit_box):
                 enemy.health -= self.damage
-                print(enemy.health)
 
     def held_update(self):
         if self.swing_counter == 6:

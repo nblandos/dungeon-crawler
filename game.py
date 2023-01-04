@@ -45,6 +45,7 @@ class Game:
         self.object_manager.update()
         self.bullet_manager.update()
         self.player.update()
+        self.hud.update()
 
     def draw_groups(self):
         # Draws all groups on the screen
@@ -54,6 +55,7 @@ class Game:
         self.bullet_manager.draw()
         self.player.draw()
         self.hud.draw()
+
 
     def input(self):
         # Checks for user inputs

@@ -21,6 +21,7 @@ class Room:
         self.tile_map = None
         self.enemy_list = []
         self.object_list = []
+        self.neighbours = []
 
 
 class Dungeon:
