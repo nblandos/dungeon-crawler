@@ -18,6 +18,8 @@ class Player(Entity):
         self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400))  # Creates the rect
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.hit_box = self.hit_box.inflate(-25, -20)
+        self.attacking = False
+        self.time = 0
         self.room = None
         self.weapon = None
 
@@ -55,9 +57,12 @@ class Player(Entity):
         else:
             self.set_velocity(vel_list)
 
-        if pygame.mouse.get_pressed()[0]:
-            # attack
-            pass
+        if pygame.mouse.get_pressed()[0] and self.weapon:
+            if pygame.time.get_ticks() - self.time > self.weapon.cooldown:
+                self.attacking = True
+                self.weapon.enemy_collision()
+                self.time = pygame.time.get_ticks()
+                self.weapon.swing_side *= (-1)
 
     def take_damage(self, amount):
         # Removes the specified amount of health from the player
@@ -74,7 +79,9 @@ class Player(Entity):
         # Check if the player is colliding with a wall and updates the rect and hit_box
         self.wall_collision()
         self.basic_update()
+        if self.dead:
+            self.game.refresh()
         if self.weapon:
-            self.weapon.rotate()
+            self.weapon.held_update()
 
 

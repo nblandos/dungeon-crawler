@@ -18,8 +18,8 @@ class Button:
         self.images.append(pygame.image.load(f'assets/buttons/{self.path}/{self.name} col_Button.png'))
         for i in range(len(self.images)):
             self.images[i] = pygame.transform.scale(self.images[i],
-                                                    (self.images[i].get_width() / 1.4,
-                                                     self.images[i].get_height() / 1.4))
+                                                    (self.images[i].get_width() / 1.2,
+                                                     self.images[i].get_height() / 1.2))
 
     def action(self):
         # This method is overwritten in the subclasses
@@ -46,14 +46,6 @@ class PlayButton(Button):
 
     def action(self):
         self.menu.running = False
-
-
-class SettingsButton(Button):
-    def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Settings', x, y)  # Inherits from the Button class
-
-    def action(self):
-        pass
 
 
 class QuitButton(Button):

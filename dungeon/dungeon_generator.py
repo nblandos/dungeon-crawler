@@ -213,4 +213,3 @@ class Dungeon:
                 if isinstance(room, Room):
                     if room.type == 'spawn':
                         room.object_list.append(RustySword(self.game, room, (672, 300)))
-                        room.object_list.append(RustySword(self.game, room, (400, 300)))
