@@ -21,8 +21,6 @@ class Room:
         self.tile_map = None
         self.enemy_list = []
         self.object_list = []
-        self.neighbours = []
-
 
 class Dungeon:
     def __init__(self, game, size, dm):
@@ -60,6 +58,7 @@ class Dungeon:
         free_paths = self.find_free_paths(room)
         # Uses a set to remove the paths that have been randomly chosen but are not free
         available_paths = (list(set(free_paths).intersection(room.paths)))
+        random.shuffle(available_paths)
 
         if available_paths and self.depth < 6:
             # Loops through the available generated paths and assigns the new room coordinates

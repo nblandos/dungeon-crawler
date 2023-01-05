@@ -1,5 +1,4 @@
 import pygame
-import copy
 from settings import *
 
 
@@ -36,16 +35,14 @@ class Minimap:
     room_height = 25
     room_width = 36
     room_dimensions = (room_width, room_height)
-    offset_x = 800
-    offset_y = -140
+    offset_x = 1000
+    offset_y = 0
 
     def __init__(self, game):
         self.game = game
         self.current_room = None
         self.current_x, self.current_y = None, None
-        self.color = (150, 148, 153)
         self.rooms = []
-        self.adjacent_rooms = []
         self.visited_rooms = []
 
     def add_room(self, room):
@@ -58,32 +55,19 @@ class Minimap:
             self.current_room = room
             self.current_x = self.current_room.pos[1]
             self.current_y = self.current_room.pos[0]
-            self.set_adjacent_rooms()
-
-    def set_adjacent_rooms(self):
-        self.adjacent_rooms = []
-        for path in self.current_room.paths:
-            if path == 'N':
-                self.adjacent_rooms.append([self.current_room.pos[0] - 1, self.current_room.pos[1]])
-            elif path == 'E':
-                self.adjacent_rooms.append([self.current_room.pos[0], self.current_room.pos[1] + 1])
-            elif path == 'S':
-                self.adjacent_rooms.append([self.current_room.pos[0] + 1, self.current_room.pos[1]])
-            elif path == 'W':
-                self.adjacent_rooms.append([self.current_room.pos[0], self.current_room.pos[1] - 1])
 
     def update(self):
         self.set_current_room(self.game.dungeon_manager.current_room)
 
     def draw_all(self):
         surface = self.game.screen
-        for i, room in enumerate(self.visited_rooms):
+        for room in self.visited_rooms:
             position = (self.offset_x + room[0] * self.room_width * 1.2,
                         self.offset_y + room[1] * self.room_height * 1.2)
-            pygame.draw.rect(surface, self.color, (*position, *self.room_dimensions), 4)
+            pygame.draw.rect(surface, DARK_GREY, (*position, *self.room_dimensions), 4)
         position = (self.offset_x + self.current_x * self.room_width * 1.2,
                     self.offset_y + self.current_y * self.room_height * 1.2)
-        pygame.draw.rect(surface, (210, 210, 210), (*position, *self.room_dimensions))
+        pygame.draw.rect(surface, GREY, (*position, *self.room_dimensions))
 
 
 

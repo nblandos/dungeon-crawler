@@ -8,7 +8,7 @@ class Player(Entity):
     # Creates the player which is a child class of Entity
     name = 'knight_m'
     speed = 400
-    max_health = 100
+    max_health = 300
     health = max_health
 
     def __init__(self, game):
@@ -62,7 +62,7 @@ class Player(Entity):
                 self.attacking = True
                 self.weapon.enemy_collision()
                 self.time = pygame.time.get_ticks()
-                self.weapon.swing_side *= (-1)
+                self.weapon.swing_side *= -1
 
     def take_damage(self, amount):
         # Removes the specified amount of health from the player

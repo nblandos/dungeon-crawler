@@ -7,12 +7,14 @@ HEIGHT = 13 * TILE_SIZE
 TITLE = "Roguelike NEA"
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
-DARK_RED = (150, 0, 32)
+DARK_RED = (200, 0, 32)
 BURGUNDY = (128, 0, 32)
 WHITE = (255, 255, 255)
+GREY = (210, 210, 210)
+DARK_GREY = (150, 148, 153)
 MIN_ROOMS = 8
 MAX_ROOMS = 12
-DUNGEON_SIZE = (16, 16)
+DUNGEON_SIZE = (8, 8)
 POSSIBLE_ROOMS = {
         'N': [['N', 'E', 'S', 'W'], ['S'], ['N', 'S'], ['S', 'W'], ['E', 'S'], ['E', 'S', 'W'], ['N', 'S', 'W'], ['N', 'E', 'S']],
         'E': [['N', 'E', 'S', 'W'], ['W'], ['E', 'W'], ['N', 'W'], ['S', 'W'], ['E', 'S', 'W'], ['N', 'S', 'W'], ['N', 'E', 'W']],

@@ -56,7 +56,7 @@ class Bullet:
     def draw(self):
         # Draws the bullet
         pygame.draw.circle(self.room.tile_map.new_map_surface, DARK_RED, self.rect.center, self.radius)
-        pygame.draw.circle(self.room.tile_map.new_map_surface, BURGUNDY, self.rect.center, self.radius - 1)
+        pygame.draw.circle(self.room.tile_map.new_map_surface, BURGUNDY, self.rect.center, self.radius - 3)
 
 
 class ImpBullet(Bullet):
