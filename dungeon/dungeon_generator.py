@@ -22,6 +22,7 @@ class Room:
         self.enemy_list = []
         self.object_list = []
 
+
 class Dungeon:
     def __init__(self, game, size, dm):
         # Initializes the Dungeon class
@@ -43,7 +44,7 @@ class Dungeon:
     def generate_dungeon(self):
         # Creates the spawn room
         self.rooms[self.start_pos[0]][self.start_pos[1]] = Room(self.game, ['N'], self.start_pos, 'spawn')
-        # Calls the necessary functions to generate the dungeon
+        # Calls the necessary functions to create the dungeon
         self.create_room(self.rooms[self.start_pos[0]][self.start_pos[1]])
         self.create_connections()
         self.add_room_map('mapa4')
@@ -54,7 +55,7 @@ class Dungeon:
         self.add_objects()
 
     def create_room(self, room):
-        # Main function that creates the dungeon
+        # Main function that creates the rooms of the dungeon
         free_paths = self.find_free_paths(room)
         # Uses a set to remove the paths that have been randomly chosen but are not free
         available_paths = (list(set(free_paths).intersection(room.paths)))
@@ -208,8 +209,10 @@ class Dungeon:
                     room.tile_map = TileMap(SpriteSheet('assets/spritesheet.png'), room.room_map, room)
 
     def add_objects(self):
+        # Adds objects to the rooms
         for row in self.rooms:
             for room in row:
                 if isinstance(room, Room):
                     if room.type == 'spawn':
-                        room.object_list.append(RustySword(self.game, room, (672, 300)))
+                        # Adds the beginner weapon to the spawn room
+                        room.object_list.append(RustySword(self.game, room, (650, 300)))

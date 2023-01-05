@@ -7,8 +7,8 @@ from bullet import ImpBullet
 
 
 class Enemy(Entity):
+    # Enemy class is the parent class for all enemies
     def __init__(self, game, name, room, max_health):
-        # Enemy class is the parent class for all enemies
         Entity.__init__(self, game, name)  # Inherit from Entity
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (TILE_SIZE, TILE_SIZE)).convert_alpha()
@@ -33,7 +33,7 @@ class Enemy(Entity):
 
     def can_attack(self):
         # Checks if the enemy can attack based on a cooldown
-        if f.time_passed(self.attack_cooldown, 1000):
+        if f.time_passed(self.attack_cooldown, 1500):
             self.attack_cooldown = pygame.time.get_ticks()
             return True
 

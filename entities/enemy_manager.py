@@ -3,7 +3,7 @@ from dungeon.dungeon_generator import Room
 from .enemy import Goblin, Imp
 
 
-# As there are many enemies belonging to different rooms, this class manages which ones to draw and update. It also is
+# As there are many enemies belonging to different rooms, this class manages which ones to draw and update.
 class EnemyManager:
     def __init__(self, game):
         # Initializes the enemy manager

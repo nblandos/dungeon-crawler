@@ -31,8 +31,10 @@ class Player(Entity):
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction = 'right'
         if keys[pygame.K_e]:
+            # Interacts with the object that the player is touching
             self.game.object_manager.interact()
         if keys[pygame.K_q]:
+            # Drops the weapon if the player is holding one
             if self.weapon:
                 self.weapon.drop()
 
@@ -58,7 +60,8 @@ class Player(Entity):
             self.set_velocity(vel_list)
 
         if pygame.mouse.get_pressed()[0] and self.weapon:
-            if pygame.time.get_ticks() - self.time > self.weapon.cooldown:
+            # When the player is holding a weapon and the left mouse button is pressed, the weapon attacks
+            if pygame.time.get_ticks() - self.time > self.weapon.cooldown: # Checks if the weapon is on cooldown
                 self.attacking = True
                 self.weapon.enemy_collision()
                 self.time = pygame.time.get_ticks()
@@ -70,7 +73,7 @@ class Player(Entity):
             self.health -= amount
 
     def draw(self):
-        # Draws the player
+        # Draws the player and the weapon if the player is holding one
         self.game.screen.blit(self.image, self.rect)
         if self.weapon:
             self.weapon.draw()
@@ -80,8 +83,10 @@ class Player(Entity):
         self.wall_collision()
         self.basic_update()
         if self.dead:
+            # Restarts the game if the player is dead
             self.game.refresh()
         if self.weapon:
+            # Updates the weapon that the player is holding
             self.weapon.held_update()
 
 

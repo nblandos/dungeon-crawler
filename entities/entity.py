@@ -1,6 +1,3 @@
-import pygame
-from settings import *
-import functions as f
 from .entity_animation import EntityAnimation
 
 
