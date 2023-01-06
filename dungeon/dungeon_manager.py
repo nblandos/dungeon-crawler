@@ -121,6 +121,10 @@ class DungeonManager:
         if self.next_room_map.y >= 0 and self.direction == 'N':
             self.end_room_change()
 
+    def next_level(self):
+        self.level += 1
+        self.load_dungeon_manager()
+
     def update(self):
         # Checks if a room change has occurred
         self.detect_room_change()

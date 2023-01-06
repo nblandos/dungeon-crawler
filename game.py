@@ -41,8 +41,8 @@ class Game:
     def update_groups(self):
         # Updates all groups
         self.dungeon_manager.update()
-        self.enemy_manager.update()
         self.object_manager.update()
+        self.enemy_manager.update()
         self.bullet_manager.update()
         self.player.update()
         self.hud.update()
@@ -50,12 +50,11 @@ class Game:
     def draw_groups(self):
         # Draws all groups on the screen
         self.dungeon_manager.draw(self.screen)
-        self.enemy_manager.draw()
         self.object_manager.draw()
+        self.enemy_manager.draw()
         self.bullet_manager.draw()
         self.player.draw()
         self.hud.draw()
-
 
     def input(self):
         # Checks for user inputs

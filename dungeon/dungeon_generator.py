@@ -7,6 +7,7 @@ import copy
 from settings import *
 from .dungeon_graphics import TileMap, SpriteSheet
 from objects.weapon import RustySword
+from objects.portal import Portal
 
 
 class Room:
@@ -213,6 +214,8 @@ class Dungeon:
         for row in self.rooms:
             for room in row:
                 if isinstance(room, Room):
-                    if room.type == 'spawn':
+                    if room.type == 'spawn' and self.level == 1:
                         # Adds the beginner weapon to the spawn room
                         room.object_list.append(RustySword(self.game, room, (650, 300)))
+                    elif room.type == 'normal':
+                        room.object_list.append(Portal(self.game, room, (640, 416)))

@@ -32,10 +32,6 @@ class Object:
         self.room = None
 
     def update(self):
-        # Updates the object
-        self.update_hit_box()
-
-    def update_hit_box(self):
         # Updates the hit box of the object
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.hit_box.midbottom = self.rect.midbottom

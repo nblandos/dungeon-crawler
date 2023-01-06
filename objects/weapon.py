@@ -7,7 +7,6 @@ class Weapon(Object):
     # Inherits from the Object class
     # Object that the player can pick up and use to attack enemies
     def __init__(self, game, name, room, pos, size):
-
         Object.__init__(self, game, name, room, pos, size)  # Inherits from the Object class
         self.angle = 0
         self.swing_counter = 0
