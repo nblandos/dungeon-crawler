@@ -209,6 +209,7 @@ class Dungeon:
                 if isinstance(room, Room):
                     room.tile_map = TileMap(SpriteSheet('assets/spritesheet.png'), room.room_map, room)
 
+
     def add_objects(self):
         # Adds objects to the rooms
         for row in self.rooms:
