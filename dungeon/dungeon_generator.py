@@ -11,7 +11,7 @@ from objects.portal import Portal
 
 
 class Room:
-    def __init__(self, game, paths, pos, room_type='normal'):
+    def __init__(self, game, paths, pos, room_type=None):
         # Initializes the Room class
         self.game = game
         self.paths = paths
@@ -52,6 +52,7 @@ class Dungeon:
         self.add_room_map('mapa3')
         self.add_room_map('floor_layer')
         self.add_room_map('wall_layer')
+        self.assign_types()
         self.add_graphics()
         self.add_objects()
 
@@ -209,6 +210,12 @@ class Dungeon:
                 if isinstance(room, Room):
                     room.tile_map = TileMap(SpriteSheet('assets/spritesheet.png'), room.room_map, room)
 
+    def assign_types(self):
+        # Assigns a type to each room in the dungeon
+        for row in self.rooms:
+            for room in row:
+                if isinstance(room, Room) and room.type is None:
+                    room.type = random.choices(['normal', 'reward'], weights=[8, 1], k=1)[0]
 
     def add_objects(self):
         # Adds objects to the rooms
@@ -218,5 +225,5 @@ class Dungeon:
                     if room.type == 'spawn' and self.level == 1:
                         # Adds the beginner weapon to the spawn room
                         room.object_list.append(RustySword(self.game, room, (650, 300)))
-                    elif room.type == 'normal':
+                    elif room.type == 'boss':
                         room.object_list.append(Portal(self.game, room, (640, 416)))

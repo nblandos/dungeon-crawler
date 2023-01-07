@@ -94,9 +94,9 @@ class DungeonManager:
             player = self.game.player
             if player.rect.y <= 1.5 * TILE_SIZE:
                 self.initialise_room_change('N')
-            elif player.rect.y >= 11 * 64:
+            elif player.rect.y >= 10.5 * 64:
                 self.initialise_room_change('S')
-            elif player.rect.x <= 3 * 64:
+            elif player.rect.x <= 2.5 * 64:
                 self.initialise_room_change('W')
             elif player.rect.x >= 18 * 64:
                 self.initialise_room_change('E')
@@ -124,6 +124,8 @@ class DungeonManager:
     def next_level(self):
         self.level += 1
         self.load_dungeon_manager()
+        self.game.enemy_manager.spawn_enemies()
+        self.game.hud.minimap.reset_visited_rooms()
 
     def update(self):
         # Checks if a room change has occurred

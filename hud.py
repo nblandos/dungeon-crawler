@@ -29,11 +29,10 @@ class HealthBar:
 
     def draw(self):
         # Draws the players current health in the health bar frame
-        pygame.draw.rect(self.game.screen, DARK_RED, (0, 0, 195, 45))
         num_sections = self.player.health // 10
         for i in range(num_sections):
-            pygame.draw.rect(self.game.screen, RED, (25 + i * 15, 15, 10, 15))
-        self.game.screen.blit(self.health_bar, (0, 0))
+            pygame.draw.rect(self.game.screen, DARK_RED, (25 + i * 15, 15, 10, 15))
+        # self.game.screen.blit(self.health_bar, (0, 0))
 
 
 class Minimap:
@@ -46,9 +45,9 @@ class Minimap:
 
     def __init__(self, game):
         self.game = game
-        self.current_room = None # The room the player is currently in
+        self.current_room = None  # The room the player is currently in
         self.current_x, self.current_y = None, None # The coordinates of the current room in the dungeon array
-        self.visited_rooms = [] # Rooms that the player has visited
+        self.visited_rooms = []  # Rooms that the player has visited
 
     def add_room(self, room):
         # Adds a room to the list of visited rooms
@@ -62,6 +61,10 @@ class Minimap:
             self.current_room = room
             self.current_x = self.current_room.pos[1]
             self.current_y = self.current_room.pos[0]
+
+    def reset_visited_rooms(self):
+        # Resets the list of visited rooms
+        self.visited_rooms = []
 
     def update(self):
         # Updates the current room to the room the player is currently in
