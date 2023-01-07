@@ -38,6 +38,7 @@ class Dungeon:
         self.start_pos = [h // 2, w // 2]
         self.new_pos = None
         self.new_room = None
+        self.boss_room_assigned = False
         self.depth = 0  # Used to limit the number of recursive calls
         self.generate_dungeon()
         self.num_rooms = self.count_rooms()
@@ -215,7 +216,11 @@ class Dungeon:
         for row in self.rooms:
             for room in row:
                 if isinstance(room, Room) and room.type is None:
-                    room.type = random.choices(['normal', 'reward'], weights=[8, 1], k=1)[0]
+                    if len(room.paths) == 1 and self.boss_room_assigned is False:
+                        room.type = 'boss'
+                        self.boss_room_assigned = True
+                    else:
+                        room.type = random.choices(['normal', 'reward'], weights=[8, 1], k=1)[0]
 
     def add_objects(self):
         # Adds objects to the rooms
