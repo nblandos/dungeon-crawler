@@ -21,7 +21,8 @@ class DungeonManager:
         # Creates a dungeon between a range of 8-12 rooms and where the spawn room only has one path
         self.dungeon = Dungeon(self.game, DUNGEON_SIZE, self)
         while len(self.dungeon.rooms[self.dungeon.start_pos[0]][self.dungeon.start_pos[1]].paths) != 1 \
-                or self.dungeon.num_rooms < MIN_ROOMS or self.dungeon.num_rooms > MAX_ROOMS:
+                or self.dungeon.num_rooms < MIN_ROOMS or self.dungeon.num_rooms > MAX_ROOMS \
+                or self.dungeon.boss_room_assigned is False:
             self.dungeon = Dungeon(self.game, DUNGEON_SIZE, self)
         print(f"Number of rooms: {self.dungeon.num_rooms}")
         self.current_room = self.dungeon.rooms[self.dungeon.start_pos[0]][self.dungeon.start_pos[1]]

@@ -7,9 +7,8 @@ from button import PlayButton, QuitButton
 class Menu:
     def __init__(self, game):
         self.game = game
-        self.font = pygame.font.Font('assets/fonts/main_font.ttf', 140)
         self.running = True
-        self.title = self.font.render("Roguelike NEA", True, WHITE)
+        self.title = pygame.font.Font(FONT, 140).render("Roguelike NEA", True, WHITE)
         # Creates the buttons
         self.play_button = PlayButton(self, 10.5 * TILE_SIZE, 4 * TILE_SIZE)
         self.quit_button = QuitButton(self, 10.5 * TILE_SIZE, 8 * TILE_SIZE)

@@ -54,8 +54,8 @@ class Dungeon:
         self.add_room_map('floor_layer')
         self.add_room_map('wall_layer')
         self.assign_types()
-        self.add_graphics()
         self.add_objects()
+        self.add_graphics()
 
     def create_room(self, room):
         # Main function that creates the rooms of the dungeon
