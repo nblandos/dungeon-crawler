@@ -33,7 +33,7 @@ class HealthBar:
 
     def draw(self):
         # Draws the players current health in the health bar frame
-        num_sections = self.player.health // 10
+        num_sections = int(self.player.health) // 10
         for i in range(num_sections):
             pygame.draw.rect(self.game.screen, DARK_RED, (15 + i * 15, 15, 10, 15))
 

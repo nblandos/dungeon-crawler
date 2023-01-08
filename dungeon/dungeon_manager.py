@@ -125,6 +125,7 @@ class DungeonManager:
     def next_level(self):
         self.level += 1
         self.load_dungeon_manager()
+        self.game.player.health = self.game.player.max_health
         self.game.enemy_manager.spawn_enemies()
         self.game.hud.minimap.reset_visited_rooms()
 

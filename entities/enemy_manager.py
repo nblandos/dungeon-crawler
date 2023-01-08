@@ -33,16 +33,19 @@ class EnemyManager:
     def spawn_normal_enemies(self, room):
         # Spawns enemies in a given room
         level = self.game.dungeon_manager.level
+        multiplier = 1 + (level - 1) * 0.3
         # Number of enemies to spawn, scales with the dungeon level
-        num_goblins = random.randint(1 + level, 4 + level)
-        num_imps = random.randint(level, 3 + level)
+        num_goblins = random.randint(1 + level, 2 + level)
+        num_imps = random.randint(0 + level, 1 + level)
         for _ in range(num_goblins):
             # Creates the specified number of goblins
-            enemy = Goblin(self.game, room, 30)
+            enemy = Goblin(self.game, room, 20 * multiplier)
+            enemy.damage *= multiplier
             room.enemy_list.append(enemy)
             room.enemy_list[-1].spawn()
         for _ in range(num_imps):
             # Creates the specified number of imps
-            enemy = Imp(self.game, room, 20)
+            enemy = Imp(self.game, room, 15 * multiplier)
+            enemy.damage *= multiplier
             room.enemy_list.append(enemy)
             room.enemy_list[-1].spawn()

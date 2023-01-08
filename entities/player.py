@@ -7,7 +7,7 @@ from .entity import Entity
 class Player(Entity):
     # Creates the player which is a child class of Entity
     name = 'knight_m'
-    speed = 600
+    speed = 450
     max_health = 300
     health = max_health
 
