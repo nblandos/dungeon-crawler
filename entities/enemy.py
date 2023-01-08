@@ -150,3 +150,16 @@ class Imp(Enemy):
         # Moves the enemy away from the player if the player is within a certain radius
         if self.can_move and not self.dead:
             self.move_away_from_player(self.radius)
+
+
+class BigZombie(Enemy):
+    name = 'big_zombie'
+    speed = 150
+    damage = 5
+
+    def __init__(self, game, room, max_health):
+        Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
+        self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
+                                            (32 * SCALE_FACTOR, 34 * SCALE_FACTOR)).convert_alpha()
+        self.rect = self.image.get_rect()  # Creates a rect of the size of the image
+        self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)

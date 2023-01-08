@@ -64,8 +64,8 @@ class Bullet:
 class ImpBullet(Bullet):
     # A bullet that is fired by the Imp enemy
     # Defines the stats of the bullet
-    hit_box_size = (7, 7)
-    radius = 5
+    hit_box_size = (8, 8)
+    radius = 6
     speed = 5
 
     def __init__(self, game, room, user, x, y, target_pos):
@@ -114,7 +114,7 @@ class RedMagicStaffBullet(MagicStaffBullet):
 
     def __init__(self, game, room, x, y, target_pos):
         MagicStaffBullet.__init__(self, game, room, x, y, target_pos)
-        self.damage = 50
+        self.damage = 10
         self.penetration = True
         self.outline_colour = DARK_RED
         self.fill_colour = RED

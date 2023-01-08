@@ -17,6 +17,8 @@ class EntityAnimation:
                 frame = pygame.image.load(f'{self.entity.path}_{state}_anim_f{i}.png').convert_alpha()
                 if self.entity.name == 'knight_m':
                     frame = pygame.transform.scale(frame, (TILE_SIZE, PLAYER_HEIGHT))
+                elif self.entity.name == 'big_zombie':
+                    frame = pygame.transform.scale(frame, (32 * SCALE_FACTOR, 34 * SCALE_FACTOR))
                 else:
                     frame = pygame.transform.scale(frame, (TILE_SIZE, TILE_SIZE))
                 frames_dict[state.upper()].append(frame)

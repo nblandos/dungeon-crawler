@@ -1,6 +1,6 @@
 import random
 from dungeon.dungeon_generator import Room
-from .enemy import Goblin, Imp
+from .enemy import Goblin, Imp, BigZombie
 
 
 # As there are many enemies belonging to different rooms, this class manages which ones to draw and update.
@@ -29,6 +29,8 @@ class EnemyManager:
             for room in row:
                 if isinstance(room, Room) and room.type == 'normal':
                     self.spawn_normal_enemies(room)
+                elif isinstance(room, Room) and room.type == 'boss':
+                    self.spawn_boss(room)
 
     def spawn_normal_enemies(self, room):
         # Spawns enemies in a given room
@@ -49,3 +51,10 @@ class EnemyManager:
             enemy.damage *= multiplier
             room.enemy_list.append(enemy)
             room.enemy_list[-1].spawn()
+
+    def spawn_boss(self, room):
+        # Spawns the boss in the boss room
+        multiplier = 1 + (self.game.dungeon_manager.level - 1) * 0.3
+        enemy = BigZombie(self.game, room, 200 * multiplier)
+        room.enemy_list.append(enemy)
+        room.enemy_list[-1].spawn()

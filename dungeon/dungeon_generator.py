@@ -220,7 +220,7 @@ class Dungeon:
                         room.type = 'boss'
                         self.boss_room_assigned = True
                     else:
-                        room.type = random.choices(['normal', 'reward'], weights=[1, 1], k=1)[0]
+                        room.type = random.choices(['normal', 'reward'], weights=[8, 1], k=1)[0]
 
     def add_objects(self):
         # Adds objects to the rooms
@@ -237,4 +237,4 @@ class Dungeon:
                                        Mace(self.game, room, (650, 400)), Knife(self.game, room, (660, 400)),
                                        GreenMagicStaff(self.game, room, (655, 370)),
                                        RedMagicStaff(self.game, room, (655, 370))]
-                        room.object_list.append(random.choices(weapon_list, weights=[1, 1, 1, 1, 999, 999], k=1)[0])
+                        room.object_list.append(random.choices(weapon_list, weights=[1, 1, 1, 1, 1, 1], k=1)[0])
