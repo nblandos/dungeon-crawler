@@ -235,4 +235,4 @@ class Dungeon:
                     elif room.type == 'reward':
                         weapon_list = [Katana(self.game, room, (660, 380)), AnimeSword(self.game, room, (650, 380)),
                                        Mace(self.game, room, (650, 400)), Knife(self.game, room, (660, 400))]
-                        room.object_list.append(random.choices(weapon_list, weights=[1, 1, 1, 1.5], k=1)[0])
+                        room.object_list.append(random.choices(weapon_list, weights=[1, 1, 1, 1], k=1)[0])

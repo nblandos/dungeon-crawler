@@ -78,7 +78,7 @@ class Enemy(Entity):
 
     def choose_random_pos(self, radius):
         # Finds a random destination within the room for ranged enemies (imps) to move to
-        min_x, max_x, min_y, max_y = 196, 1082, 162, 586 # The bounds of the room
+        min_x, max_x, min_y, max_y = 196, 1082, 162, 586  # The bounds of the room
         pos = [random.randint(min_x, max_x), random.randint(min_y, max_y)]
         vector = pygame.math.Vector2(self.game.player.hit_box.x - pos[0], self.game.player.hit_box.x - pos[1])
         while vector.length() < radius:
@@ -93,9 +93,21 @@ class Enemy(Entity):
         self.attack()
         self.rect.midbottom = self.hit_box.midbottom
 
+    def draw_health(self, surface):
+        if self.health < self.max_health:
+            health_rect = pygame.Rect(0, 0, 25, 6)
+            health_rect.midbottom = self.rect.centerx, self.rect.top
+            health_rect.midbottom = self.rect.centerx, self.rect.top
+            pos = health_rect.topleft
+            size = health_rect.size
+            pygame.draw.rect(surface, DARK_RED, (*pos, *size))
+            rect = (pos[0], pos[1], (size[0]) * (self.health / self.max_health), size[1])
+            pygame.draw.rect(surface, LIME_GREEN, rect)
+
     def draw(self):
         # Draws the enemy
         self.room.tile_map.new_map_surface.blit(self.image, self.rect)
+        self.draw_health(self.room.tile_map.new_map_surface)
 
 
 class Goblin(Enemy):
@@ -104,7 +116,7 @@ class Goblin(Enemy):
     # Defines the stats of the goblin enemy
     name = 'goblin'
     speed = 225
-    damage = 2
+    damage = 1
 
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
@@ -116,7 +128,7 @@ class Imp(Enemy):
     # Defines the stats of the imp enemy
     name = 'imp'
     speed = 175
-    damage = 4
+    damage = 1.5
     radius = 200
 
     def __init__(self, game, room, max_health):
@@ -126,7 +138,8 @@ class Imp(Enemy):
     def attack(self):
         # Overrides the attack method from Enemy as the imp shoots bullets at the player
         # Shoots a bullet at the player every 1.2 seconds when standing still
-        if f.time_passed(self.attack_cooldown, 1200) and not self.dead and not self.game.player.dead and sum(self.velocity) == 0:
+        if f.time_passed(self.attack_cooldown, 1200) and not self.dead and not self.game.player.dead and sum(
+                self.velocity) == 0:
             self.game.bullet_manager.add_bullet(
                 ImpBullet(self.game, self.room, self, self.rect.center[0], self.rect.center[1],
                           (self.game.player.hit_box.centerx, self.game.player.hit_box.centery + 30)))
