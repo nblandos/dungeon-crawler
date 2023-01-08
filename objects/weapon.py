@@ -1,5 +1,6 @@
 import pygame
 import math
+from settings import *
 from .object import Object
 
 
@@ -81,7 +82,7 @@ class RustySword(Weapon):
     # A type of weapon that the player starts with
     # Defines the stats of the weapon
     name = 'weapon_rusty_sword'
-    size = (36, 90)
+    size = (10 * SCALE_FACTOR, 21 * SCALE_FACTOR)
     damage = 15
     cooldown = 500
 
@@ -89,5 +90,14 @@ class RustySword(Weapon):
         Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
 
 
+class Katana(Weapon):
+    # Inherits from the Weapon class
+    # Defines the stats of the weapon
+    name = 'weapon_katana'
+    size = (6 * SCALE_FACTOR, 29 * SCALE_FACTOR)
+    damage = 20
+    cooldown = 300
 
+    def __init__(self, game, room, pos):
+        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
 

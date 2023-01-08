@@ -6,8 +6,9 @@ import copy
 # Settings contains the constants used in the game
 from settings import *
 from .dungeon_graphics import TileMap, SpriteSheet
-from objects.weapon import RustySword
+from objects.weapon import RustySword, Katana
 from objects.portal import Portal
+
 
 
 class Room:
@@ -220,7 +221,7 @@ class Dungeon:
                         room.type = 'boss'
                         self.boss_room_assigned = True
                     else:
-                        room.type = random.choices(['normal', 'reward'], weights=[8, 1], k=1)[0]
+                        room.type = random.choices(['normal', 'reward'], weights=[0, 1], k=1)[0]
 
     def add_objects(self):
         # Adds objects to the rooms
@@ -232,3 +233,6 @@ class Dungeon:
                         room.object_list.append(RustySword(self.game, room, (650, 300)))
                     elif room.type == 'boss':
                         room.object_list.append(Portal(self.game, room, (640, 416)))
+                    elif room.type == 'reward':
+                        weapon_list = [Katana(self.game, room, (640, 416))]
+                        room.object_list.append(random.choices(weapon_list, k=1)[0])

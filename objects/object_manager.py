@@ -6,7 +6,7 @@ class ObjectManager:
     def interact(self):
         # Interacts with the objects the player is touching
         for obj in self.game.dungeon_manager.current_room.object_list:
-            if obj.interaction: # Checks if the player is close enough to interact with the object
+            if obj.interaction:  # Checks if the player is close enough to interact with the object
                 obj.interact()
 
     def draw(self):

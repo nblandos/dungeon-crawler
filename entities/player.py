@@ -30,8 +30,9 @@ class Player(Entity):
             self.direction = 'left'
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction = 'right'
-        if keys[pygame.K_e]:
+        if keys[pygame.K_e] and pygame.time.get_ticks() - self.time > 300:
             # Interacts with the object that the player is touching
+            self.time = pygame.time.get_ticks()
             self.game.object_manager.interact()
         if keys[pygame.K_q]:
             # Drops the weapon if the player is holding one
