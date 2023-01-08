@@ -101,3 +101,38 @@ class Katana(Weapon):
     def __init__(self, game, room, pos):
         Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
 
+
+class AnimeSword(Weapon):
+    # Inherits from the Weapon class
+    # Defines the stats of the weapon
+    name = 'weapon_anime_sword'
+    size = (12 * SCALE_FACTOR, 30 * SCALE_FACTOR)
+    damage = 60
+    cooldown = 850
+
+    def __init__(self, game, room, pos):
+        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+
+
+class Knife(Weapon):
+    # Inherits from the Weapon class
+    # Defines the stats of the weapon
+    name = 'weapon_knife'
+    size = (6 * SCALE_FACTOR, 13 * SCALE_FACTOR)
+    damage = 8
+    cooldown = 150
+
+    def __init__(self, game, room, pos):
+        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+
+
+class Mace(Weapon):
+    # Inherits from the Weapon class
+    # Defines the stats of the weapon
+    name = 'weapon_mace'
+    size = (10 * SCALE_FACTOR, 24 * SCALE_FACTOR)
+    damage = 40
+    cooldown = 500
+
+    def __init__(self, game, room, pos):
+        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
