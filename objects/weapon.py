@@ -2,7 +2,7 @@ import pygame
 import math
 from settings import *
 from .object import Object
-from bullet import GreenMagicStaffBullet
+from bullet import GreenMagicStaffBullet, RedMagicStaffBullet
 
 
 class Weapon(Object):
@@ -159,3 +159,20 @@ class GreenMagicStaff(Weapon):
         self.game.bullet_manager.add_bullet(GreenMagicStaffBullet(self.game, self.game.dungeon_manager.current_room,
                                                                   self.rect.midtop[0], self.rect.midtop[1], mouse_pos))
 
+
+class RedMagicStaff(Weapon):
+    # Inherits from the Weapon class
+    # Defines the stats of the weapon
+    name = 'weapon_red_magic_staff'
+    size = (8 * SCALE_FACTOR, 30 * SCALE_FACTOR)
+    damage = 0
+    cooldown = 900
+
+    def __init__(self, game, room, pos):
+        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+
+    def shoot(self):
+        # Shoots a bullet from the weapon
+        mouse_pos = pygame.mouse.get_pos()
+        self.game.bullet_manager.add_bullet(RedMagicStaffBullet(self.game, self.game.dungeon_manager.current_room,
+                                                                self.rect.midtop[0], self.rect.midtop[1], mouse_pos))
