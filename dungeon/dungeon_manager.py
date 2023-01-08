@@ -75,7 +75,7 @@ class DungeonManager:
         if direction == 'N':
             self.set_next_room(self.dungeon.rooms[self.y - 1][self.x])
             self.next_room_map.y = -13 * TILE_SIZE
-            self.game.player.rect.y = -3.5 * TILE_SIZE
+            self.game.player.rect.y = -4 * TILE_SIZE
         elif direction == 'S':
             self.set_next_room(self.dungeon.rooms[self.y + 1][self.x])
             self.next_room_map.y = HEIGHT
@@ -125,7 +125,9 @@ class DungeonManager:
     def next_level(self):
         self.level += 1
         self.load_dungeon_manager()
-        self.game.player.health = self.game.player.max_health
+        self.game.player.health += 100
+        if self.game.player.health > self.game.player.max_health:
+            self.game.player.health = self.game.player.max_health
         self.game.enemy_manager.spawn_enemies()
         self.game.hud.minimap.reset_visited_rooms()
 

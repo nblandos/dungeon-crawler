@@ -66,7 +66,7 @@ class ImpBullet(Bullet):
     # Defines the stats of the bullet
     hit_box_size = (8, 8)
     radius = 6
-    speed = 5
+    speed = 6
 
     def __init__(self, game, room, user, x, y, target_pos):
         Bullet.__init__(self, game, room, x, y, target_pos)  # Inherits from the Bullet class
@@ -95,7 +95,7 @@ class GreenMagicStaffBullet(MagicStaffBullet):
 
     def __init__(self, game, room, x, y, target_pos):
         MagicStaffBullet.__init__(self, game, room, x, y, target_pos)
-        self.damage = 15
+        self.damage = 20
         self.outline_colour = DARK_GREEN
         self.fill_colour = LIME_GREEN
 
@@ -114,7 +114,7 @@ class RedMagicStaffBullet(MagicStaffBullet):
 
     def __init__(self, game, room, x, y, target_pos):
         MagicStaffBullet.__init__(self, game, room, x, y, target_pos)
-        self.damage = 10
+        self.damage = 5
         self.penetration = True
         self.outline_colour = DARK_RED
         self.fill_colour = RED
