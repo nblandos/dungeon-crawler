@@ -3,10 +3,9 @@ from settings import *
 
 
 class Bullet:
-    def __init__(self, game, room, user, x, y, target_pos):
+    def __init__(self, game, room, x, y, target_pos):
         self.game = game
         self.room = room
-        self.user = user
         self.target_pos = target_pos
         self.image = None
         self.rect = None
@@ -54,9 +53,7 @@ class Bullet:
         self.wall_collision()
 
     def draw(self):
-        # Draws the bullet
-        pygame.draw.circle(self.room.tile_map.new_map_surface, DARK_RED, self.rect.center, self.radius)
-        pygame.draw.circle(self.room.tile_map.new_map_surface, BURGUNDY, self.rect.center, self.radius - 2)
+        pass
 
 
 class ImpBullet(Bullet):
@@ -67,8 +64,43 @@ class ImpBullet(Bullet):
     speed = 5
 
     def __init__(self, game, room, user, x, y, target_pos):
-        Bullet.__init__(self, game, room, user, x, y, target_pos)  # Inherits from the Bullet class
+        Bullet.__init__(self, game, room, x, y, target_pos)  # Inherits from the Bullet class
         self.damage = user.damage
+
+    def draw(self):
+        # Draws the bullet
+        pygame.draw.circle(self.room.tile_map.new_map_surface, DARK_RED, self.rect.center, self.radius)
+        pygame.draw.circle(self.room.tile_map.new_map_surface, BURGUNDY, self.rect.center, self.radius - 2)
+
+
+class GreenMagicStaffBullet(Bullet):
+    hit_box_size = (12, 12)
+    radius = 10
+    speed = 8
+
+    def __init__(self, game, room, x, y, target_pos):
+        Bullet.__init__(self, game, room, x, y, target_pos)
+        self.damage = 15
+
+    def enemy_collision(self):
+        # Checks if the bullet has collided with an enemy and deals damage if it has
+        for enemy in self.game.dungeon_manager.current_room.enemy_list:
+            if self.rect.colliderect(enemy.hit_box):
+                enemy.health -= self.damage
+                self.game.bullet_manager.remove_bullet(self)
+
+    def update(self):
+        # Moves the bullet and checks for collisions
+        self.move()
+        if self.rect.y < 0 or self.rect.y > 1000 or self.rect.x < 0 or self.rect.x > 1300:
+            self.game.bullet_manager.remove_bullet(self)  # Removes bullet if it goes off-screen
+        self.enemy_collision()
+        self.wall_collision()
+
+    def draw(self):
+        # Draws the bullet
+        pygame.draw.circle(self.room.tile_map.new_map_surface, LIME_GREEN, self.rect.center, self.radius)
+        pygame.draw.circle(self.room.tile_map.new_map_surface, DARK_GREEN, self.rect.center, self.radius - 2)
 
 
 class BulletManager:
@@ -96,4 +128,3 @@ class BulletManager:
         # Draws all bullets in the bullet list
         for bullet in self.bullet_list:
             bullet.draw()
-

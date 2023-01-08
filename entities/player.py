@@ -62,9 +62,10 @@ class Player(Entity):
 
         if pygame.mouse.get_pressed()[0] and self.weapon:
             # When the player is holding a weapon and the left mouse button is pressed, the weapon attacks
-            if pygame.time.get_ticks() - self.time > self.weapon.cooldown: # Checks if the weapon is on cooldown
+            if pygame.time.get_ticks() - self.time > self.weapon.cooldown:  # Checks if the weapon is on cooldown
                 self.attacking = True
                 self.weapon.enemy_collision()
+                self.weapon.shoot()
                 self.time = pygame.time.get_ticks()
                 self.weapon.swing_side *= -1
 

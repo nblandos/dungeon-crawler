@@ -6,7 +6,7 @@ import copy
 # Settings contains the constants used in the game
 from settings import *
 from .dungeon_graphics import TileMap, SpriteSheet
-from objects.weapon import RustySword, Katana, AnimeSword, Knife, Mace
+from objects.weapon import RustySword, Katana, AnimeSword, Knife, Mace, GreenMagicStaff
 from objects.portal import Portal
 
 
@@ -234,5 +234,6 @@ class Dungeon:
                         room.object_list.append(Portal(self.game, room, (640, 416)))
                     elif room.type == 'reward':
                         weapon_list = [Katana(self.game, room, (660, 380)), AnimeSword(self.game, room, (650, 380)),
-                                       Mace(self.game, room, (650, 400)), Knife(self.game, room, (660, 400))]
-                        room.object_list.append(random.choices(weapon_list, weights=[1, 1, 1, 1], k=1)[0])
+                                       Mace(self.game, room, (650, 400)), Knife(self.game, room, (660, 400)),
+                                       GreenMagicStaff(self.game, room, (655, 370))]
+                        room.object_list.append(random.choices(weapon_list, weights=[1, 1, 1, 1, 999], k=1)[0])

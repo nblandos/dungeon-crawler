@@ -2,6 +2,7 @@ import pygame
 import math
 from settings import *
 from .object import Object
+from bullet import GreenMagicStaffBullet
 
 
 class Weapon(Object):
@@ -66,6 +67,9 @@ class Weapon(Object):
             self.swing()
         else:
             self.rotate()
+
+    def shoot(self):
+        pass
 
     def draw(self):
         # Overrides the draw method from the Object class
@@ -136,3 +140,22 @@ class Mace(Weapon):
 
     def __init__(self, game, room, pos):
         Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+
+
+class GreenMagicStaff(Weapon):
+    # Inherits from the Weapon class
+    # Defines the stats of the weapon
+    name = 'weapon_green_magic_staff'
+    size = (8 * SCALE_FACTOR, 30 * SCALE_FACTOR)
+    damage = 0
+    cooldown = 350
+
+    def __init__(self, game, room, pos):
+        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+
+    def shoot(self):
+        # Shoots a bullet from the weapon
+        mouse_pos = pygame.mouse.get_pos()
+        self.game.bullet_manager.add_bullet(GreenMagicStaffBullet(self.game, self.game.dungeon_manager.current_room,
+                                                                  self.rect.midtop[0], self.rect.midtop[1], mouse_pos))
+
