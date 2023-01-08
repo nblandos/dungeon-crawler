@@ -1,4 +1,6 @@
 from .entity_animation import EntityAnimation
+from objects.portal import Portal
+
 
 
 class Entity:
@@ -39,6 +41,8 @@ class Entity:
             if self.room:
                 # The dead entity is removed from the room
                 self.room.enemy_list.remove(self)
+                if self.name == 'big_zombie':
+                    self.room.object_list.append(Portal(self.game, self.room, (640, 416)))
 
     def basic_update(self):
         # Updates the rect, hit_box and animations of the entity and checks if the entity is dead

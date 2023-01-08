@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 
+
 class EntityAnimation:
     def __init__(self, entity):
         self.entity = entity

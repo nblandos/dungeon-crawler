@@ -56,5 +56,6 @@ class EnemyManager:
         # Spawns the boss in the boss room
         multiplier = 1 + (self.game.dungeon_manager.level - 1) * 0.3
         enemy = BigZombie(self.game, room, 200 * multiplier)
+        enemy.damage *= multiplier
         room.enemy_list.append(enemy)
         room.enemy_list[-1].spawn()

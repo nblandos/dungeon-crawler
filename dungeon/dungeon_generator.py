@@ -230,8 +230,6 @@ class Dungeon:
                     if room.type == 'spawn' and self.level == 1:
                         # Adds the beginner weapon to the spawn room
                         room.object_list.append(RustySword(self.game, room, (650, 300)))
-                    elif room.type == 'boss':
-                        room.object_list.append(Portal(self.game, room, (640, 416)))
                     elif room.type == 'reward':
                         weapon_list = [Katana(self.game, room, (660, 380)), AnimeSword(self.game, room, (650, 380)),
                                        Mace(self.game, room, (650, 400)), Knife(self.game, room, (660, 400)),

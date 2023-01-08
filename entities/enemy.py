@@ -18,6 +18,7 @@ class Enemy(Entity):
         self.max_health = max_health
         self.health = max_health
         self.attack_cooldown = pygame.time.get_ticks()
+        self.cooldown = None
 
     def spawn(self):
         # Spawns the enemy in a random position within the room
@@ -33,7 +34,7 @@ class Enemy(Entity):
 
     def can_attack(self):
         # Checks if the enemy can attack based on a cooldown
-        if f.time_passed(self.attack_cooldown, 1500):
+        if f.time_passed(self.attack_cooldown, self.cooldown):
             self.attack_cooldown = pygame.time.get_ticks()
             return True
 
@@ -120,6 +121,7 @@ class Goblin(Enemy):
 
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
+        self.cooldown = 1500
 
 
 class Imp(Enemy):
@@ -134,11 +136,12 @@ class Imp(Enemy):
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
         self.destination = None  # The position of a destination for the enemy to move to
+        self.cooldown = 1200
 
     def attack(self):
         # Overrides the attack method from Enemy as the imp shoots bullets at the player
         # Shoots a bullet at the player every 1.2 seconds when standing still
-        if f.time_passed(self.attack_cooldown, 1200) and not self.dead and not self.game.player.dead and sum(
+        if f.time_passed(self.attack_cooldown, self.cooldown) and not self.dead and not self.game.player.dead and sum(
                 self.velocity) == 0:
             self.game.bullet_manager.add_bullet(
                 ImpBullet(self.game, self.room, self, self.rect.center[0], self.rect.center[1],
@@ -155,10 +158,11 @@ class Imp(Enemy):
 class BigZombie(Enemy):
     name = 'big_zombie'
     speed = 150
-    damage = 5
+    damage = 20
 
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
+        self.cooldown = 1000
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (32 * SCALE_FACTOR, 34 * SCALE_FACTOR)).convert_alpha()
         self.rect = self.image.get_rect()  # Creates a rect of the size of the image
