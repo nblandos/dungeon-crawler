@@ -3,7 +3,7 @@ from .dungeon_generator import Dungeon
 
 
 class DungeonManager:
-    level = 10
+    level = 1
 
     def __init__(self, game):
         self.game = game

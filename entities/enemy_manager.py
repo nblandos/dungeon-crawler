@@ -58,7 +58,7 @@ class EnemyManager:
     def spawn_boss(self, room):
         # Spawns the boss in the boss room
         multiplier = 1 + (self.game.dungeon_manager.level - 1) * self.multiplier_value
-        boss_list = [BigZombie(self.game, room, 200 * multiplier), BigDemon(self.game, room, 300 * multiplier)]
+        boss_list = [BigZombie(self.game, room, 150 * multiplier), BigDemon(self.game, room, 200 * multiplier)]
         enemy = random.choice(boss_list)
         enemy.damage *= multiplier
         room.enemy_list.append(enemy)

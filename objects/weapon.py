@@ -56,7 +56,7 @@ class Weapon(Object):
         # Damages the enemy if the weapon is touching them
         for enemy in self.game.dungeon_manager.current_room.enemy_list:
             if self.rect.colliderect(enemy.hit_box):
-                enemy.health -= self.damage
+                enemy.health -= self.damage * self.game.player.attack_multiplier
 
     def held_update(self):
         # Updates the weapon when it is being held by the player
@@ -99,7 +99,7 @@ class Katana(Weapon):
     # Defines the stats of the weapon
     name = 'weapon_katana'
     size = (6 * SCALE_FACTOR, 29 * SCALE_FACTOR)
-    damage = 20
+    damage = 25
     cooldown = 300
 
     def __init__(self, game, room, pos):
@@ -123,7 +123,7 @@ class Knife(Weapon):
     # Defines the stats of the weapon
     name = 'weapon_knife'
     size = (6 * SCALE_FACTOR, 13 * SCALE_FACTOR)
-    damage = 10
+    damage = 12
     cooldown = 150
 
     def __init__(self, game, room, pos):
@@ -135,7 +135,7 @@ class Mace(Weapon):
     # Defines the stats of the weapon
     name = 'weapon_mace'
     size = (10 * SCALE_FACTOR, 24 * SCALE_FACTOR)
-    damage = 40
+    damage = 35
     cooldown = 500
 
     def __init__(self, game, room, pos):

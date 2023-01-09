@@ -97,7 +97,7 @@ class MagicStaffBullet(Bullet):
         # Checks if the bullet has collided with an enemy and deals damage if it has
         for enemy in self.game.dungeon_manager.current_room.enemy_list:
             if self.rect.colliderect(enemy.hit_box):
-                enemy.health -= self.damage
+                enemy.health -= self.damage * self.game.player.attack_multiplier
                 if not self.penetration:
                     self.game.bullet_manager.remove_bullet(self)
 
@@ -121,7 +121,7 @@ class RedMagicStaffBullet(MagicStaffBullet):
 
     def __init__(self, game, room, x, y, target_pos):
         MagicStaffBullet.__init__(self, game, room, x, y, target_pos)
-        self.damage = 5
+        self.damage = 3
         self.penetration = True
         self.outline_colour = DARK_RED
         self.fill_colour = RED

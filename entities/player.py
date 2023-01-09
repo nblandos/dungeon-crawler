@@ -7,8 +7,9 @@ from .entity import Entity
 class Player(Entity):
     # Creates the player which is a child class of Entity
     name = 'knight_m'
-    speed = 400
-    max_health = 300
+    speed = 300
+    max_health = 250
+    attack_multiplier = 1
     health = max_health
 
     def __init__(self, game):

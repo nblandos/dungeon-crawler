@@ -1,6 +1,8 @@
+import random
+
 from .entity_animation import EntityAnimation
 from objects.portal import Portal
-
+from objects.flask import AttackFlask, HealthFlask, SpeedFlask
 
 
 class Entity:
@@ -20,7 +22,9 @@ class Entity:
 
     def wall_collision(self):
         move_rect = self.hit_box.move(*self.velocity)  # Creates a rect of where the hit_box will be after moving
-        collide_points = (move_rect.midbottom, move_rect.bottomleft, move_rect.bottomright)  # Creates a tuple of the points of the rect
+        collide_points = (
+            move_rect.midbottom, move_rect.bottomleft,
+            move_rect.bottomright)  # Creates a tuple of the points of the rect
         for wall in self.game.dungeon_manager.current_map.wall_list:
             # Loops through all the walls in the current map and checks if the hit_box will collide with any of them
             if any(wall.hit_box.collidepoint(point) for point in collide_points):
@@ -43,13 +47,18 @@ class Entity:
                 self.room.enemy_list.remove(self)
                 if self.room.type == 'boss':
                     self.room.object_list.append(Portal(self.game, self.room, (640, 416)))
-                    self.game.player.health += self.game.player.max_health * (1/3)
+                    self.game.player.health += self.game.player.max_health * (1 / 5)
                     if self.game.player.health > self.game.player.max_health:
                         self.game.player.health = self.game.player.max_health
                 elif not self.room.enemy_list:
-                    self.game.player.health += self.game.player.max_health * (1/12)
+                    self.game.player.health += self.game.player.max_health * (1 / 20)
                     if self.game.player.health > self.game.player.max_health:
                         self.game.player.health = self.game.player.max_health
+                    if random.randint(0, 1) == 0:
+                        flask_list = [AttackFlask(self.game, self.room, (640, 408)),
+                                      HealthFlask(self.game, self.room, (640, 408)),
+                                      SpeedFlask(self.game, self.room, (640, 408))]
+                        self.room.object_list.append(random.choice(flask_list))
 
     def basic_update(self):
         # Updates the rect, hit_box and animations of the entity and checks if the entity is dead
