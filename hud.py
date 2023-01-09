@@ -33,9 +33,15 @@ class HealthBar:
 
     def draw(self):
         # Draws the players current health in the health bar frame
+        line_pos = 15
+        section_count = 0
         num_sections = int(self.player.health) // 15
         for i in range(num_sections):
-            pygame.draw.rect(self.game.screen, DARK_RED, (15 + i * 15, 15, 10, 15))
+            section_count += 1
+            pygame.draw.rect(self.game.screen, DARK_RED, (15 + section_count * 15, line_pos, 10, 15))
+            if section_count > 15:
+                line_pos += 20
+                section_count = 0
 
 
 class Minimap:
