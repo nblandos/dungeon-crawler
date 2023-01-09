@@ -235,4 +235,4 @@ class Dungeon:
                                        Mace(self.game, room, (650, 400)), Knife(self.game, room, (660, 400)),
                                        GreenMagicStaff(self.game, room, (655, 370)),
                                        RedMagicStaff(self.game, room, (655, 370))]
-                        room.object_list.append(random.choices(weapon_list, weights=[1, 1, 1, 1, 1, 1], k=1)[0])
+                        room.object_list.append(random.choice(weapon_list))

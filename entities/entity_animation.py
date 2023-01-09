@@ -8,7 +8,7 @@ class EntityAnimation:
         self.direction = self.entity.direction
         self.animation_frame = 0  # The current frame of the animation
         self.states = ['idle', 'run']  # List of possible states
-        self.frames_dict = self.load_frames_dict() # Loads the animation images for the entity
+        self.frames_dict = self.load_frames_dict()  # Loads the animation images for the entity
 
     def load_frames_dict(self):
         # Returns a dictionary of every image frame for different states
@@ -18,6 +18,8 @@ class EntityAnimation:
                 frame = pygame.image.load(f'{self.entity.path}_{state}_anim_f{i}.png').convert_alpha()
                 if self.entity.name == 'knight_m':
                     frame = pygame.transform.scale(frame, (TILE_SIZE, PLAYER_HEIGHT))
+                elif self.entity.name == 'big_demon':
+                    frame = pygame.transform.scale(frame, (32 * SCALE_FACTOR, 36 * SCALE_FACTOR))
                 elif self.entity.name == 'big_zombie':
                     frame = pygame.transform.scale(frame, (32 * SCALE_FACTOR, 34 * SCALE_FACTOR))
                 else:

@@ -3,13 +3,13 @@ import random
 import functions as f
 from settings import *
 from .entity import Entity
-from bullet import ImpBullet
+from bullet import ImpBullet, BigZombieBullet
 
 
 class Enemy(Entity):
     # Enemy class is the parent class for all enemies
     def __init__(self, game, name, room, max_health):
-        Entity.__init__(self, game, name)  # Inherit from Entity
+        Entity.__init__(self, game, name)  # Inherits from Entity
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (TILE_SIZE, TILE_SIZE)).convert_alpha()
         self.rect = self.image.get_rect()  # Creates a rect of the size of the image
@@ -19,11 +19,16 @@ class Enemy(Entity):
         self.health = max_health
         self.attack_cooldown = pygame.time.get_ticks()
         self.cooldown = None
+        self.destination = None  # The position of a destination for the enemy to move to
 
     def spawn(self):
-        # Spawns the enemy in a random position within the room
-        self.rect.x = random.randint(200, 1000)
-        self.rect.y = random.randint(200, 550)
+        # Spawns boss enemies in the middle of the room
+        # Spawns normal enemy in a random position within the room
+        if self.room.type == 'boss':
+            self.rect.center = (650, 400)
+        else:
+            self.rect.x = random.randint(200, 1000)
+            self.rect.y = random.randint(200, 550)
 
     def move(self):
         # Method that makes the enemy move towards the player
@@ -111,12 +116,38 @@ class Enemy(Entity):
         self.draw_health(self.room.tile_map.new_map_surface)
 
 
+class RangedEnemy(Enemy):
+    def __init__(self, game, room, max_health):
+        Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
+
+    def attack(self):
+        # Overrides the attack method from Enemy as ranged enemies shoot bullets at the player
+        # Shoots a bullet at the player if the enemy is not on cooldown
+        if f.time_passed(self.attack_cooldown, self.cooldown) and not self.dead and not self.game.player.dead and sum(
+                self.velocity) == 0:
+            if self.name == 'imp':
+                self.game.bullet_manager.add_bullet(
+                    ImpBullet(self.game, self.room, self, self.rect.center[0], self.rect.center[1],
+                              (self.game.player.hit_box.centerx, self.game.player.hit_box.centery + 30)))
+            elif self.name == 'big_zombie':
+                self.game.bullet_manager.add_bullet(
+                    BigZombieBullet(self.game, self.room, self, self.rect.center[0], self.rect.center[1],
+                                    (self.game.player.hit_box.centerx, self.game.player.hit_box.centery + 30)))
+            self.attack_cooldown = pygame.time.get_ticks()
+
+    def move(self):
+        # Overrides the move method from Enemy as ranged enemies moves away from the player
+        # Moves the enemy away from the player if the player is within a certain radius
+        if self.can_move and not self.dead:
+            self.move_away_from_player(self.radius)
+
+
 class Goblin(Enemy):
     # Goblin class is a child class of Enemy
     # The goblin is a melee enemy that moves towards the player and attacks it
     # Defines the stats of the goblin enemy
     name = 'goblin'
-    speed = 225
+    speed = 200
     damage = 1
 
     def __init__(self, game, room, max_health):
@@ -124,7 +155,7 @@ class Goblin(Enemy):
         self.cooldown = 1500
 
 
-class Imp(Enemy):
+class Imp(RangedEnemy):
     # Imp class is a child class of Enemy
     # The imp is a ranged enemy that moves away from the player and shoots bullets at it
     # Defines the stats of the imp enemy
@@ -134,35 +165,33 @@ class Imp(Enemy):
     radius = 200
 
     def __init__(self, game, room, max_health):
-        Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
-        self.destination = None  # The position of a destination for the enemy to move to
+        RangedEnemy.__init__(self, game, room, max_health)  # Inherits from Enemy
         self.cooldown = 1200
 
-    def attack(self):
-        # Overrides the attack method from Enemy as the imp shoots bullets at the player
-        # Shoots a bullet at the player every 1.2 seconds when standing still
-        if f.time_passed(self.attack_cooldown, self.cooldown) and not self.dead and not self.game.player.dead and sum(
-                self.velocity) == 0:
-            self.game.bullet_manager.add_bullet(
-                ImpBullet(self.game, self.room, self, self.rect.center[0], self.rect.center[1],
-                          (self.game.player.hit_box.centerx, self.game.player.hit_box.centery + 30)))
-            self.attack_cooldown = pygame.time.get_ticks()
 
-    def move(self):
-        # Overrides the move method from Enemy as the imp moves away from the player
-        # Moves the enemy away from the player if the player is within a certain radius
-        if self.can_move and not self.dead:
-            self.move_away_from_player(self.radius)
-
-
-class BigZombie(Enemy):
-    name = 'big_zombie'
+class BigDemon(Enemy):
+    name = 'big_demon'
     speed = 150
     damage = 20
 
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
         self.cooldown = 1000
+        self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
+                                            (32 * SCALE_FACTOR, 36 * SCALE_FACTOR)).convert_alpha()
+        self.rect = self.image.get_rect()  # Creates a rect of the size of the image
+        self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
+
+
+class BigZombie(RangedEnemy):
+    name = 'big_zombie'
+    speed = 250
+    damage = 5
+    radius = 100
+
+    def __init__(self, game, room, max_health):
+        RangedEnemy.__init__(self, game, room, max_health)  # Inherits from RangedEnemy
+        self.cooldown = 150
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (32 * SCALE_FACTOR, 34 * SCALE_FACTOR)).convert_alpha()
         self.rect = self.image.get_rect()  # Creates a rect of the size of the image

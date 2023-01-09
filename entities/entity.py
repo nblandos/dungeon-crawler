@@ -41,8 +41,15 @@ class Entity:
             if self.room:
                 # The dead entity is removed from the room
                 self.room.enemy_list.remove(self)
-                if self.name == 'big_zombie':
+                if self.room.type == 'boss':
                     self.room.object_list.append(Portal(self.game, self.room, (640, 416)))
+                    self.game.player.health += self.game.player.max_health * (1/3)
+                    if self.game.player.health > self.game.player.max_health:
+                        self.game.player.health = self.game.player.max_health
+                elif not self.room.enemy_list:
+                    self.game.player.health += self.game.player.max_health * (1/12)
+                    if self.game.player.health > self.game.player.max_health:
+                        self.game.player.health = self.game.player.max_health
 
     def basic_update(self):
         # Updates the rect, hit_box and animations of the entity and checks if the entity is dead

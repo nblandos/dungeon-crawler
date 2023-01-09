@@ -66,13 +66,27 @@ class ImpBullet(Bullet):
     # Defines the stats of the bullet
     hit_box_size = (8, 8)
     radius = 6
-    speed = 6
+    speed = 5
 
     def __init__(self, game, room, user, x, y, target_pos):
         Bullet.__init__(self, game, room, x, y, target_pos)  # Inherits from the Bullet class
         self.damage = user.damage
         self.outline_colour = BURGUNDY
         self.fill_colour = DARK_RED
+
+
+class BigZombieBullet(Bullet):
+    # A bullet that is fired by the Big Zombie enemy
+    # Defines the stats of the bullet
+    hit_box_size = (15, 15)
+    radius = 13
+    speed = 8
+
+    def __init__(self, game, room, user, x, y, target_pos):
+        Bullet.__init__(self, game, room, x, y, target_pos)  # Inherits from the Bullet class
+        self.damage = user.damage
+        self.outline_colour = DARK_GREEN
+        self.fill_colour = LIME_GREEN
 
 
 class MagicStaffBullet(Bullet):
@@ -99,13 +113,6 @@ class GreenMagicStaffBullet(MagicStaffBullet):
         self.outline_colour = DARK_GREEN
         self.fill_colour = LIME_GREEN
 
-    def enemy_collision(self):
-        # Checks if the bullet has collided with an enemy and deals damage if it has
-        for enemy in self.game.dungeon_manager.current_room.enemy_list:
-            if self.rect.colliderect(enemy.hit_box):
-                enemy.health -= self.damage
-                self.game.bullet_manager.remove_bullet(self)
-
 
 class RedMagicStaffBullet(MagicStaffBullet):
     hit_box_size = (27, 27)
@@ -118,13 +125,6 @@ class RedMagicStaffBullet(MagicStaffBullet):
         self.penetration = True
         self.outline_colour = DARK_RED
         self.fill_colour = RED
-
-    def enemy_collision(self):
-        # Checks if the bullet has collided with an enemy and deals damage if it has
-        for enemy in self.game.dungeon_manager.current_room.enemy_list:
-            if self.rect.colliderect(enemy.hit_box):
-                enemy.health -= self.damage
-                self.game.bullet_manager.remove_bullet(self)
 
 
 class BulletManager:

@@ -3,7 +3,7 @@ from .dungeon_generator import Dungeon
 
 
 class DungeonManager:
-    level = 1
+    level = 10
 
     def __init__(self, game):
         self.game = game
@@ -125,9 +125,6 @@ class DungeonManager:
     def next_level(self):
         self.level += 1
         self.load_dungeon_manager()
-        self.game.player.health += self.game.player.max_health * (2/3)
-        if self.game.player.health > self.game.player.max_health:
-            self.game.player.health = self.game.player.max_health
         self.game.enemy_manager.spawn_enemies()
         self.game.hud.minimap.reset_visited_rooms()
 
