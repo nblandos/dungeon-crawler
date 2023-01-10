@@ -54,11 +54,12 @@ class Entity:
                     self.game.player.health += self.game.player.max_health * (1 / 20)
                     if self.game.player.health > self.game.player.max_health:
                         self.game.player.health = self.game.player.max_health
-                    if random.randint(0, 1) == 0:
+                    if random.randint(0, 2) == 1:
                         flask_list = [AttackFlask(self.game, self.room, (640, 408)),
                                       HealthFlask(self.game, self.room, (640, 408)),
                                       SpeedFlask(self.game, self.room, (640, 408))]
-                        self.room.object_list.append(random.choice(flask_list))
+                        random_flask = random.choice(flask_list)
+                        self.room.object_list.append(random_flask)
 
     def basic_update(self):
         # Updates the rect, hit_box and animations of the entity and checks if the entity is dead

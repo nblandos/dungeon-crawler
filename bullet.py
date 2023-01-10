@@ -105,7 +105,7 @@ class MagicStaffBullet(Bullet):
 class GreenMagicStaffBullet(MagicStaffBullet):
     hit_box_size = (12, 12)
     radius = 10
-    speed = 8
+    speed = 9
 
     def __init__(self, game, room, x, y, target_pos):
         MagicStaffBullet.__init__(self, game, room, x, y, target_pos)
@@ -121,7 +121,7 @@ class RedMagicStaffBullet(MagicStaffBullet):
 
     def __init__(self, game, room, x, y, target_pos):
         MagicStaffBullet.__init__(self, game, room, x, y, target_pos)
-        self.damage = 3
+        self.damage = 4
         self.penetration = True
         self.outline_colour = DARK_RED
         self.fill_colour = RED

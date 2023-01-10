@@ -148,7 +148,7 @@ class GreenMagicStaff(Weapon):
     name = 'weapon_green_magic_staff'
     size = (8 * SCALE_FACTOR, 30 * SCALE_FACTOR)
     damage = 0
-    cooldown = 350
+    cooldown = 300
 
     def __init__(self, game, room, pos):
         Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
