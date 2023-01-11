@@ -8,7 +8,7 @@ class EnemyManager:
     def __init__(self, game):
         # Initializes the enemy manager
         self.game = game
-        self.multiplier_value = 0.2
+        self.multiplier_value = 0.25
 
     def draw(self):
         # Draws all enemies in the current room
