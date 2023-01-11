@@ -6,7 +6,7 @@ from entities.enemy_manager import EnemyManager
 from dungeon.dungeon_manager import DungeonManager
 from objects.object_manager import ObjectManager
 from bullet import BulletManager
-from menu import Menu
+from menu import MainMenu, PauseMenu
 from hud import Hud
 
 # Initialises pygame modules
@@ -28,14 +28,14 @@ class Game:
         self.bullet_manager = BulletManager(self)
         self.object_manager = ObjectManager(self)
         self.player = Player(self)
-        self.menu = Menu(self)
+        self.main_menu = MainMenu(self)
+        self.pause_menu = PauseMenu(self)
         self.hud = Hud(self)
         self.running = True
 
-    def refresh(self):
+    def restart(self):
         # Restarts the game
         self.__init__()
-        pygame.display.flip()
         self.run()
 
     def update_groups(self):
@@ -56,22 +56,23 @@ class Game:
         self.player.draw()
         self.hud.draw()
 
+    def pause(self):
+        # Pauses the game
+        self.pause_menu.running = True
+
     def input(self):
         # Checks for user inputs
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
         self.player.input()
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_r]:
-            self.refresh()
 
     def run(self):
         self.enemy_manager.spawn_enemies()
         # Main game loop that is called every frame
         while self.running:
-            self.menu.show()
+            self.main_menu.show()
+            self.pause_menu.show()
             self.screen.fill(BLACK)
             self.update_groups()
             self.draw_groups()

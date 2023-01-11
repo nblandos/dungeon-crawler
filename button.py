@@ -48,6 +48,14 @@ class PlayButton(Button):
         self.menu.running = False
 
 
+class ResumeButton(Button):
+    def __init__(self, menu, x, y):
+        super().__init__(menu, 'Large Buttons', 'Resume', x, y)  # Inherits from the Button class
+
+    def action(self):
+        self.menu.running = False
+
+
 class QuitButton(Button):
     def __init__(self, menu, x, y):
         super().__init__(menu, 'Large Buttons', 'Quit', x, y)  # Inherits from the Button class
@@ -55,3 +63,12 @@ class QuitButton(Button):
     def action(self):
         self.menu.game.running = False
         self.menu.running = False
+
+
+class MenuButton(Button):
+    def __init__(self, menu, x, y):
+        super().__init__(menu, 'Large Buttons', 'Menu', x, y)  # Inherits from the Button class
+
+    def action(self):
+        self.menu.running = False
+        self.menu.game.restart()

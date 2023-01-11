@@ -39,6 +39,17 @@ class Player(Entity):
             # Drops the weapon if the player is holding one
             if self.weapon:
                 self.weapon.drop()
+        if keys[pygame.K_ESCAPE]:
+            self.game.pause()
+
+        if pygame.mouse.get_pressed()[0] and self.weapon:
+            # When the player is holding a weapon and the left mouse button is pressed, the weapon attacks
+            if pygame.time.get_ticks() - self.time > self.weapon.cooldown:  # Checks if the weapon is on cooldown
+                self.attacking = True
+                self.weapon.shoot()
+                self.weapon.enemy_collision()
+                self.time = pygame.time.get_ticks()
+                self.weapon.swing_side *= -1
 
         # Calculates the velocity of the player based on the key pressed
         vel_up = [0, -self.speed * self.game.constant_dt]
@@ -61,15 +72,6 @@ class Player(Entity):
         else:
             self.set_velocity(vel_list)
 
-        if pygame.mouse.get_pressed()[0] and self.weapon:
-            # When the player is holding a weapon and the left mouse button is pressed, the weapon attacks
-            if pygame.time.get_ticks() - self.time > self.weapon.cooldown:  # Checks if the weapon is on cooldown
-                self.attacking = True
-                self.weapon.shoot()
-                self.weapon.enemy_collision()
-                self.time = pygame.time.get_ticks()
-                self.weapon.swing_side *= -1
-
     def take_damage(self, amount):
         # Removes the specified amount of health from the player
         if not self.dead:
@@ -87,9 +89,7 @@ class Player(Entity):
         self.basic_update()
         if self.dead:
             # Restarts the game if the player is dead
-            self.game.refresh()
+            self.game.restart()
         if self.weapon:
             # Updates the weapon that the player is holding
             self.weapon.held_update()
-
-
