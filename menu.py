@@ -19,6 +19,9 @@ class Menu:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE and self.game.pause_menu.running:
+                    self.running = False
 
     def draw(self):
         # Draws the menu screen

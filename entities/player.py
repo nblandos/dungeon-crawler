@@ -39,9 +39,6 @@ class Player(Entity):
             # Drops the weapon if the player is holding one
             if self.weapon:
                 self.weapon.drop()
-        if keys[pygame.K_ESCAPE]:
-            self.game.pause()
-
         if pygame.mouse.get_pressed()[0] and self.weapon:
             # When the player is holding a weapon and the left mouse button is pressed, the weapon attacks
             if pygame.time.get_ticks() - self.time > self.weapon.cooldown:  # Checks if the weapon is on cooldown
@@ -89,6 +86,7 @@ class Player(Entity):
         self.basic_update()
         if self.dead:
             # Restarts the game if the player is dead
+            self.game.save()
             self.game.restart()
         if self.weapon:
             # Updates the weapon that the player is holding

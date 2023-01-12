@@ -1,5 +1,6 @@
 import pygame
 import sys
+import json
 from settings import *
 from entities.player import Player
 from entities.enemy_manager import EnemyManager
@@ -38,6 +39,15 @@ class Game:
         self.__init__()
         self.run()
 
+    def pause(self):
+        # Pauses the game
+        self.pause_menu.running = True
+
+    def save(self):
+        # Saves the game
+        with open('highscore.txt', 'w') as file:
+            json.dump(str(self.dungeon_manager.level), file)
+
     def update_groups(self):
         # Updates all groups
         self.dungeon_manager.update()
@@ -56,16 +66,17 @@ class Game:
         self.player.draw()
         self.hud.draw()
 
-    def pause(self):
-        # Pauses the game
-        self.pause_menu.running = True
-
     def input(self):
         # Checks for user inputs
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-        self.player.input()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.pause()
+                if event.key == pygame.K_r:
+                    self.restart()
+            self.player.input()
 
     def run(self):
         self.enemy_manager.spawn_enemies()
