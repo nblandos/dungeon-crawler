@@ -147,8 +147,8 @@ class Goblin(Enemy):
     # The goblin is a melee enemy that moves towards the player and attacks it
     # Defines the stats of the goblin enemy
     name = 'goblin'
-    speed = 200
-    damage = 1
+    speed = 225
+    damage = 3
 
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
@@ -161,7 +161,7 @@ class Imp(RangedEnemy):
     # Defines the stats of the imp enemy
     name = 'imp'
     speed = 175
-    damage = 1.5
+    damage = 5
     radius = 200
 
     def __init__(self, game, room, max_health):
@@ -172,7 +172,7 @@ class Imp(RangedEnemy):
 class BigDemon(Enemy):
     name = 'big_demon'
     speed = 150
-    damage = 20
+    damage = 24
 
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy

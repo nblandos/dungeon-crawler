@@ -123,7 +123,7 @@ class Knife(Weapon):
     # Defines the stats of the weapon
     name = 'weapon_knife'
     size = (6 * SCALE_FACTOR, 13 * SCALE_FACTOR)
-    damage = 12
+    damage = 15
     cooldown = 150
 
     def __init__(self, game, room, pos):

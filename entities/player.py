@@ -8,7 +8,7 @@ class Player(Entity):
     # Creates the player which is a child class of Entity
     name = 'knight_m'
     speed = 300
-    max_health = 250
+    max_health = 200
     attack_multiplier = 1
     health = max_health
 
@@ -86,7 +86,6 @@ class Player(Entity):
         self.basic_update()
         if self.dead:
             # Restarts the game if the player is dead
-            self.game.save()
             self.game.restart()
         if self.weapon:
             # Updates the weapon that the player is holding

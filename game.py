@@ -1,6 +1,5 @@
 import pygame
 import sys
-import json
 from settings import *
 from entities.player import Player
 from entities.enemy_manager import EnemyManager
@@ -21,6 +20,8 @@ class Game:
         self.display = pygame.display.set_mode((WIDTH, HEIGHT))
         self.screen = pygame.Surface((WIDTH, HEIGHT)).convert()
         pygame.display.set_caption(TITLE)
+        pygame.mixer.music.load('assets/music/music.ogg')
+        pygame.mixer.music.set_volume(0.01)
         self.clock = pygame.time.Clock()
         self.constant_dt = 1 / FPS
         # Creates instances of the necessary classes
@@ -36,17 +37,13 @@ class Game:
 
     def restart(self):
         # Restarts the game
+        pygame.mixer.music.stop()
         self.__init__()
         self.run()
 
     def pause(self):
         # Pauses the game
         self.pause_menu.running = True
-
-    def save(self):
-        # Saves the game
-        with open('highscore.txt', 'w') as file:
-            json.dump(str(self.dungeon_manager.level), file)
 
     def update_groups(self):
         # Updates all groups
