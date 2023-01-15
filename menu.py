@@ -9,6 +9,7 @@ class Menu:
         self.game = game
         self.running = False
         self.title = pygame.font.Font(FONT, 140).render(title_text, True, WHITE)
+        self.username_text = pygame.font.Font(FONT, 50).render("User-" + game.username, True, WHITE)
 
     def draw_buttons(self):
         pass
@@ -20,13 +21,18 @@ class Menu:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE and (self.game.pause_menu.running or self.game.highscore_menu.running):
-                    self.running = False
+                if event.key == pygame.K_ESCAPE:
+                    if self.game.pause_menu.running:
+                        self.running = False
+                    elif self.game.highscore_menu.running:
+                        self.running = False
+                        self.game.main_menu.running = True
 
     def draw(self):
         # Draws the menu screen
         self.game.screen.fill(BLACK)
         self.game.screen.blit(self.title, ((WIDTH - self.title.get_width()) / 2, 50))
+        self.game.screen.blit(self.username_text, (WIDTH - self.username_text.get_width() - 3, 3))
         self.draw_buttons()
 
     def update(self):
@@ -50,9 +56,9 @@ class MainMenu(Menu):
         Menu.__init__(self, game, self.title_text)
         self.running = True
         # Creates the buttons
-        self.play_button = PlayButton(self, WIDTH / 2, 4 * TILE_SIZE)
-        self.highscore_button = HighscoreButton(self, WIDTH / 2, 6 * TILE_SIZE)
-        self.quit_button = QuitButton(self, WIDTH / 2, 8 * TILE_SIZE)
+        self.play_button = PlayButton(self, WIDTH / 2, 3.5 * TILE_SIZE)
+        self.highscore_button = HighscoreButton(self, WIDTH / 2, 6.5 * TILE_SIZE)
+        self.quit_button = QuitButton(self, WIDTH / 2, 9.5 * TILE_SIZE)
 
     def draw_buttons(self):
         # Draws the menu screen
@@ -93,7 +99,7 @@ class HighscoreMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game, self.title_text)
         # Creates the buttons
-        self.back_button = BackButton(self, WIDTH / 2, 8 * TILE_SIZE)
+        self.back_button = BackButton(self, WIDTH / 10, 0.5 * TILE_SIZE)
 
     def draw_buttons(self):
         # Draws the menu screen

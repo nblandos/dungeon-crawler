@@ -49,12 +49,13 @@ class PlayButton(Button):
         pygame.mixer.music.play(-1)  # Plays the music
 
 
-class ResumeButton(Button):
+class HighscoreButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Resume', x, y)  # Inherits from the Button class
+        super().__init__(menu, 'Large Buttons', 'Load', x, y)  # Inherits from the Button class
 
     def action(self):
         self.menu.running = False
+        self.menu.game.highscore_menu.running = True
 
 
 class QuitButton(Button):
@@ -63,6 +64,14 @@ class QuitButton(Button):
 
     def action(self):
         self.menu.game.running = False
+        self.menu.running = False
+
+
+class ResumeButton(Button):
+    def __init__(self, menu, x, y):
+        super().__init__(menu, 'Large Buttons', 'Resume', x, y)  # Inherits from the Button class
+
+    def action(self):
         self.menu.running = False
 
 
@@ -77,16 +86,8 @@ class MenuButton(Button):
 
 class BackButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Square Buttons', 'Return Square', x, y)  # Inherits from the Button class
+        super().__init__(menu, 'Square Buttons', 'Back', x, y)  # Inherits from the Button class
 
     def action(self):
         self.menu.running = False
-
-
-class HighscoreButton(Button):
-    def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Highscore', x, y)  # Inherits from the Button class
-
-    def action(self):
-        self.menu.running = False
-        self.menu.game.highscore_menu.show()
+        self.menu.game.main_menu.running = True

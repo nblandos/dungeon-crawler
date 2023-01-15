@@ -16,33 +16,34 @@ pygame.init()
 
 class Game:
     # Initialises the game
-    def __init__(self):
+    def __init__(self, username):
         # Sets up the game window
-        self.login_system = LoginSystem()
-        if self.login_system.logged_in:
-            self.display = pygame.display.set_mode((WIDTH, HEIGHT))
-            self.screen = pygame.Surface((WIDTH, HEIGHT)).convert()
-            pygame.display.set_caption(TITLE)
-            pygame.mixer.music.load('assets/music/music.ogg')
-            pygame.mixer.music.set_volume(0.01)
-            self.clock = pygame.time.Clock()
-            self.constant_dt = 1 / FPS
-            # Creates instances of the necessary classes
-            self.dungeon_manager = DungeonManager(self)
-            self.enemy_manager = EnemyManager(self)
-            self.bullet_manager = BulletManager(self)
-            self.object_manager = ObjectManager(self)
-            self.player = Player(self)
-            self.main_menu = MainMenu(self)
-            self.pause_menu = PauseMenu(self)
-            self.highscore_menu = HighscoreMenu(self)
-            self.hud = Hud(self)
-            self.running = True
+        self.display = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.screen = pygame.Surface((WIDTH, HEIGHT)).convert()
+        pygame.display.set_caption(TITLE)
+        self.clock = pygame.time.Clock()
+        self.constant_dt = 1 / FPS
+        self.username = username
+        # Loads the music
+        pygame.mixer.music.load('assets/music/music.ogg')
+        pygame.mixer.music.set_volume(0.01)
+        # Creates instances of the necessary classes
+        self.dungeon_manager = DungeonManager(self)
+        self.enemy_manager = EnemyManager(self)
+        self.bullet_manager = BulletManager(self)
+        self.object_manager = ObjectManager(self)
+        self.player = Player(self)
+        self.main_menu = MainMenu(self)
+        self.pause_menu = PauseMenu(self)
+        self.highscore_menu = HighscoreMenu(self)
+        self.hud = Hud(self)
+        self.enemy_manager.spawn_enemies()
+        self.running = True
 
     def restart(self):
         # Restarts the game
         pygame.mixer.music.stop()
-        self.__init__()
+        self.__init__(self.username)
         self.run()
 
     def pause(self):
@@ -75,16 +76,14 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.pause()
-                if event.key == pygame.K_r:
-                    self.restart()
             self.player.input()
 
     def run(self):
-        self.enemy_manager.spawn_enemies()
         # Main game loop that is called every frame
         while self.running:
             self.main_menu.show()
             self.pause_menu.show()
+            self.highscore_menu.show()
             self.screen.fill(BLACK)
             self.update_groups()
             self.draw_groups()
