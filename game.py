@@ -6,7 +6,7 @@ from entities.enemy_manager import EnemyManager
 from dungeon.dungeon_manager import DungeonManager
 from objects.object_manager import ObjectManager
 from bullet import BulletManager
-from menu import MainMenu, PauseMenu
+from menu import MainMenu, PauseMenu, HighscoreMenu
 from hud import Hud
 from login_system import LoginSystem
 
@@ -35,6 +35,7 @@ class Game:
             self.player = Player(self)
             self.main_menu = MainMenu(self)
             self.pause_menu = PauseMenu(self)
+            self.highscore_menu = HighscoreMenu(self)
             self.hud = Hud(self)
             self.running = True
 

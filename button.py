@@ -75,6 +75,14 @@ class MenuButton(Button):
         self.menu.game.restart()
 
 
+class BackButton(Button):
+    def __init__(self, menu, x, y):
+        super().__init__(menu, 'Square Buttons', 'Return Square', x, y)  # Inherits from the Button class
+
+    def action(self):
+        self.menu.running = False
+
+
 class HighscoreButton(Button):
     def __init__(self, menu, x, y):
         super().__init__(menu, 'Large Buttons', 'Highscore', x, y)  # Inherits from the Button class

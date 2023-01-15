@@ -1,7 +1,7 @@
 import pygame
 import sys
 from settings import *
-from button import PlayButton, QuitButton, ResumeButton, MenuButton
+from button import PlayButton, QuitButton, ResumeButton, MenuButton, BackButton, HighscoreButton
 
 
 class Menu:
@@ -20,7 +20,7 @@ class Menu:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE and self.game.pause_menu.running:
+                if event.key == pygame.K_ESCAPE and (self.game.pause_menu.running or self.game.highscore_menu.running):
                     self.running = False
 
     def draw(self):
@@ -51,16 +51,19 @@ class MainMenu(Menu):
         self.running = True
         # Creates the buttons
         self.play_button = PlayButton(self, WIDTH / 2, 4 * TILE_SIZE)
+        self.highscore_button = HighscoreButton(self, WIDTH / 2, 6 * TILE_SIZE)
         self.quit_button = QuitButton(self, WIDTH / 2, 8 * TILE_SIZE)
 
     def draw_buttons(self):
         # Draws the menu screen
         self.play_button.draw()
+        self.highscore_button.draw()
         self.quit_button.draw()
 
     def update(self):
         # Updates the buttons on the menu screen (Checks if they are hovered over)
         self.play_button.update()
+        self.highscore_button.update()
         self.quit_button.update()
 
 
@@ -82,3 +85,20 @@ class PauseMenu(Menu):
         # Updates the buttons on the menu screen (Checks if they are hovered over)
         self.resume_button.update()
         self.menu_button.update()
+
+
+class HighscoreMenu(Menu):
+    title_text = "Highscores"
+
+    def __init__(self, game):
+        Menu.__init__(self, game, self.title_text)
+        # Creates the buttons
+        self.back_button = BackButton(self, WIDTH / 2, 8 * TILE_SIZE)
+
+    def draw_buttons(self):
+        # Draws the menu screen
+        self.back_button.draw()
+
+    def update(self):
+        # Updates the buttons on the menu screen (Checks if they are hovered over)
+        self.back_button.update()

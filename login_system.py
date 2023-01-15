@@ -63,6 +63,3 @@ class LoginSystem:
                 self.login()
             except sqlite3.IntegrityError:
                 mb.showerror("Error", "Username already exists.")
-
-
-
