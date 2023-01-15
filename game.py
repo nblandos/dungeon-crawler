@@ -8,6 +8,7 @@ from objects.object_manager import ObjectManager
 from bullet import BulletManager
 from menu import MainMenu, PauseMenu
 from hud import Hud
+from login_system import LoginSystem
 
 # Initialises pygame modules
 pygame.init()
@@ -17,23 +18,25 @@ class Game:
     # Initialises the game
     def __init__(self):
         # Sets up the game window
-        self.display = pygame.display.set_mode((WIDTH, HEIGHT))
-        self.screen = pygame.Surface((WIDTH, HEIGHT)).convert()
-        pygame.display.set_caption(TITLE)
-        pygame.mixer.music.load('assets/music/music.ogg')
-        pygame.mixer.music.set_volume(0.01)
-        self.clock = pygame.time.Clock()
-        self.constant_dt = 1 / FPS
-        # Creates instances of the necessary classes
-        self.dungeon_manager = DungeonManager(self)
-        self.enemy_manager = EnemyManager(self)
-        self.bullet_manager = BulletManager(self)
-        self.object_manager = ObjectManager(self)
-        self.player = Player(self)
-        self.main_menu = MainMenu(self)
-        self.pause_menu = PauseMenu(self)
-        self.hud = Hud(self)
-        self.running = True
+        self.login_system = LoginSystem()
+        if self.login_system.logged_in:
+            self.display = pygame.display.set_mode((WIDTH, HEIGHT))
+            self.screen = pygame.Surface((WIDTH, HEIGHT)).convert()
+            pygame.display.set_caption(TITLE)
+            pygame.mixer.music.load('assets/music/music.ogg')
+            pygame.mixer.music.set_volume(0.01)
+            self.clock = pygame.time.Clock()
+            self.constant_dt = 1 / FPS
+            # Creates instances of the necessary classes
+            self.dungeon_manager = DungeonManager(self)
+            self.enemy_manager = EnemyManager(self)
+            self.bullet_manager = BulletManager(self)
+            self.object_manager = ObjectManager(self)
+            self.player = Player(self)
+            self.main_menu = MainMenu(self)
+            self.pause_menu = PauseMenu(self)
+            self.hud = Hud(self)
+            self.running = True
 
     def restart(self):
         # Restarts the game
