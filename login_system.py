@@ -4,6 +4,10 @@ import hashlib
 import sqlite3
 
 
+def encrypt_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+
 class LoginSystem:
     def __init__(self):
         self.logged_in = False
@@ -30,7 +34,8 @@ class LoginSystem:
         tk.Label(self.registration_frame, text='Username:', font=("Arial", 20), padx=40, pady=15).grid()
         tk.Entry(self.registration_frame, textvariable=self.username, bd=5, font=("Arial", 15)).grid(row=0, column=1)
         tk.Label(self.registration_frame, text='Password:', font=("Arial", 20), padx=40, pady=15).grid()
-        tk.Entry(self.registration_frame, textvariable=self.password, bd=5, font=("Arial", 15), show='*').grid(row=1, column=1)
+        tk.Entry(self.registration_frame, textvariable=self.password, bd=5, font=("Arial", 15), show='*').grid(row=1,
+                                                                                                               column=1)
         tk.Button(self.registration_frame, text=' Login ', bd=3, font=("Arial", 15), padx=5, pady=5,
                   command=self.login).grid()
         tk.Button(self.registration_frame, text=' Register ', bd=3, font=("Arial", 15), padx=5, pady=5,
@@ -39,7 +44,7 @@ class LoginSystem:
 
     def login(self):
         username = self.username.get()
-        password = self.password.get()
+        password = encrypt_password(self.password.get())
         self.cursor.execute(f"SELECT * FROM users WHERE username='{username}' AND password='{password}'")
         if self.cursor.fetchone():
             self.logged_in = True
@@ -52,7 +57,7 @@ class LoginSystem:
 
     def register(self):
         username = self.username.get()
-        password = self.password.get()
+        password = encrypt_password(self.password.get())
         if not username or not password:
             mb.showerror("Error", "Username or password fields are blank.")
         else:
