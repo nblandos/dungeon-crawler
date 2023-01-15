@@ -128,11 +128,11 @@ class RangedEnemy(Enemy):
             if self.name == 'imp':
                 self.game.bullet_manager.add_bullet(
                     ImpBullet(self.game, self.room, self, self.rect.center[0], self.rect.center[1],
-                              (self.game.player.hit_box.centerx, self.game.player.hit_box.centery + 35)))
+                              (self.game.player.hit_box.centerx, self.game.player.hit_box.centery + 25)))
             elif self.name == 'big_zombie':
                 self.game.bullet_manager.add_bullet(
                     BigZombieBullet(self.game, self.room, self, self.rect.center[0], self.rect.center[1],
-                                    (self.game.player.hit_box.centerx, self.game.player.hit_box.centery + 35)))
+                                    (self.game.player.hit_box.centerx, self.game.player.hit_box.centery + 25)))
             self.attack_cooldown = pygame.time.get_ticks()
 
     def move(self):
