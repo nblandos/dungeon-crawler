@@ -51,7 +51,7 @@ class PlayButton(Button):
 
 class HighscoreButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Load', x, y)  # Inherits from the Button class
+        super().__init__(menu, 'Large Buttons', 'Highscores', x, y)  # Inherits from the Button class
 
     def action(self):
         self.menu.running = False
