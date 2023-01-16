@@ -86,6 +86,7 @@ class Player(Entity):
         self.basic_update()
         if self.dead:
             # Restarts the game if the player is dead
+            self.game.save_score()
             self.game.restart()
         if self.weapon:
             # Updates the weapon that the player is holding

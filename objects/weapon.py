@@ -50,7 +50,7 @@ class Weapon(Object):
         self.image = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
         self.rotated_offset = self.offset.rotate(-self.angle)
         self.rect = self.image.get_rect(center=player_pos + self.rotated_offset)
-        self.swing_counter += 1
+        self.swing_counter += 60 * self.game.constant_dt
 
     def enemy_collision(self):
         # Damages the enemy if the weapon is touching them

@@ -7,7 +7,6 @@ import copy
 from settings import *
 from .dungeon_graphics import TileMap, SpriteSheet
 from objects.weapon import RustySword, Katana, AnimeSword, Knife, Mace, GreenMagicStaff, RedMagicStaff
-from objects.flask import AttackFlask, HealthFlask, SpeedFlask
 
 
 class Room:

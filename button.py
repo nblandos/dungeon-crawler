@@ -46,7 +46,7 @@ class PlayButton(Button):
 
     def action(self):
         self.menu.running = False
-        pygame.mixer.music.play(-1)  # Plays the music
+        pygame.mixer.music.play(-1)
 
 
 class HighscoreButton(Button):

@@ -1,5 +1,8 @@
 import pygame
 import sys
+import os
+import random
+import sqlite3
 from settings import *
 from entities.player import Player
 from entities.enemy_manager import EnemyManager
@@ -24,11 +27,11 @@ class Game:
         self.constant_dt = 1 / FPS
         self.username = username
         # Loads the music
-        pygame.mixer.music.load('assets/music/music.ogg')
-        pygame.mixer.music.set_volume(0.01)
+        self.randomise_music()
         # Creates instances of the necessary classes
         self.dungeon_manager = DungeonManager(self)
         self.enemy_manager = EnemyManager(self)
+        self.enemy_manager.spawn_enemies()
         self.bullet_manager = BulletManager(self)
         self.object_manager = ObjectManager(self)
         self.player = Player(self)
@@ -36,7 +39,6 @@ class Game:
         self.pause_menu = PauseMenu(self)
         self.highscore_menu = HighscoreMenu(self)
         self.hud = Hud(self)
-        self.enemy_manager.spawn_enemies()
         self.running = True
 
     def restart(self):
@@ -45,9 +47,25 @@ class Game:
         self.__init__(self.username)
         self.run()
 
+    def save_score(self):
+        # Saves the score to the database
+        score = self.dungeon_manager.level
+        con = sqlite3.connect('users.db')
+        cursor = con.cursor()
+        highscore = cursor.execute(f'SELECT highscore FROM users WHERE username = "{self.username}"').fetchone()[0]
+        if score > highscore:
+            cursor.execute(f'UPDATE users SET highscore = {score} WHERE username = "{self.username}"')
+            con.commit()
+
     def pause(self):
         # Pauses the game
         self.pause_menu.running = True
+
+    def randomise_music(self):
+        music = random.choice(os.listdir("assets/music"))
+        pygame.mixer.music.load(f"assets/music/{music}")
+        pygame.mixer.music.set_volume(0.01)
+        print(music)
 
     def update_groups(self):
         # Updates all groups

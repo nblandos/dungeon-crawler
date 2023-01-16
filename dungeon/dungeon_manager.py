@@ -127,6 +127,8 @@ class DungeonManager:
         self.load_dungeon_manager()
         self.game.enemy_manager.spawn_enemies()
         self.game.hud.minimap.reset_visited_rooms()
+        if self.level % 5 == 0:
+            self.game.randomise_music()
 
     def update(self):
         # Checks if a room change has occurred

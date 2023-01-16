@@ -1,4 +1,7 @@
 import pygame
+import hashlib
+import os
+import random
 
 
 def get_hit_box(surface, top=0, left=0):
@@ -14,3 +17,8 @@ def get_hit_box(surface, top=0, left=0):
 def time_passed(time, amount):
     if pygame.time.get_ticks() - time > amount:
         return True
+
+
+def encrypt_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+

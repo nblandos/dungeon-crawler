@@ -1,11 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox as mb
-import hashlib
 import sqlite3
-
-
-def encrypt_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
+from functions import encrypt_password
 
 
 class LoginSystem:
@@ -44,23 +40,25 @@ class LoginSystem:
 
     def login(self):
         username = self.username.get()
-        password = encrypt_password(self.password.get())
-        self.cursor.execute(f"SELECT * FROM users WHERE username='{username}' AND password='{password}'")
-        if self.cursor.fetchone():
-            self.logged_in = True
-            self.root.destroy()
+        password = self.password.get()
+        if not username or not password:
+            mb.showerror("Error", "Username or Password fields are blank.")
         else:
-            if not username or not password:
-                mb.showerror("Error", "Username or Password fields are blank.")
+            password = encrypt_password(password)
+            self.cursor.execute(f"SELECT * FROM users WHERE username='{username}' AND password='{password}'")
+            if self.cursor.fetchone():
+                self.logged_in = True
+                self.root.destroy()
             else:
-                mb.showerror("Error", "Account details do not exist.")
+                mb.showerror("Error", "Invalid username or password.")
 
     def register(self):
         username = self.username.get()
-        password = encrypt_password(self.password.get())
+        password = self.password.get()
         if not username or not password:
             mb.showerror("Error", "Username or password fields are blank.")
         else:
+            password = encrypt_password(password)
             try:
                 self.cursor.execute("INSERT INTO users(username,password) VALUES (?,?)", (username, password))
                 self.con.commit()
