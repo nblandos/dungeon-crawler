@@ -1,3 +1,4 @@
+import pygame
 from settings import *
 from .dungeon_generator import Dungeon
 
@@ -129,6 +130,7 @@ class DungeonManager:
         self.game.hud.minimap.reset_visited_rooms()
         if self.level % 5 == 0:
             self.game.randomise_music()
+            pygame.mixer.music.play(-1)
 
     def update(self):
         # Checks if a room change has occurred

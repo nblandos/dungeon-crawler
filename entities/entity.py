@@ -47,11 +47,11 @@ class Entity:
                 self.room.enemy_list.remove(self)
                 if self.room.type == 'boss':
                     self.room.object_list.append(Portal(self.game, self.room, (640, 416)))
-                    self.game.player.health += self.game.player.max_health * (1 / 10)
+                    self.game.player.health += self.game.player.max_health * (1 / 5)
                     if self.game.player.health > self.game.player.max_health:
                         self.game.player.health = self.game.player.max_health
                 elif not self.room.enemy_list:
-                    self.game.player.health += self.game.player.max_health * (1 / 40)
+                    self.game.player.health += self.game.player.max_health * (1 / 20)
                     if self.game.player.health > self.game.player.max_health:
                         self.game.player.health = self.game.player.max_health
                     if random.randint(0, 2) == 1:

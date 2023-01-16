@@ -43,6 +43,7 @@ class Game:
 
     def restart(self):
         # Restarts the game
+        self.save_score()
         pygame.mixer.music.stop()
         self.__init__(self.username)
         self.run()
@@ -53,6 +54,7 @@ class Game:
         con = sqlite3.connect('users.db')
         cursor = con.cursor()
         highscore = cursor.execute(f'SELECT highscore FROM users WHERE username = "{self.username}"').fetchone()[0]
+        print(highscore)
         if score > highscore:
             cursor.execute(f'UPDATE users SET highscore = {score} WHERE username = "{self.username}"')
             con.commit()
@@ -63,9 +65,10 @@ class Game:
 
     def randomise_music(self):
         music = random.choice(os.listdir("assets/music"))
+        while music == pygame.mixer.music.get_busy():
+            music = random.choice(os.listdir("assets/music"))
         pygame.mixer.music.load(f"assets/music/{music}")
         pygame.mixer.music.set_volume(0.01)
-        print(music)
 
     def update_groups(self):
         # Updates all groups

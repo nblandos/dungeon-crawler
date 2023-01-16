@@ -18,7 +18,7 @@ class AttackFlask(Flask):
         Flask.__init__(self, game, self.name, room, pos, self.size)
 
     def interact(self):
-        self.game.player.attack_multiplier += 0.1
+        self.game.player.attack_multiplier += 0.2
         self.remove()
 
 
@@ -30,8 +30,8 @@ class HealthFlask(Flask):
         Flask.__init__(self, game, self.name, room, pos, self.size)
 
     def interact(self):
-        self.game.player.max_health += 25
-        self.game.player.health += 25
+        self.game.player.max_health += 40
+        self.game.player.health += 40
         self.remove()
 
 
@@ -43,5 +43,5 @@ class SpeedFlask(Flask):
         Flask.__init__(self, game, self.name, room, pos, self.size)
 
     def interact(self):
-        self.game.player.speed += 30
+        self.game.player.speed += 50
         self.remove()
