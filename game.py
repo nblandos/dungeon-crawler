@@ -8,6 +8,7 @@ from entities.player import Player
 from entities.enemy_manager import EnemyManager
 from dungeon.dungeon_manager import DungeonManager
 from objects.object_manager import ObjectManager
+from sound_manager import SoundManager
 from bullet import BulletManager
 from menu import MainMenu, PauseMenu, HighscoreMenu
 from hud import Hud
@@ -29,6 +30,7 @@ class Game:
         # Loads the music
         self.randomise_music()
         # Creates instances of the necessary classes
+        self.sound_manager = SoundManager(self)
         self.dungeon_manager = DungeonManager(self)
         self.enemy_manager = EnemyManager(self)
         self.enemy_manager.spawn_enemies()
