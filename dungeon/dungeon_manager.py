@@ -124,11 +124,12 @@ class DungeonManager:
             self.end_room_change()
 
     def next_level(self):
+        # Loads the next level
         self.level += 1
         self.load_dungeon_manager()
         self.game.enemy_manager.spawn_enemies()
         self.game.hud.minimap.reset_visited_rooms()
-        if self.level % 5 == 0:
+        if self.level % 5 == 0:  # Every 5 levels the music changes
             self.game.randomise_music()
             pygame.mixer.music.play(-1)
 

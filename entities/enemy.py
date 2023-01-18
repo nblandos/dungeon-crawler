@@ -100,6 +100,7 @@ class Enemy(Entity):
         self.rect.midbottom = self.hit_box.midbottom
 
     def draw_health(self, surface):
+        # Draws the health bar of the enemy
         if self.health < self.max_health:
             health_rect = pygame.Rect(0, 0, 25, 6)
             health_rect.midbottom = self.rect.centerx, self.rect.top
@@ -117,6 +118,7 @@ class Enemy(Entity):
 
 
 class RangedEnemy(Enemy):
+    # Parent class for every type of of ranged enemies
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
 
@@ -156,7 +158,7 @@ class Goblin(Enemy):
 
 
 class Imp(RangedEnemy):
-    # Imp class is a child class of Enemy
+    # Imp class is a child class of RangedEnemy
     # The imp is a ranged enemy that moves away from the player and shoots bullets at it
     # Defines the stats of the imp enemy
     name = 'imp'
@@ -165,25 +167,31 @@ class Imp(RangedEnemy):
     radius = 200
 
     def __init__(self, game, room, max_health):
-        RangedEnemy.__init__(self, game, room, max_health)  # Inherits from Enemy
+        RangedEnemy.__init__(self, game, room, max_health)  # Inherits from RangedEnemy
         self.cooldown = 1200
 
 
 class BigDemon(Enemy):
+    # BigDemon class is a child class of Enemy
+    # The big demon is a melee enemy that moves towards the player and attacks it
+    # Defines the stats of the big demon enemy
     name = 'big_demon'
     speed = 150
     damage = 20
 
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
-        self.cooldown = 1000
+        self.cooldown = 1200
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (32 * SCALE_FACTOR, 36 * SCALE_FACTOR)).convert_alpha()
-        self.rect = self.image.get_rect()  # Creates a rect of the size of the image
+        self.rect = self.image.get_rect()
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
 
 
 class BigZombie(RangedEnemy):
+    # BigZombie class is a child class of RangedEnemy
+    # The big zombie is a ranged enemy that moves away from the player and shoots bullets at it
+    # Defines the stats of the big zombie enemy
     name = 'big_zombie'
     speed = 250
     damage = 5

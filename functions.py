@@ -13,9 +13,13 @@ def get_hit_box(surface, top=0, left=0):
 
 
 def time_passed(time, amount):
+    # Returns true if the amount of time passed is greater than the amount
     if pygame.time.get_ticks() - time > amount:
         return True
 
 
 def encrypt_password(password):
+    # Encrypts a given message using a hash
     return hashlib.sha256(password.encode()).hexdigest()
+
+

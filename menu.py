@@ -9,10 +9,12 @@ class Menu:
     def __init__(self, game, title_text):
         self.game = game
         self.running = False
+        # Defines text that is on every menu screen
         self.title = pygame.font.Font(FONT, 140).render(title_text, True, WHITE)
         self.username_text = pygame.font.Font(FONT, 50).render("User-" + game.username, True, WHITE)
 
     def draw_contents(self):
+        # This method is overwritten in every menu screen
         pass
 
     def input(self):
@@ -37,6 +39,7 @@ class Menu:
         self.draw_contents()
 
     def update(self):
+        # This method is overwritten in every menu screen
         pass
 
     def show(self):
@@ -108,6 +111,7 @@ class HighscoreMenu(Menu):
         self.back_button = BackButton(self, WIDTH / 10, 0.5 * TILE_SIZE)
 
     def retrieve_scores(self):
+        # Retrieves the top 5 highscores from the database in descending order
         self.cursor.execute("SELECT username, highscore FROM users ORDER BY highscore DESC LIMIT 5")
         return self.cursor.fetchall()
 

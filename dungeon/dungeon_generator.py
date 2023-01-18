@@ -215,6 +215,8 @@ class Dungeon:
         for row in self.rooms:
             for room in row:
                 if isinstance(room, Room) and room.type is None:
+                    # Assign the boss room to the first room encountered with a single path
+                    # This usually is the farthest room from the start
                     if len(room.paths) == 1 and self.boss_room_assigned is False:
                         room.type = 'boss'
                         self.boss_room_assigned = True
@@ -230,6 +232,7 @@ class Dungeon:
                         # Adds the beginner weapon to the spawn room
                         room.object_list.append(RustySword(self.game, room, (650, 300)))
                     elif room.type == 'reward':
+                        # Adds a random weapon to the reward room
                         weapon_list = [Katana(self.game, room, (660, 380)), AnimeSword(self.game, room, (650, 380)),
                                        Mace(self.game, room, (650, 400)), Knife(self.game, room, (660, 400)),
                                        GreenMagicStaff(self.game, room, (655, 370)),

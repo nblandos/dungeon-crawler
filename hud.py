@@ -9,16 +9,17 @@ class Hud:
         self.health_bar = HealthBar(self.game, self.game.player)
         self.minimap = Minimap(self.game)
 
+    def draw_level(self):
+        # Draws text that shows the current level
+        level_text = f'Level {int(self.game.dungeon_manager.level)}'
+        text_surface = pygame.font.Font(FONT, 50).render(level_text, True, WHITE)
+        self.game.screen.blit(text_surface, (620, 0))
+
     def draw(self):
         # Draws every hud element
         self.health_bar.draw()
         self.minimap.draw()
         self.draw_level()
-
-    def draw_level(self):
-        level_text = f'Level {int(self.game.dungeon_manager.level)}'
-        text_surface = pygame.font.Font(FONT, 50).render(level_text, True, WHITE)
-        self.game.screen.blit(text_surface, (620, 0))
 
     def update(self):
         # Updates every hud element that needs to be updated
@@ -32,7 +33,7 @@ class HealthBar:
         self.player = player
 
     def draw(self):
-        # Draws the players current health in the health bar frame
+        # Draws the player's current health
         line_pos = 15
         section_count = 0
         num_sections = int(self.player.health) // 15

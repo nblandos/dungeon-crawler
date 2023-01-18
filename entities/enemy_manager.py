@@ -3,7 +3,7 @@ from dungeon.dungeon_generator import Room
 from .enemy import Goblin, Imp, BigZombie, BigDemon
 
 
-# As there are many enemies belonging to different rooms, this class manages which ones to draw and update.
+# As there are many enemies belonging to different rooms, this class manages which ones to draw and update
 class EnemyManager:
     def __init__(self, game):
         # Initializes the enemy manager
@@ -36,6 +36,7 @@ class EnemyManager:
     def spawn_normal_enemies(self, room):
         # Spawns enemies in a given room
         level = self.game.dungeon_manager.level
+        # The multiplier scales the enemies' stats based on the level of the dungeon
         multiplier = 1 + (level - 1) * self.multiplier_value
         if level > 6:
             level = 6

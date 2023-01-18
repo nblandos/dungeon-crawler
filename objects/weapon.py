@@ -69,6 +69,7 @@ class Weapon(Object):
             self.rotate()
 
     def shoot(self):
+        # Overriden by the child classes
         pass
 
     def draw(self):

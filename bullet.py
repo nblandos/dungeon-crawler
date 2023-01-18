@@ -57,6 +57,7 @@ class Bullet:
         self.wall_collision()
 
     def draw(self):
+        # Draws the bullet
         pygame.draw.circle(self.room.tile_map.new_map_surface, self.outline_colour, self.rect.center, self.radius)
         pygame.draw.circle(self.room.tile_map.new_map_surface, self.fill_colour, self.rect.center, self.radius - 2)
 
@@ -90,9 +91,11 @@ class BigZombieBullet(Bullet):
 
 
 class MagicStaffBullet(Bullet):
+    # A bullet that is fired by the player
     def __init__(self, game, room, x, y, target_pos):
         Bullet.__init__(self, game, room, x, y, target_pos)
 
+    # Overrides entity_collision from the Bullet class as the player should damage enemies, not themselves
     def entity_collision(self):
         # Checks if the bullet has collided with an enemy and deals damage if it has
         for enemy in self.game.dungeon_manager.current_room.enemy_list:
@@ -103,6 +106,8 @@ class MagicStaffBullet(Bullet):
 
 
 class GreenMagicStaffBullet(MagicStaffBullet):
+    # A bullet that is fired by the player's weapon - Green Magic Staff
+    # Defines the stats of the bullet
     hit_box_size = (12, 12)
     radius = 10
     speed = 9
@@ -115,6 +120,8 @@ class GreenMagicStaffBullet(MagicStaffBullet):
 
 
 class RedMagicStaffBullet(MagicStaffBullet):
+    # A bullet that is fired by the player's weapon - Red Magic Staff
+    # Defines the stats of the bullet
     hit_box_size = (27, 27)
     radius = 25
     speed = 4
@@ -128,6 +135,7 @@ class RedMagicStaffBullet(MagicStaffBullet):
 
 
 class BulletManager:
+    # Manages a list of the bullets that are currently in the game.
     def __init__(self, game):
         self.game = game
         self.bullet_list = []  # List of all bullets in the game
