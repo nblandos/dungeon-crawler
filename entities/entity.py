@@ -1,5 +1,4 @@
 import random
-
 from .entity_animation import EntityAnimation
 from objects.portal import Portal
 from objects.flask import AttackFlask, HealthFlask, SpeedFlask
@@ -46,15 +45,19 @@ class Entity:
                 # The dead entity is removed from the room
                 self.room.enemy_list.remove(self)
                 if self.room.type == 'boss':
+                    # The portal to the next room is spawned if the boss is dead
                     self.room.object_list.append(Portal(self.game, self.room, (640, 416)))
+                    # Some health is restored if the room is cleared
                     self.game.player.health += self.game.player.max_health * (1 / 5)
                     if self.game.player.health > self.game.player.max_health:
                         self.game.player.health = self.game.player.max_health
                 elif not self.room.enemy_list:
+                    # Some health is restored if the room is cleared
                     self.game.player.health += self.game.player.max_health * (1 / 20)
                     if self.game.player.health > self.game.player.max_health:
                         self.game.player.health = self.game.player.max_health
                     if random.randint(0, 2) == 1:
+                        # 1 in 3 chance of spawning a flask when all enemies are dead in a room
                         flask_list = [AttackFlask(self.game, self.room, (640, 408)),
                                       HealthFlask(self.game, self.room, (640, 408)),
                                       SpeedFlask(self.game, self.room, (640, 408))]

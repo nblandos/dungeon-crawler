@@ -8,7 +8,6 @@ from entities.player import Player
 from entities.enemy_manager import EnemyManager
 from dungeon.dungeon_manager import DungeonManager
 from objects.object_manager import ObjectManager
-from sound_manager import SoundManager
 from bullet import BulletManager
 from menu import MainMenu, PauseMenu, HighscoreMenu
 from hud import Hud

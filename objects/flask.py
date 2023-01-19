@@ -7,7 +7,7 @@ class Flask(Object):
         Object.__init__(self, game, name, room, pos, size)  # Inherits from the Object class
 
     def interact(self):
-        # Overriden by the child classes
+        # Overridden by the child classes
         pass
 
 

@@ -118,7 +118,7 @@ class Enemy(Entity):
 
 
 class RangedEnemy(Enemy):
-    # Parent class for every type of of ranged enemies
+    # Parent class for every type of ranged enemy
     def __init__(self, game, room, max_health):
         Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
 
