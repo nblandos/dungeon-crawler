@@ -52,9 +52,7 @@ class Dungeon:
         self.add_room_map('mapa3')
         self.add_room_map('floor_layer')
         self.add_room_map('wall_layer')
-        self.assign_types()
-        self.add_objects()
-        self.add_graphics()
+        self.add_contents()
 
     def create_room(self, room):
         # Main function that creates the rooms of the dungeon
@@ -203,38 +201,39 @@ class Dungeon:
                     self.close_paths(room.paths, room_map, file)
                     room.room_map.append(room_map)
 
-    def add_graphics(self):
+    def add_graphics(self, room):
         # Creates an instance of TileMap for each room in the dungeon which will display the room
-        for row in self.rooms:
-            for room in row:
-                if isinstance(room, Room):
-                    room.tile_map = TileMap(SpriteSheet('assets/spritesheet.png'), room.room_map, room)
+        room.tile_map = TileMap(SpriteSheet('assets/spritesheet.png'), room.room_map, room)
 
-    def assign_types(self):
+    def assign_types(self, room):
         # Assigns a type to each room in the dungeon
-        for row in self.rooms:
-            for room in row:
-                if isinstance(room, Room) and room.type is None:
-                    # Assign the boss room to the first room encountered with a single path
-                    # This usually is the farthest room from the start
-                    if len(room.paths) == 1 and self.boss_room_assigned is False:
-                        room.type = 'boss'
-                        self.boss_room_assigned = True
-                    else:
-                        room.type = random.choices(['normal', 'reward'], weights=[8, 1], k=1)[0]
+        if room.type is None:
+            if len(room.paths) == 1 and self.boss_room_assigned is False:
+                # Assign the boss room to the first room encountered with a single path
+                # This usually is the farthest room from the start room
+                room.type = 'boss'
+                self.boss_room_assigned = True
+            else:
+                room.type = random.choices(['normal', 'reward'], weights=[8, 1], k=1)[0]
 
-    def add_objects(self):
+    def add_objects(self, room):
         # Adds objects to the rooms
+        if room.type == 'spawn' and self.level == 1:
+            # Adds the beginner weapon to the spawn room
+            room.object_list.append(RustySword(self.game, room, (650, 300)))
+        elif room.type == 'reward':
+            # Adds a random weapon to the reward room
+            weapon_list = [Katana(self.game, room, (660, 380)), AnimeSword(self.game, room, (650, 380)),
+                           Mace(self.game, room, (650, 400)), Knife(self.game, room, (660, 400)),
+                           GreenMagicStaff(self.game, room, (655, 370)),
+                           RedMagicStaff(self.game, room, (655, 370))]
+            room.object_list.append(random.choice(weapon_list))
+
+    def add_contents(self):
+        # Adds objects and graphics to every room in the dungeon
         for row in self.rooms:
             for room in row:
                 if isinstance(room, Room):
-                    if room.type == 'spawn' and self.level == 1:
-                        # Adds the beginner weapon to the spawn room
-                        room.object_list.append(RustySword(self.game, room, (650, 300)))
-                    elif room.type == 'reward':
-                        # Adds a random weapon to the reward room
-                        weapon_list = [Katana(self.game, room, (660, 380)), AnimeSword(self.game, room, (650, 380)),
-                                       Mace(self.game, room, (650, 400)), Knife(self.game, room, (660, 400)),
-                                       GreenMagicStaff(self.game, room, (655, 370)),
-                                       RedMagicStaff(self.game, room, (655, 370))]
-                        room.object_list.append(random.choice(weapon_list))
+                    self.assign_types(room)
+                    self.add_objects(room)
+                    self.add_graphics(room)
