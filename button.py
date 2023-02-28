@@ -72,6 +72,7 @@ class ResumeButton(Button):
         super().__init__(menu, 'Large Buttons', 'Resume', x, y)  # Inherits from the Button class
 
     def action(self):
+        pygame.mixer.music.unpause()
         self.menu.running = False
 
 

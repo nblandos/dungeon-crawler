@@ -55,7 +55,6 @@ class Game:
         con = sqlite3.connect('users.db')
         cursor = con.cursor()
         highscore = cursor.execute(f'SELECT highscore FROM users WHERE username = "{self.username}"').fetchone()[0]
-        print(highscore)
         if score > highscore:
             cursor.execute(f'UPDATE users SET highscore = {score} WHERE username = "{self.username}"')
             con.commit()
@@ -98,6 +97,7 @@ class Game:
                 self.running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    pygame.mixer.music.pause()
                     self.pause()
             self.player.input()
 

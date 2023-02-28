@@ -123,7 +123,7 @@ class DungeonManager:
         if self.next_room_map.y >= 0 and self.direction == 'N':
             self.end_room_change()
 
-    def next_level(self):
+    def load_next_level(self):
         # Loads the next level
         self.level += 1
         self.load_dungeon_manager()

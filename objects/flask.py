@@ -44,5 +44,5 @@ class SpeedFlask(Flask):
         Flask.__init__(self, game, self.name, room, pos, self.size)
 
     def interact(self):
-        self.game.player.speed += 50
+        self.game.player.speed += 40
         self.remove()

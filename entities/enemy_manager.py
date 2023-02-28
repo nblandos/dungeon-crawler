@@ -8,7 +8,7 @@ class EnemyManager:
     def __init__(self, game):
         # Initializes the enemy manager
         self.game = game
-        self.multiplier_value = 0.25
+        self.multiplier_value = 0.3
 
     def draw(self):
         # Draws all enemies in the current room
@@ -45,13 +45,13 @@ class EnemyManager:
         num_imps = random.randint(0, 1 + level)
         for _ in range(num_goblins):
             # Creates the specified number of goblins
-            enemy = Goblin(self.game, room, 20 * multiplier)
+            enemy = Goblin(self.game, room, 25 * multiplier)
             enemy.damage *= multiplier
             room.enemy_list.append(enemy)
             room.enemy_list[-1].spawn()
         for _ in range(num_imps):
             # Creates the specified number of imps
-            enemy = Imp(self.game, room, 15 * multiplier)
+            enemy = Imp(self.game, room, 20 * multiplier)
             enemy.damage *= multiplier
             room.enemy_list.append(enemy)
             room.enemy_list[-1].spawn()

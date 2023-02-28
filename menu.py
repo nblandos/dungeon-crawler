@@ -26,6 +26,7 @@ class Menu:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     if self.game.pause_menu.running:
+                        pygame.mixer.music.unpause()
                         self.running = False
                     elif self.game.highscore_menu.running:
                         self.running = False

@@ -48,7 +48,7 @@ class Entity:
                     # The portal to the next room is spawned if the boss is dead
                     self.room.object_list.append(Portal(self.game, self.room, (640, 416)))
                     # Some health is restored if the room is cleared
-                    self.game.player.health += self.game.player.max_health * (1 / 5)
+                    self.game.player.health += self.game.player.max_health * (1 / 10)
                     if self.game.player.health > self.game.player.max_health:
                         self.game.player.health = self.game.player.max_health
                 elif not self.room.enemy_list:
