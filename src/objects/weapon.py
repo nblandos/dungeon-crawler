@@ -9,7 +9,8 @@ class Weapon(Object):
     # Inherits from the Object class
     # Object that the player can pick up and use to attack enemies
     def __init__(self, game, name, room, pos, size):
-        Object.__init__(self, game, name, room, pos, size)  # Inherits from the Object class
+        # Inherits from the Object class
+        Object.__init__(self, game, name, room, pos, size)
         self.angle = 0
         self.swing_counter = 0
         self.offset = pygame.math.Vector2(0, -40)
@@ -41,7 +42,8 @@ class Weapon(Object):
         self.angle = (180 / math.pi) * -math.atan2(dy, dx) - 90
         self.image = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
         self.rotated_offset = self.offset.rotate(-self.angle)
-        self.rect = self.image.get_rect(center=player_pos + self.rotated_offset)
+        self.rect = self.image.get_rect(
+            center=player_pos + self.rotated_offset)
 
     def swing(self):
         # Swings the weapon in an arc
@@ -49,7 +51,8 @@ class Weapon(Object):
         player_pos = self.game.player.hit_box.center
         self.image = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
         self.rotated_offset = self.offset.rotate(-self.angle)
-        self.rect = self.image.get_rect(center=player_pos + self.rotated_offset)
+        self.rect = self.image.get_rect(
+            center=player_pos + self.rotated_offset)
         self.swing_counter += 60 * self.game.constant_dt
 
     def enemy_collision(self):
@@ -92,7 +95,8 @@ class RustySword(Weapon):
     cooldown = 500
 
     def __init__(self, game, room, pos):
-        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+        Weapon.__init__(self, game, self.name, room, pos,
+                        self.size)  # Inherits from Weapon
 
 
 class Katana(Weapon):
@@ -104,7 +108,8 @@ class Katana(Weapon):
     cooldown = 300
 
     def __init__(self, game, room, pos):
-        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+        Weapon.__init__(self, game, self.name, room, pos,
+                        self.size)  # Inherits from Weapon
 
 
 class AnimeSword(Weapon):
@@ -116,7 +121,8 @@ class AnimeSword(Weapon):
     cooldown = 850
 
     def __init__(self, game, room, pos):
-        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+        Weapon.__init__(self, game, self.name, room, pos,
+                        self.size)  # Inherits from Weapon
 
 
 class Knife(Weapon):
@@ -128,7 +134,8 @@ class Knife(Weapon):
     cooldown = 150
 
     def __init__(self, game, room, pos):
-        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+        Weapon.__init__(self, game, self.name, room, pos,
+                        self.size)  # Inherits from Weapon
 
 
 class Mace(Weapon):
@@ -140,7 +147,8 @@ class Mace(Weapon):
     cooldown = 500
 
     def __init__(self, game, room, pos):
-        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+        Weapon.__init__(self, game, self.name, room, pos,
+                        self.size)  # Inherits from Weapon
 
 
 class GreenMagicStaff(Weapon):
@@ -152,7 +160,8 @@ class GreenMagicStaff(Weapon):
     cooldown = 300
 
     def __init__(self, game, room, pos):
-        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+        Weapon.__init__(self, game, self.name, room, pos,
+                        self.size)  # Inherits from Weapon
 
     def shoot(self):
         # Shoots a bullet from the weapon
@@ -170,7 +179,8 @@ class RedMagicStaff(Weapon):
     cooldown = 900
 
     def __init__(self, game, room, pos):
-        Weapon.__init__(self, game, self.name, room, pos, self.size)  # Inherits from Weapon
+        Weapon.__init__(self, game, self.name, room, pos,
+                        self.size)  # Inherits from Weapon
 
     def shoot(self):
         # Shoots a bullet from the weapon

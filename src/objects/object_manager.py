@@ -25,7 +25,3 @@ class ObjectManager:
             obj.update()
         if self.game.player.weapon:
             self.game.player.weapon.update()
-
-
-
-

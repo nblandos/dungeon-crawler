@@ -8,22 +8,28 @@ class EntityAnimation:
         self.direction = self.entity.direction
         self.animation_frame = 0  # The current frame of the animation
         self.states = ['idle', 'run']  # List of possible states
-        self.frames_dict = self.load_frames_dict()  # Loads the animation images for the entity
+        # Loads the animation images for the entity
+        self.frames_dict = self.load_frames_dict()
 
     def load_frames_dict(self):
         # Returns a dictionary of every image frame for different states
         frames_dict = {"IDLE": [], "RUN": []}
         for state in self.states:
             for i in range(4):
-                frame = pygame.image.load(f'{self.entity.path}_{state}_anim_f{i}.png').convert_alpha()
+                frame = pygame.image.load(
+                    f'{self.entity.path}_{state}_anim_f{i}.png').convert_alpha()
                 if self.entity.name == 'knight_m':
-                    frame = pygame.transform.scale(frame, (TILE_SIZE, PLAYER_HEIGHT))
+                    frame = pygame.transform.scale(
+                        frame, (TILE_SIZE, PLAYER_HEIGHT))
                 elif self.entity.name == 'big_demon':
-                    frame = pygame.transform.scale(frame, (32 * SCALE_FACTOR, 36 * SCALE_FACTOR))
+                    frame = pygame.transform.scale(
+                        frame, (32 * SCALE_FACTOR, 36 * SCALE_FACTOR))
                 elif self.entity.name == 'big_zombie':
-                    frame = pygame.transform.scale(frame, (32 * SCALE_FACTOR, 34 * SCALE_FACTOR))
+                    frame = pygame.transform.scale(
+                        frame, (32 * SCALE_FACTOR, 34 * SCALE_FACTOR))
                 else:
-                    frame = pygame.transform.scale(frame, (TILE_SIZE, TILE_SIZE))
+                    frame = pygame.transform.scale(
+                        frame, (TILE_SIZE, TILE_SIZE))
                 frames_dict[state.upper()].append(frame)
         return frames_dict
 
@@ -38,9 +44,11 @@ class EntityAnimation:
         # Sets the animation frame to the correct image based on the state and direction
         # If the entity was moving left, the image is flipped
         if self.entity.direction == 'right':
-            self.entity.image = self.frames_dict[state][int(self.animation_frame)]
+            self.entity.image = self.frames_dict[state][int(
+                self.animation_frame)]
         elif self.entity.direction == 'left':
-            self.entity.image = pygame.transform.flip(self.frames_dict[state][int(self.animation_frame)], True, False)
+            self.entity.image = pygame.transform.flip(
+                self.frames_dict[state][int(self.animation_frame)], True, False)
 
     def update(self):
         # Checks what state the entity is in and plays the correct animation
@@ -48,4 +56,3 @@ class EntityAnimation:
             self.animation('IDLE')
         elif self.entity.velocity != [0, 0]:
             self.animation('RUN')
-

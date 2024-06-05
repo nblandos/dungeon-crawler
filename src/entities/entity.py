@@ -20,7 +20,8 @@ class Entity:
         self.velocity = new_velocity
 
     def wall_collision(self):
-        move_rect = self.hit_box.move(*self.velocity)  # Creates a rect of where the hit_box will be after moving
+        # Creates a rect of where the hit_box will be after moving
+        move_rect = self.hit_box.move(*self.velocity)
         collide_points = (
             move_rect.midbottom, move_rect.bottomleft,
             move_rect.bottomright)  # Creates a tuple of the points of the rect
@@ -46,20 +47,24 @@ class Entity:
                 self.room.enemy_list.remove(self)
                 if self.room.type == 'boss':
                     # The portal to the next room is spawned if the boss is dead
-                    self.room.object_list.append(Portal(self.game, self.room, (640, 416)))
+                    self.room.object_list.append(
+                        Portal(self.game, self.room, (640, 416)))
                     # Some health is restored if the room is cleared
-                    self.game.player.health += self.game.player.max_health * (1 / 10)
+                    self.game.player.health += self.game.player.max_health * \
+                        (1 / 10)
                     if self.game.player.health > self.game.player.max_health:
                         self.game.player.health = self.game.player.max_health
                 elif not self.room.enemy_list:
                     # Some health is restored if the room is cleared
-                    self.game.player.health += self.game.player.max_health * (1 / 20)
+                    self.game.player.health += self.game.player.max_health * \
+                        (1 / 20)
                     if self.game.player.health > self.game.player.max_health:
                         self.game.player.health = self.game.player.max_health
                     if random.randint(0, 2) == 1:
                         # 1 in 3 chance of spawning a flask when all enemies are dead in a room
                         flask_list = [AttackFlask(self.game, self.room, (640, 408)),
-                                      HealthFlask(self.game, self.room, (640, 408)),
+                                      HealthFlask(
+                                          self.game, self.room, (640, 408)),
                                       SpeedFlask(self.game, self.room, (640, 408))]
                         random_flask = random.choice(flask_list)
                         self.room.object_list.append(random_flask)

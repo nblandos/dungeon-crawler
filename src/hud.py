@@ -12,7 +12,8 @@ class Hud:
     def draw_level(self):
         # Draws text that shows the current level
         level_text = f'Level {int(self.game.dungeon_manager.level)}'
-        text_surface = pygame.font.Font(FONT, 50).render(level_text, True, WHITE)
+        text_surface = pygame.font.Font(
+            FONT, 50).render(level_text, True, WHITE)
         self.game.screen.blit(text_surface, (620, 0))
 
     def draw(self):
@@ -39,7 +40,8 @@ class HealthBar:
         num_sections = int(self.player.health) // 15
         for i in range(num_sections):
             section_count += 1
-            pygame.draw.rect(self.game.screen, DARK_RED, (15 + section_count * 15, line_pos, 10, 15))
+            pygame.draw.rect(self.game.screen, DARK_RED,
+                             (15 + section_count * 15, line_pos, 10, 15))
             if section_count > 15:
                 line_pos += 20
                 section_count = 0
@@ -56,7 +58,8 @@ class Minimap:
     def __init__(self, game):
         self.game = game
         self.current_room = None  # The room the player is currently in
-        self.current_x, self.current_y = None, None # The coordinates of the current room in the dungeon array
+        # The coordinates of the current room in the dungeon array
+        self.current_x, self.current_y = None, None
         self.visited_rooms = []  # Rooms that the player has visited
 
     def add_room(self, room):
@@ -86,12 +89,8 @@ class Minimap:
         for room in self.visited_rooms:
             position = (self.offset_x + room[0] * self.room_width * 1.2,
                         self.offset_y + room[1] * self.room_height * 1.2)
-            pygame.draw.rect(surface, DARK_GREY, (*position, *self.room_dimensions), 4)
+            pygame.draw.rect(surface, DARK_GREY,
+                             (*position, *self.room_dimensions), 4)
         position = (self.offset_x + self.current_x * self.room_width * 1.2,
                     self.offset_y + self.current_y * self.room_height * 1.2)
         pygame.draw.rect(surface, GREY, (*position, *self.room_dimensions))
-
-
-
-
-

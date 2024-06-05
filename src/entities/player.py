@@ -16,7 +16,8 @@ class Player(Entity):
         Entity.__init__(self, game, self.name)  # Inherits from Entity
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (TILE_SIZE, PLAYER_HEIGHT)).convert_alpha()
-        self.rect = self.image.get_rect(center=(512 + 2.5 * 64, 400))  # Creates the rect
+        self.rect = self.image.get_rect(
+            center=(512 + 2.5 * 64, 400))  # Creates the rect
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
         self.hit_box = self.hit_box.inflate(-25, -20)
         self.attacking = False

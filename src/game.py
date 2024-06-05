@@ -54,9 +54,11 @@ class Game:
         score = self.dungeon_manager.level
         con = sqlite3.connect('users.db')
         cursor = con.cursor()
-        highscore = cursor.execute(f'SELECT highscore FROM users WHERE username = "{self.username}"').fetchone()[0]
+        highscore = cursor.execute(
+            f'SELECT highscore FROM users WHERE username = "{self.username}"').fetchone()[0]
         if score > highscore:
-            cursor.execute(f'UPDATE users SET highscore = {score} WHERE username = "{self.username}"')
+            cursor.execute(
+                f'UPDATE users SET highscore = {score} WHERE username = "{self.username}"')
             con.commit()
 
     def pause(self):

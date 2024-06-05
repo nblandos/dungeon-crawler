@@ -12,7 +12,8 @@ class Object:
         self.pos = pos
         self.size = size
         self.path = f'assets/frames/{self.name}.png'
-        self.image = pygame.transform.scale(pygame.image.load(self.path), self.size).convert_alpha()
+        self.image = pygame.transform.scale(
+            pygame.image.load(self.path), self.size).convert_alpha()
         self.image_copy = self.image
         self.rect = self.image.get_rect()
         self.hit_box = f.get_hit_box(self.image, *self.rect.topleft)
@@ -39,4 +40,3 @@ class Object:
     def draw(self):
         # Draws the object
         self.room.tile_map.new_map_surface.blit(self.image, self.rect)
-

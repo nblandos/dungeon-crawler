@@ -10,8 +10,10 @@ class Menu:
         self.game = game
         self.running = False
         # Defines text that is on every menu screen
-        self.title = pygame.font.Font(FONT, 140).render(title_text, True, WHITE)
-        self.username_text = pygame.font.Font(FONT, 50).render("User-" + game.username, True, WHITE)
+        self.title = pygame.font.Font(
+            FONT, 140).render(title_text, True, WHITE)
+        self.username_text = pygame.font.Font(FONT, 50).render(
+            "User-" + game.username, True, WHITE)
 
     def draw_contents(self):
         # This method is overwritten in every menu screen
@@ -35,8 +37,10 @@ class Menu:
     def draw(self):
         # Draws the menu screen
         self.game.screen.fill(BLACK)
-        self.game.screen.blit(self.title, ((WIDTH - self.title.get_width()) / 2, 50))
-        self.game.screen.blit(self.username_text, (WIDTH - self.username_text.get_width() - 3, 3))
+        self.game.screen.blit(
+            self.title, ((WIDTH - self.title.get_width()) / 2, 50))
+        self.game.screen.blit(self.username_text,
+                              (WIDTH - self.username_text.get_width() - 3, 3))
         self.draw_contents()
 
     def update(self):
@@ -62,7 +66,8 @@ class MainMenu(Menu):
         self.running = True
         # Creates the buttons
         self.play_button = PlayButton(self, WIDTH / 2, 3.5 * TILE_SIZE)
-        self.highscore_button = HighscoreButton(self, WIDTH / 2, 6.5 * TILE_SIZE)
+        self.highscore_button = HighscoreButton(
+            self, WIDTH / 2, 6.5 * TILE_SIZE)
         self.quit_button = QuitButton(self, WIDTH / 2, 9.5 * TILE_SIZE)
 
     def draw_contents(self):
@@ -113,18 +118,25 @@ class HighscoreMenu(Menu):
 
     def retrieve_scores(self):
         # Retrieves the top 5 highscores from the database in descending order
-        self.cursor.execute("SELECT username, highscore FROM users ORDER BY highscore DESC LIMIT 5")
+        self.cursor.execute(
+            "SELECT username, highscore FROM users ORDER BY highscore DESC LIMIT 5")
         return self.cursor.fetchall()
 
     def draw_scores(self):
         # Draws the highscores
         for i in range(len(self.highscores)):
-            ranking_text = pygame.font.Font(FONT, 110).render(str(i + 1) + ".", True, WHITE)
-            username_text = pygame.font.Font(FONT, 110).render(self.highscores[i][0], True, WHITE)
-            score_text = pygame.font.Font(FONT, 110).render(str(self.highscores[i][1]), True, WHITE)
-            self.game.screen.blit(ranking_text, (WIDTH / 6, HEIGHT / 4 + i * HEIGHT / 8))
-            self.game.screen.blit(username_text, (WIDTH / 3, HEIGHT / 4 + i * HEIGHT / 8))
-            self.game.screen.blit(score_text, (3 * WIDTH / 4, HEIGHT / 4 + i * HEIGHT / 8))
+            ranking_text = pygame.font.Font(FONT, 110).render(
+                str(i + 1) + ".", True, WHITE)
+            username_text = pygame.font.Font(FONT, 110).render(
+                self.highscores[i][0], True, WHITE)
+            score_text = pygame.font.Font(FONT, 110).render(
+                str(self.highscores[i][1]), True, WHITE)
+            self.game.screen.blit(
+                ranking_text, (WIDTH / 6, HEIGHT / 4 + i * HEIGHT / 8))
+            self.game.screen.blit(
+                username_text, (WIDTH / 3, HEIGHT / 4 + i * HEIGHT / 8))
+            self.game.screen.blit(
+                score_text, (3 * WIDTH / 4, HEIGHT / 4 + i * HEIGHT / 8))
 
     def draw_contents(self):
         # Draws the menu screen

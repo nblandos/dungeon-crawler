@@ -11,4 +11,3 @@ class Portal(Object):
     def interact(self):
         # Loads the next level
         self.game.dungeon_manager.load_next_level()
-

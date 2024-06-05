@@ -87,7 +87,8 @@ class TileMap:
             for row in layer:
                 x = TILE_SIZE
                 for tile in row:
-                    tiles.append(Tile(self.spritesheet, (self.get_tile_position(int(tile)), (16, 16)), x, y, (TILE_SIZE, TILE_SIZE)))
+                    tiles.append(Tile(self.spritesheet, (self.get_tile_position(
+                        int(tile)), (16, 16)), x, y, (TILE_SIZE, TILE_SIZE)))
                     if int(tile) in WALL_LIST:
                         self.wall_list.append(tiles[-1])
                     x += TILE_SIZE

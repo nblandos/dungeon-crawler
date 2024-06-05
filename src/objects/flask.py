@@ -4,7 +4,8 @@ from .object import Object
 
 class Flask(Object):
     def __init__(self, game, name, room, pos, size):
-        Object.__init__(self, game, name, room, pos, size)  # Inherits from the Object class
+        # Inherits from the Object class
+        Object.__init__(self, game, name, room, pos, size)
 
     def interact(self):
         # Overridden by the child classes

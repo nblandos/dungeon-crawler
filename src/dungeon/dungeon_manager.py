@@ -26,7 +26,8 @@ class DungeonManager:
                 or self.dungeon.boss_room_assigned is False:
             self.dungeon = Dungeon(self.game, DUNGEON_SIZE, self)
         print(f"Number of rooms: {self.dungeon.num_rooms}")
-        self.current_room = self.dungeon.rooms[self.dungeon.start_pos[0]][self.dungeon.start_pos[1]]
+        self.current_room = self.dungeon.rooms[self.dungeon.start_pos[0]
+                                               ][self.dungeon.start_pos[1]]
         self.current_map = self.current_room.tile_map
         self.y, self.x = self.current_room.pos[0], self.current_room.pos[1]
         self.room_change = False

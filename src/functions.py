@@ -21,5 +21,3 @@ def time_passed(time, amount):
 def encrypt_password(password):
     # Encrypts a given message using a hash
     return hashlib.sha256(password.encode()).hexdigest()
-
-

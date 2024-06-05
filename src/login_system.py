@@ -27,12 +27,16 @@ class LoginSystem:
         self.root.title('Registration')
         self.root.geometry('600x300')
         self.root.resizable(False, False)
-        self.header = tk.Label(self.root, text='Registration', font=("Arial", 32))
+        self.header = tk.Label(
+            self.root, text='Registration', font=("Arial", 32))
         self.header.pack()
         self.registration_frame = tk.Frame(self.root, padx=40, pady=10)
-        tk.Label(self.registration_frame, text='Username:', font=("Arial", 20), padx=40, pady=15).grid()
-        tk.Entry(self.registration_frame, textvariable=self.username, bd=5, font=("Arial", 15)).grid(row=0, column=1)
-        tk.Label(self.registration_frame, text='Password:', font=("Arial", 20), padx=40, pady=15).grid()
+        tk.Label(self.registration_frame, text='Username:',
+                 font=("Arial", 20), padx=40, pady=15).grid()
+        tk.Entry(self.registration_frame, textvariable=self.username,
+                 bd=5, font=("Arial", 15)).grid(row=0, column=1)
+        tk.Label(self.registration_frame, text='Password:',
+                 font=("Arial", 20), padx=40, pady=15).grid()
         tk.Entry(self.registration_frame, textvariable=self.password, bd=5, font=("Arial", 15), show='*').grid(row=1,
                                                                                                                column=1)
         tk.Button(self.registration_frame, text=' Login ', bd=3, font=("Arial", 15), padx=5, pady=5,
@@ -50,7 +54,8 @@ class LoginSystem:
             mb.showerror("Error", "Username or Password fields are blank.")
         else:
             password = encrypt_password(password)
-            self.cursor.execute(f"SELECT * FROM users WHERE username='{username}' AND password='{password}'")
+            self.cursor.execute(
+                f"SELECT * FROM users WHERE username='{username}' AND password='{password}'")
             # Checks if the username and password match a user in the database
             if self.cursor.fetchone():
                 self.logged_in = True
@@ -70,7 +75,8 @@ class LoginSystem:
             password = encrypt_password(password)
             # Inserts the username and password into the database if there is no user with the same username
             try:
-                self.cursor.execute("INSERT INTO users(username,password) VALUES (?,?)", (username, password))
+                self.cursor.execute(
+                    "INSERT INTO users(username,password) VALUES (?,?)", (username, password))
                 self.con.commit()
                 mb.showinfo("Success", "Account created successfully.")
                 self.login()

@@ -54,7 +54,8 @@ class Enemy(Entity):
                                                  self.game.player.hit_box.y - self.hit_box.y)
         if distance_to_player.length_squared() > 0:
             distance_to_player.normalize_ip()
-            distance_to_player.scale_to_length(self.speed * self.game.constant_dt)
+            distance_to_player.scale_to_length(
+                self.speed * self.game.constant_dt)
         # Sets the velocity to based on the direction from the player to the enemy and the speed of the enemy
         self.set_velocity(distance_to_player)
 
@@ -75,7 +76,8 @@ class Enemy(Entity):
                                                           self.destination[1] - self.hit_box.y)
             if distance_to_destination.length_squared() > 0:
                 distance_to_destination.normalize_ip()
-                distance_to_destination.scale_to_length(self.speed * self.game.constant_dt)
+                distance_to_destination.scale_to_length(
+                    self.speed * self.game.constant_dt)
                 self.set_velocity(distance_to_destination)
             else:
                 self.destination = None
@@ -86,10 +88,12 @@ class Enemy(Entity):
         # Finds a random destination within the room for ranged enemies (imps) to move to
         min_x, max_x, min_y, max_y = 196, 1082, 162, 586  # The bounds of the room
         pos = [random.randint(min_x, max_x), random.randint(min_y, max_y)]
-        vector = pygame.math.Vector2(self.game.player.hit_box.x - pos[0], self.game.player.hit_box.x - pos[1])
+        vector = pygame.math.Vector2(
+            self.game.player.hit_box.x - pos[0], self.game.player.hit_box.x - pos[1])
         while vector.length() < radius:
             pos = [random.randint(min_x, max_x), random.randint(min_y, max_y)]
-            vector = pygame.math.Vector2(self.game.player.hit_box.x - pos[0], self.game.player.hit_box.x - pos[1])
+            vector = pygame.math.Vector2(
+                self.game.player.hit_box.x - pos[0], self.game.player.hit_box.x - pos[1])
         self.destination = pos
 
     def update(self):
@@ -108,7 +112,8 @@ class Enemy(Entity):
             pos = health_rect.topleft
             size = health_rect.size
             pygame.draw.rect(surface, DARK_RED, (*pos, *size))
-            rect = (pos[0], pos[1], (size[0]) * (self.health / self.max_health), size[1])
+            rect = (pos[0], pos[1], (size[0]) *
+                    (self.health / self.max_health), size[1])
             pygame.draw.rect(surface, LIME_GREEN, rect)
 
     def draw(self):
@@ -120,7 +125,8 @@ class Enemy(Entity):
 class RangedEnemy(Enemy):
     # Parent class for every type of ranged enemy
     def __init__(self, game, room, max_health):
-        Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
+        Enemy.__init__(self, game, self.name, room,
+                       max_health)  # Inherits from Enemy
 
     def attack(self):
         # Overrides the attack method from Enemy as ranged enemies shoot bullets at the player
@@ -153,7 +159,8 @@ class Goblin(Enemy):
     damage = 2
 
     def __init__(self, game, room, max_health):
-        Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
+        Enemy.__init__(self, game, self.name, room,
+                       max_health)  # Inherits from Enemy
         self.cooldown = 1500
 
 
@@ -167,7 +174,8 @@ class Imp(RangedEnemy):
     radius = 200
 
     def __init__(self, game, room, max_health):
-        RangedEnemy.__init__(self, game, room, max_health)  # Inherits from RangedEnemy
+        # Inherits from RangedEnemy
+        RangedEnemy.__init__(self, game, room, max_health)
         self.cooldown = 1200
 
 
@@ -180,7 +188,8 @@ class BigDemon(Enemy):
     damage = 20
 
     def __init__(self, game, room, max_health):
-        Enemy.__init__(self, game, self.name, room, max_health)  # Inherits from Enemy
+        Enemy.__init__(self, game, self.name, room,
+                       max_health)  # Inherits from Enemy
         self.cooldown = 1200
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (32 * SCALE_FACTOR, 36 * SCALE_FACTOR)).convert_alpha()
@@ -198,7 +207,8 @@ class BigZombie(RangedEnemy):
     radius = 100
 
     def __init__(self, game, room, max_health):
-        RangedEnemy.__init__(self, game, room, max_health)  # Inherits from RangedEnemy
+        # Inherits from RangedEnemy
+        RangedEnemy.__init__(self, game, room, max_health)
         self.cooldown = 150
         self.image = pygame.transform.scale(pygame.image.load(f'{self.path}_idle_anim_f3.png'),
                                             (32 * SCALE_FACTOR, 34 * SCALE_FACTOR)).convert_alpha()

@@ -44,7 +44,8 @@ class Dungeon:
 
     def generate_dungeon(self):
         # Creates the spawn room
-        self.rooms[self.start_pos[0]][self.start_pos[1]] = Room(self.game, ['N'], self.start_pos, 'spawn')
+        self.rooms[self.start_pos[0]][self.start_pos[1]] = Room(
+            self.game, ['N'], self.start_pos, 'spawn')
         # Calls the necessary functions to create the dungeon
         self.create_room(self.rooms[self.start_pos[0]][self.start_pos[1]])
         self.create_connections()
@@ -74,7 +75,8 @@ class Dungeon:
                 elif path == 'W':
                     self.new_pos = [room.pos[0], room.pos[1] - 1]
                 # Instantiates the new room and adds it to the 2D array 'rooms'
-                self.new_room = Room(self.game, random.choice(POSSIBLE_ROOMS[path]), self.new_pos)
+                self.new_room = Room(self.game, random.choice(
+                    POSSIBLE_ROOMS[path]), self.new_pos)
                 self.rooms[self.new_pos[0]][self.new_pos[1]] = self.new_room
                 # Recursively calls the function to explore the newly created room and create its neighbours
                 self.create_room(self.new_room)
@@ -203,7 +205,8 @@ class Dungeon:
 
     def add_graphics(self, room):
         # Creates an instance of TileMap for each room in the dungeon which will display the room
-        room.tile_map = TileMap(SpriteSheet('assets/spritesheet.png'), room.room_map, room)
+        room.tile_map = TileMap(SpriteSheet(
+            'assets/spritesheet.png'), room.room_map, room)
 
     def assign_types(self, room):
         # Assigns a type to each room in the dungeon
@@ -214,7 +217,8 @@ class Dungeon:
                 room.type = 'boss'
                 self.boss_room_assigned = True
             else:
-                room.type = random.choices(['normal', 'reward'], weights=[8, 1], k=1)[0]
+                room.type = random.choices(
+                    ['normal', 'reward'], weights=[8, 1], k=1)[0]
 
     def add_objects(self, room):
         # Adds objects to the rooms
@@ -224,7 +228,8 @@ class Dungeon:
         elif room.type == 'reward':
             # Adds a random weapon to the reward room
             weapon_list = [Katana(self.game, room, (660, 380)), AnimeSword(self.game, room, (650, 380)),
-                           Mace(self.game, room, (650, 400)), Knife(self.game, room, (660, 400)),
+                           Mace(self.game, room, (650, 400)), Knife(
+                               self.game, room, (660, 400)),
                            GreenMagicStaff(self.game, room, (655, 370)),
                            RedMagicStaff(self.game, room, (655, 370))]
             room.object_list.append(random.choice(weapon_list))

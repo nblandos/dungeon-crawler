@@ -14,8 +14,10 @@ class Button:
 
     def load_images(self):
         # Load the images for the button
-        self.images.append(pygame.image.load(f'assets/buttons/{self.path}/{self.name} Button.png'))
-        self.images.append(pygame.image.load(f'assets/buttons/{self.path}/{self.name} col_Button.png'))
+        self.images.append(pygame.image.load(
+            f'assets/buttons/{self.path}/{self.name} Button.png'))
+        self.images.append(pygame.image.load(
+            f'assets/buttons/{self.path}/{self.name} col_Button.png'))
         for i in range(len(self.images)):
             self.images[i] = pygame.transform.scale(self.images[i],
                                                     (self.images[i].get_width() / 1.2,
@@ -42,7 +44,8 @@ class Button:
 
 class PlayButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Play', x, y)  # Inherits from the Button class
+        # Inherits from the Button class
+        super().__init__(menu, 'Large Buttons', 'Play', x, y)
 
     def action(self):
         self.menu.running = False
@@ -51,7 +54,8 @@ class PlayButton(Button):
 
 class HighscoreButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Highscores', x, y)  # Inherits from the Button class
+        # Inherits from the Button class
+        super().__init__(menu, 'Large Buttons', 'Highscores', x, y)
 
     def action(self):
         self.menu.running = False
@@ -60,7 +64,8 @@ class HighscoreButton(Button):
 
 class QuitButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Quit', x, y)  # Inherits from the Button class
+        # Inherits from the Button class
+        super().__init__(menu, 'Large Buttons', 'Quit', x, y)
 
     def action(self):
         self.menu.game.running = False
@@ -69,7 +74,8 @@ class QuitButton(Button):
 
 class ResumeButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Resume', x, y)  # Inherits from the Button class
+        # Inherits from the Button class
+        super().__init__(menu, 'Large Buttons', 'Resume', x, y)
 
     def action(self):
         pygame.mixer.music.unpause()
@@ -78,7 +84,8 @@ class ResumeButton(Button):
 
 class MenuButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Large Buttons', 'Menu', x, y)  # Inherits from the Button class
+        # Inherits from the Button class
+        super().__init__(menu, 'Large Buttons', 'Menu', x, y)
 
     def action(self):
         self.menu.running = False
@@ -87,7 +94,8 @@ class MenuButton(Button):
 
 class BackButton(Button):
     def __init__(self, menu, x, y):
-        super().__init__(menu, 'Square Buttons', 'Back', x, y)  # Inherits from the Button class
+        # Inherits from the Button class
+        super().__init__(menu, 'Square Buttons', 'Back', x, y)
 
     def action(self):
         self.menu.running = False
