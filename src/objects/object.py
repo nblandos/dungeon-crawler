@@ -11,7 +11,7 @@ class Object:
         self.room = room
         self.pos = pos
         self.size = size
-        self.path = f'assets/frames/{self.name}.png'
+        self.path = f'../assets/frames/{self.name}.png'
         self.image = pygame.transform.scale(
             pygame.image.load(self.path), self.size).convert_alpha()
         self.image_copy = self.image

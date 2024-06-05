@@ -190,7 +190,7 @@ class Dungeon:
     def add_room_map(self, file):
         # Adds layers of csv files to every room in the dungeon
         # The number in the csv files correspond to tile image identifiers
-        with open(f'assets/maps/{file}.csv', newline='') as f:
+        with open(f'../assets/maps/{file}.csv', newline='') as f:
             reader = csv.reader(f)
             basic_map = list(reader)
 
@@ -206,7 +206,7 @@ class Dungeon:
     def add_graphics(self, room):
         # Creates an instance of TileMap for each room in the dungeon which will display the room
         room.tile_map = TileMap(SpriteSheet(
-            'assets/spritesheet.png'), room.room_map, room)
+            '../assets/spritesheet.png'), room.room_map, room)
 
     def assign_types(self, room):
         # Assigns a type to each room in the dungeon

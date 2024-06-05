@@ -68,10 +68,10 @@ class Game:
     @staticmethod
     def randomise_music():
         # Changes the music to a different random track
-        music = random.choice(os.listdir("assets/music"))
+        music = random.choice(os.listdir("../assets/music"))
         while music == pygame.mixer.music.get_busy():
-            music = random.choice(os.listdir("assets/music"))
-        pygame.mixer.music.load(f"assets/music/{music}")
+            music = random.choice(os.listdir("../assets/music"))
+        pygame.mixer.music.load(f"../assets/music/{music}")
         pygame.mixer.music.set_volume(0.01)
 
     def update_groups(self):

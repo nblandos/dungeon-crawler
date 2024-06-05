@@ -15,9 +15,9 @@ class Button:
     def load_images(self):
         # Load the images for the button
         self.images.append(pygame.image.load(
-            f'assets/buttons/{self.path}/{self.name} Button.png'))
+            f'../assets/buttons/{self.path}/{self.name} Button.png'))
         self.images.append(pygame.image.load(
-            f'assets/buttons/{self.path}/{self.name} col_Button.png'))
+            f'../assets/buttons/{self.path}/{self.name} col_Button.png'))
         for i in range(len(self.images)):
             self.images[i] = pygame.transform.scale(self.images[i],
                                                     (self.images[i].get_width() / 1.2,

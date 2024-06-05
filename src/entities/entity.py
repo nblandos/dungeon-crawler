@@ -8,7 +8,7 @@ class Entity:
     def __init__(self, game, name):
         self.game = game
         self.name = name
-        self.path = f'assets/frames/{self.name}'
+        self.path = f'../assets/frames/{self.name}'
         self.dead = False
         self.can_move = True
         self.direction = 'right'
